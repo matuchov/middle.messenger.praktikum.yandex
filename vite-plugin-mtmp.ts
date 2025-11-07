@@ -18,7 +18,9 @@ export default function vitePluginMtmp() {
           .map((value) => `${value}: string;`)
           .join('')} }): string`;
 
-        const result = `export default function render(data = { }){ return \`${processed}\` }`;
+        const result = `export default function render(data = { }){ return \`${processed}\` }
+        
+        `;
         const typePath = id + '.d.ts';
 
         fs.writeFileSync(typePath, typeFile);

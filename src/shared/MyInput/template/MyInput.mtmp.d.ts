@@ -1,1 +1,11 @@
-export default function render(data?: { inputClass: string;name: string;label: string;name: string;name: string;inputType: string;value: string;isDisabled: string;errorText: string; }): string
+export default function render(data?: {
+  inputClass: string;
+  name: string;
+  label: string;
+  name: string;
+  name: string;
+  inputType: string;
+  value: string;
+  isDisabled: string;
+  errorText: string;
+}): string;

@@ -1,1 +1,1 @@
-export default function render(data?: { class: string;src: string; }): string
+export default function render(data?: { class: string; src: string }): string;
