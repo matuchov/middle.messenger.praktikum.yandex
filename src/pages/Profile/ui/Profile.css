@@ -1,0 +1,61 @@
+.profile {
+  margin: auto auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 500px;
+  gap: 30px;
+}
+
+.profile__avatar_change {
+  position: relative;
+  margin: 0 auto;
+}
+
+.profile__avatar_change .avatar::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: 'Поменять аватар';
+  text-align: center;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.profile__avatar_change:hover .avatar {
+  background: rgba(98, 98, 98, 0.742);
+}
+
+.profile__avatar_change:hover .avatar::after {
+  display: block;
+  opacity: 1;
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap: 20px;
+}
+
+.profile__form button {
+  align-self: center;
+  width: 280px;
+}
+
+.profile__links {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.profile__link {
+  font-size: 13px;
+  color: var(--accent-color);
+}
+
+.profile__link_cancel {
+  color: var(--warning-color);
+}

@@ -1,0 +1,54 @@
+.sidebar__chatlist-row {
+  padding: 12px 0px;
+  display: flex;
+  gap: 10px;
+  border-top: 2px solid var(--background-color);
+  overflow: hidden;
+  max-height: 73px;
+}
+
+.sidebar__chatlist-text {
+  max-width: 180px;
+  overflow: hidden;
+}
+
+.sidebar__chatlist-name {
+  overflow: hidden;
+  max-height: 12px;
+  color: var(--main-color);
+  padding-bottom: 5px;
+  font-size: 13px;
+}
+.sidebar__chatlist-lastmessage {
+  font-size: 12px;
+  max-height: 24px;
+  overflow: hidden;
+}
+
+.sidebar__chatlist-info_row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar__chatlist-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar__chatlist-time {
+  font-size: 9px;
+}
+.sidebar__chatlist-counter {
+  font-size: 9px;
+  color: var(--background-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  min-width: 20px;
+  padding: 2px;
+  border-radius: 1001px;
+  background-color: var(--accent-color);
+}

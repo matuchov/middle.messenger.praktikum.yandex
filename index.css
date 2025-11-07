@@ -1,0 +1,22 @@
+:root {
+  --main-color: #1e1e1e;
+  --secondary-color: #999999;
+  --accent-color: #3369f3;
+  --warning-color: #ff0000;
+  --background-color: #efefef;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  max-width: 1280px;
+  margin: 0 auto;
+}

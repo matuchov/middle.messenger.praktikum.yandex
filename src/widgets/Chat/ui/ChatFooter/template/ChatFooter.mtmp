@@ -1,0 +1,14 @@
+<footer class="chat__footer">
+  {{ dropdownComponent }}
+
+  <input name="message" type="text" class="chat__input" placeholder="Сообщение" />
+
+  <button
+    onclick="{{ onclickSendBtn }}"
+    class="chat__send-button"
+    type="button"
+    aria-label="Отправить сообщение"
+  >
+    >
+  </button>
+</footer>

@@ -1,0 +1,30 @@
+.avatar-upload {
+  margin: auto auto;
+  min-width: 340px;
+  min-height: 257px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+}
+.avatar-upload__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.avatar-upload__input {
+  display: none;
+}
+
+.avatar-upload__input_label {
+  color: var(--accent-color);
+}
+
+.avatar-upload__input_label:hover {
+  text-decoration: underline;
+}

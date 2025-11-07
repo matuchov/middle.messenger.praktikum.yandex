@@ -1,0 +1,15 @@
+.chat__messages {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  justify-content: end;
+}
+
+.chat__messages_container {
+  align-content: end;
+  height: 100%;
+  overflow-y: auto;
+}

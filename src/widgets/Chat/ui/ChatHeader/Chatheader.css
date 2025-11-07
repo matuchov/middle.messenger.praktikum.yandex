@@ -1,0 +1,19 @@
+.chat__header {
+  padding: 10px 0;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--background-color);
+  z-index: 10;
+}
+.chat__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat__username {
+  font-weight: 600;
+  font-size: 13px;
+}

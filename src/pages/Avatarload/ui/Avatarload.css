@@ -1,0 +1,30 @@
+.avatarload {
+  margin: auto auto;
+  min-width: 340px;
+  min-height: 257px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+}
+.avatarload__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.avatarload__input {
+  display: none;
+}
+
+.avatarload__input_label {
+  color: var(--accent-color);
+}
+
+.avatarload__input_label:hover {
+  text-decoration: underline;
+}

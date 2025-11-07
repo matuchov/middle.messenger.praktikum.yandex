@@ -1,0 +1,21 @@
+.sidebar {
+  height: 100vh;
+  display: flex;
+  width: 410px;
+  flex-direction: column;
+  padding-right: 10px;
+  padding-left: 10px;
+  color: var(--secondary-color);
+  overflow-y: scroll;
+}
+.sidebar__profile {
+  padding-top: 20px;
+
+  display: flex;
+  justify-content: end;
+}
+
+.sidebar__chatlist {
+  display: flex;
+  flex-direction: column;
+}
