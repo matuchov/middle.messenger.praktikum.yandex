@@ -1,0 +1,4 @@
+.sidebar__chatlist {
+  display: flex;
+  flex-direction: column;
+}

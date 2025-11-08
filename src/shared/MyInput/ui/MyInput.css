@@ -1,0 +1,64 @@
+.myInput {
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--background-color);
+}
+
+.myInput.myInput--column {
+  flex-direction: column;
+}
+
+.myInput.myInput--column input {
+  padding: 5px 0;
+}
+
+.myInput.myInput--column label {
+  color: var(--secondary-color);
+  font-size: 11px;
+}
+
+.myInput.myInput--row {
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.myInput:hover {
+  border-bottom: 1px solid var(--accent-color);
+}
+
+.myInput input:focus {
+  color: var(--main-color);
+}
+
+.myInput:has(input:focus) {
+  border-bottom: 1px solid var(--accent-color);
+}
+
+.myInput.myInput--row input {
+  padding: 5px 0;
+  text-align: right;
+  color: var(--secondary-color);
+}
+
+.myInput.myInput--row label {
+  position: relative;
+}
+
+.myInput.myInput--error {
+  color: var(--warning-color);
+}
+
+.myInput__error {
+  display: none;
+  padding-top: 5px;
+  color: var(--warning-color);
+  font-size: 11px;
+}
+
+.myInput.myInput--error .myInput__error {
+  color: var(--warning-color);
+  display: block;
+}

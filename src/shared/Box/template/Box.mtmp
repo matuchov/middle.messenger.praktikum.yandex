@@ -1,0 +1,1 @@
+<div class="{{ boxClass }} box">{{ children }}</div>

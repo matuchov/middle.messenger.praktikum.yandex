@@ -1,0 +1,1 @@
+export default function render(data?: { Error: string;errorText: string;linkComponent: string; }): string

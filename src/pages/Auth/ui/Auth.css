@@ -1,0 +1,25 @@
+.auth {
+  margin: auto auto;
+}
+
+.auth__box {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 30px;
+  gap: 20px;
+}
+
+.auth__form button {
+  align-self: center;
+}
+.auth__link {
+  font-size: 12px;
+  font-weight: 400;
+  align-self: center;
+}
