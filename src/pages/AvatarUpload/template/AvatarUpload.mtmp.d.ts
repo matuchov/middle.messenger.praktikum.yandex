@@ -1,1 +1,1 @@
-export default function render(data?: { submitBtn: string }): string;
+export default function render(data?: { submitBtn: string; }): string

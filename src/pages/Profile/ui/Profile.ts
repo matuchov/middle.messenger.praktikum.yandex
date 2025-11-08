@@ -21,6 +21,7 @@ export const Profile = ({ page }: ProfileProps) => {
     : '';
 
   const formContent = Form({
+    disabled: ProfilePatterns[page].disabled,
     inputs,
     formClass: 'profile__form',
     subminBtn: sumbitBtn,

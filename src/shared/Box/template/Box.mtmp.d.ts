@@ -1,1 +1,1 @@
-export default function render(data?: { boxClass: string; children: string }): string;
+export default function render(data?: { boxClass: string;children: string; }): string

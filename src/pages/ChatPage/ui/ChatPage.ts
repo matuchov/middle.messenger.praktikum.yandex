@@ -1,6 +1,5 @@
 import { Chat } from '@/widgets/Chat/ui/Chat';
 import ChatPageTemlpate from '../template/ChatPage.mtmp';
-import './ChatPage.css';
 import { Sidebar } from '@/widgets/Sidebar/ui/Sidebar';
 
 export const ChatPage = () => {

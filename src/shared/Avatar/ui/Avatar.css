@@ -6,12 +6,17 @@
   border-radius: 50%;
   justify-content: center;
 }
-.avatar--small {
+
+.avatar img {
+  object-fit: cover;
+}
+
+.avatar--small img {
   width: 47px;
   height: 47px;
 }
 
-.avatar--large {
+.avatar--large img {
   width: 130px;
   height: 130px;
 }

@@ -4,6 +4,7 @@
   justify-content: center;
   color: var(--background-color);
   background: var(--accent-color);
-  padding: 12px;
+  padding: 11px 70px;
   border-radius: 8px;
+  font-size: 13px;
 }

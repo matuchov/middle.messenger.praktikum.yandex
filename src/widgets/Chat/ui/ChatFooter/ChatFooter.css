@@ -1,8 +1,12 @@
 .chat__footer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 20px 0;
+}
+
+.chat__form {
+  flex-grow: 1;
+  display: flex;
 }
 
 .chat__input {

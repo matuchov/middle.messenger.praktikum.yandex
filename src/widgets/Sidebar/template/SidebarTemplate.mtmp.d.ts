@@ -1,1 +1,1 @@
-export default function render(data?: { link: string; search: string; shatlist: string }): string;
+export default function render(data?: { link: string;search: string;shatlist: string; }): string

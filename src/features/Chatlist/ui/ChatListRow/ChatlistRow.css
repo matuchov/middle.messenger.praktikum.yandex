@@ -5,6 +5,15 @@
   border-top: 2px solid var(--background-color);
   overflow: hidden;
   max-height: 73px;
+  border-radius: 10px;
+  transition: background-color 0.25s ease, padding 0.25s ease, margin 0.25s ease;
+}
+
+.sidebar__chatlist-row:hover {
+  background: var(--background-hover-color);
+  padding-left: var(--sidebar-padding-x);
+  padding-right: var(--sidebar-padding-x);
+  margin: 0 calc(0px - var(--sidebar-padding-x));
 }
 
 .sidebar__chatlist-text {

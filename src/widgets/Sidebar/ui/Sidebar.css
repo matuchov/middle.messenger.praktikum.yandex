@@ -1,10 +1,11 @@
 .sidebar {
+  --sidebar-padding-x: 10px;
   height: 100vh;
   display: flex;
   width: 410px;
   flex-direction: column;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding-right: var(--sidebar-padding-x);
+  padding-left: var(--sidebar-padding-x);
   color: var(--secondary-color);
   overflow-y: scroll;
 }

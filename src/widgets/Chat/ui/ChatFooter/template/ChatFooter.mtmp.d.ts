@@ -1,4 +1,1 @@
-export default function render(data?: {
-  dropdownComponent: string;
-  onclickSendBtn: string;
-}): string;
+export default function render(data?: { dropdownComponent: string;onclickSendBtn: string; }): string

@@ -1,8 +1,8 @@
 .myInput {
   display: flex;
-
   font-size: 15px;
   font-weight: 500;
+  border-bottom: 1px solid var(--background-color);
 }
 
 .myInput.myInput--column {
@@ -11,7 +11,6 @@
 
 .myInput.myInput--column input {
   padding: 5px 0;
-  border-bottom: 1px solid var(--accent-color);
 }
 
 .myInput.myInput--column label {
@@ -20,11 +19,24 @@
 }
 
 .myInput.myInput--row {
-  border-bottom: 1px solid var(--background-color);
+  padding: 0 5px;
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
 }
+
+.myInput:hover {
+  border-bottom: 1px solid var(--accent-color);
+}
+
+.myInput input:focus {
+  color: var(--main-color);
+}
+
+.myInput:has(input:focus) {
+  border-bottom: 1px solid var(--accent-color);
+}
+
 .myInput.myInput--row input {
   padding: 5px 0;
   text-align: right;
@@ -32,6 +44,7 @@
 }
 
 .myInput.myInput--row label {
+  position: relative;
 }
 
 .myInput.myInput--error {

@@ -39,7 +39,7 @@ const profileInputs: MyInputProps[] = [
   {
     inputStyle: 'row',
     inputType: 'text',
-    label: 'Пароль',
+    label: 'Имя в чате',
     name: 'display_name',
   },
   {
@@ -65,7 +65,7 @@ export const ProfilePatterns: ProfilePatternsType = {
   },
   default: {
     inputs: profileInputs,
-    disabled: false,
+    disabled: true,
     links: [
       {
         linkText: 'Изменить данные',

@@ -1,7 +1,6 @@
 import { MyButton } from '@/shared/MyButton';
 import type { FormProps } from '../model/types';
 import FormTemlpate from '../template/Form.mtmp';
-import './Form.css';
 import { MyInput } from '@/shared/MyInput';
 
 export const Form = ({

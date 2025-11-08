@@ -25,7 +25,7 @@
 }
 
 .profile__avatar_change:hover .avatar {
-  background: rgba(98, 98, 98, 0.742);
+  background: var(--background-hover-color);
 }
 
 .profile__avatar_change:hover .avatar::after {

@@ -1,1 +1,1 @@
-export default function render(data?: { messages: string }): string;
+export default function render(data?: { messages: string; }): string

@@ -16,10 +16,10 @@ export default function vitePluginMtmp() {
 
         const typeFile = `export default function render(data?: { ${values
           .map((value) => `${value}: string;`)
-          .join('')} }): string`;
+          .join('')} }): string\n`;
 
         const result = `export default function render(data = { }){ return \`${processed}\` }
-        
+        \n
         `;
         const typePath = id + '.d.ts';
 
