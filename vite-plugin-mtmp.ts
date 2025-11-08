@@ -22,8 +22,21 @@ export default function vitePluginMtmp() {
         \n
         `;
         const typePath = id + '.d.ts';
+        let shouldWrite = true;
 
-        fs.writeFileSync(typePath, typeFile);
+        try {
+          const existing = fs.readFileSync(typePath, 'utf-8');
+
+          const normalize = (str: string) => str.replace(/\s+/g, ' ').trim();
+
+          if (normalize(existing) === normalize(typeFile)) {
+            shouldWrite = false;
+          }
+        } catch {}
+
+        if (shouldWrite) {
+          fs.writeFileSync(typePath, typeFile);
+        }
 
         return result;
       }
