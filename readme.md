@@ -6,6 +6,7 @@ Vite использует плагин [`vitePluginMtmp`](vite-plugin-mtmp.ts) �
 Проект на Netlify https://delightful-praline-d9d196.netlify.app/
 
 Страницы:
+
 [Профиль: /profile](https://delightful-praline-d9d196.netlify.app/profile)
 
 [Изменение пароля: /changepass](https://delightful-praline-d9d196.netlify.app/changepass)
@@ -22,7 +23,6 @@ Vite использует плагин [`vitePluginMtmp`](vite-plugin-mtmp.ts) �
 
 [Ошибка 404 /500](https://delightful-praline-d9d196.netlify.app/dsadsads)
 
-
 ## Быстрый старт
 
 Установите зависимости и запустите дев-сервер:
@@ -36,5 +36,12 @@ npm run dev
 
 ```bash
 npm run build
+
+```
+
+Запуск production:
+
+```bash
+npm run start
 
 ```
