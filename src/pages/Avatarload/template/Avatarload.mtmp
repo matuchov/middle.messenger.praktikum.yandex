@@ -1,9 +1,0 @@
-<h1>Загрузите файл</h1>
-
-<form class="avatarload__form" action="">
-  <label class="avatarload__input_label">
-    <input class="avatarload__input" name="avatar" type="file" id="fileInput" />
-    Выбрать файл на компьютере
-  </label>
-  {{ submitBtn }}
-</form>

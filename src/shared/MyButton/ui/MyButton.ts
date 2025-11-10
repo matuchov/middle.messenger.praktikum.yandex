@@ -17,11 +17,10 @@ export const MyButton = ({
   const icon = iconSrc ? MyButtonIconTemlpate({ iconSrc, iconClass }) : '';
 
   const templateTextClass = textClass;
-  const templateBtnClass =
-    theme === 'default' ? 'mybutton' + btnClass : btnClass;
+  const templateBtnClass = theme === 'default' ? `mybutton${btnClass}` : btnClass;
 
   return MyButtonTemlpate({
-    icon: icon,
+    icon,
     btnText,
     onclick,
     templateBtnClass,

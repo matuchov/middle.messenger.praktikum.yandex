@@ -21,7 +21,7 @@ export default function vitePluginMtmp() {
         const result = `export default function render(data = { }){ return \`${processed}\` }
         \n
         `;
-        const typePath = id + '.d.ts';
+        const typePath = `${id}.d.ts`;
         let shouldWrite = true;
 
         try {
@@ -32,7 +32,9 @@ export default function vitePluginMtmp() {
           if (normalize(existing) === normalize(typeFile)) {
             shouldWrite = false;
           }
-        } catch {}
+        } catch {
+          console.log('error');
+        }
 
         if (shouldWrite) {
           fs.writeFileSync(typePath, typeFile);
@@ -40,6 +42,7 @@ export default function vitePluginMtmp() {
 
         return result;
       }
+      return '';
     },
   };
 }

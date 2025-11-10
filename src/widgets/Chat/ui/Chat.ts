@@ -1,7 +1,7 @@
-import ChatTemplate from '../template/Chat.mtmp';
-import { ChatHeader } from './ChatHeader/ChatHeader';
 import { Avatar } from '@/shared/Avatar';
 import { Dropdown } from '@/shared/Dropdown';
+import ChatTemplate from '../template/Chat.mtmp';
+import { ChatHeader } from './ChatHeader/ChatHeader';
 import { ChatMessages } from './ChatMessages/ChatMessages';
 import { ChatFooter } from './ChatFooter/ChatFooter';
 import './Chat.css';

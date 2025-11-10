@@ -1,7 +1,7 @@
 import { Box } from '@/shared/Box/ui/Box';
+import { MyButton } from '@/shared/MyButton';
 import AvatarUploadTemlpate from '../template/AvatarUpload.mtmp';
 import './AvatarUpload.css';
-import { MyButton } from '@/shared/MyButton';
 
 export const AvatarUpload = () => {
   const submitBtn = MyButton({

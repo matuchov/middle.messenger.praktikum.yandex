@@ -1,3 +1,7 @@
+export const btnThemes = {
+  default: 'mybutton',
+  clear: '',
+};
 export interface MyButtonProps {
   btnType?: 'submit' | 'button';
   theme?: keyof typeof btnThemes;
@@ -8,8 +12,3 @@ export interface MyButtonProps {
   textClass?: string;
   btnText?: string;
 }
-
-export const btnThemes = {
-  default: 'mybutton',
-  clear: '',
-};

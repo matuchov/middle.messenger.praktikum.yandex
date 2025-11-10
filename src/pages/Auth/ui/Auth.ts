@@ -8,14 +8,14 @@ import './Auth.css';
 import { AuthPatterns } from '../model/pattern';
 
 export const Auth = ({ page }: AuthProps) => {
-  const inputs = AuthPatterns[page].inputs;
+  const { inputs } = AuthPatterns[page];
   const subminBtn = MyButton(AuthPatterns[page].button);
   const link = MyLink(AuthPatterns[page].link);
 
   const form = Form({
     inputs,
     formClass: 'auth__form',
-    subminBtn: subminBtn,
+    subminBtn,
   });
 
   return AuthTemplate({ children: Box({ children: form + link, boxClass: 'auth__box' }) });

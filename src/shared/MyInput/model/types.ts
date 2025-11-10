@@ -1,3 +1,7 @@
+export const itemsStyleClasses = {
+  row: 'myInput--row',
+  column: 'myInput--column',
+};
 export interface MyInputProps {
   errorText?: string;
   inputStyle: keyof typeof itemsStyleClasses;
@@ -7,8 +11,3 @@ export interface MyInputProps {
   value?: string;
   disabled?: boolean;
 }
-
-export const itemsStyleClasses = {
-  row: 'myInput--row',
-  column: 'myInput--column',
-};

@@ -1,2 +1,2 @@
-export { Box } from "./ui/Box";
-export type { BoxProps } from "./model/types";
+export { Box } from './ui/Box';
+export type { BoxProps } from './model/types';

@@ -4,13 +4,8 @@ import ChatMessagePictureTemlpate from './template/ChatMessagePicture.mtmp';
 
 import './ChatMessage.css';
 
-export const ChatMessage = ({
-  messageText = '',
-  type,
-  direction,
-  src,
-}: ChatMessageProps) => {
-  const messageType = ' ' + directions[direction] + ' ' + types[type];
+export const ChatMessage = ({ messageText = '', type, direction, src }: ChatMessageProps) => {
+  const messageType = ` ${directions[direction]} ${types[type]}`;
 
   if (src) {
     return ChatMessagePictureTemlpate({ messageType, src });

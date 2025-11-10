@@ -1,7 +1,7 @@
 import type { MyInputProps } from '@/shared/MyInput';
-import type { pageTypes } from './types';
 import type { MyButtonProps } from '@/shared/MyButton';
 import type { MyLinkProps } from '@/shared/MyLink';
+import type { pageTypes } from './types';
 
 type ProfilePattern = {
   inputs: MyInputProps[];

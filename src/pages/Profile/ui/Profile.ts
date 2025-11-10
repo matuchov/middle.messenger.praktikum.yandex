@@ -14,7 +14,7 @@ export const Profile = ({ page }: ProfileProps) => {
     linkHref: '/AvatarUpload',
   });
 
-  const inputs = ProfilePatterns[page].inputs;
+  const { inputs } = ProfilePatterns[page];
 
   const sumbitBtn = ProfilePatterns[page].submitBtn
     ? MyButton(ProfilePatterns[page].submitBtn)

@@ -15,11 +15,9 @@ const routes: Record<string, () => string> = {
   '/500': () => ErrorPage({ error: '500' }),
 };
 
-window.addEventListener('load', handleRoute);
-
 function handleRoute() {
   let el;
-  const path = location.pathname;
+  const path = window.location.pathname;
 
   if (routes[path]) {
     el = routes[path]();
@@ -29,3 +27,5 @@ function handleRoute() {
 
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = el;
 }
+
+window.addEventListener('load', handleRoute);
