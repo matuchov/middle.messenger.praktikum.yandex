@@ -3,6 +3,9 @@ import { Auth } from '@/pages/Auth';
 import { ChatPage } from '@/pages/ChatPage';
 import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '../pages/ErrorPage';
+import { Block } from './utils/Block';
+
+console.log('hello');
 
 const routes: Record<string, () => string> = {
   '/': () => ChatPage(),
@@ -29,3 +32,11 @@ function handleRoute() {
 }
 
 window.addEventListener('load', handleRoute);
+
+// type TProps = { text: string };
+
+// const block = new Block<TProps>('div', { text: 'hello' });
+
+// block.setProps({ text: 'updated' }); // ✅ тип безопасен
+
+// document.body.append(block.getContent()!);
