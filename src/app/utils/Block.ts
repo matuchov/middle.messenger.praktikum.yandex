@@ -1,17 +1,17 @@
 import { EventBus } from './EventBus';
 
-enum EVENTS {
-  INIT = 'init',
-  FLOW_CDM = 'flow:component-did-mount',
-  FLOW_RENDER = 'flow:render',
-  FLOW_CDU = 'flow:component-did-update',
-}
+const EVENTS = {
+  INIT: 'init',
+  FLOW_CDM: 'flow:component-did-mount',
+  FLOW_RENDER: 'flow:render',
+  FLOW_CDU: 'flow:component-did-update',
+};
 
-type TEventBus = {
+type TEventBus<T> = {
   [EVENTS.INIT]: [];
   [EVENTS.FLOW_CDM]: [];
   [EVENTS.FLOW_RENDER]: [];
-  [EVENTS.FLOW_CDU]: [oldProps: unknown, newProps: unknown];
+  [EVENTS.FLOW_CDU]: [oldProps: T, newProps: T];
 };
 
 type Tmeta = {
@@ -26,20 +26,19 @@ export class Block<TProps extends object> {
 
   protected props: TProps;
 
-  private readonly _eventBus: EventBus<TEventBus>;
+  private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
-  constructor(tagName = 'div', props: TProps) {
-    const eventBus = new EventBus<TEventBus>();
+  constructor(props: TProps, tagName = 'div') {
+    const eventBus = new EventBus<TEventBus<TProps>>();
     this._meta = { tagName, props };
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
-
     this._registerEvents(eventBus);
     eventBus.emit(EVENTS.INIT);
     eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
-  private _registerEvents(eventBus: EventBus<TEventBus>) {
+  private _registerEvents(eventBus: EventBus<TEventBus<TProps>>) {
     eventBus.on(EVENTS.INIT, this.init.bind(this));
     eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
@@ -96,12 +95,23 @@ export class Block<TProps extends object> {
   }
 
   private _makePropsProxy(props: TProps): TProps {
-    const self = this;
     return new Proxy(props, {
-      set(target, prop: keyof TProps, value) {
-        const oldProps = { ...target };
-        target[prop] = value;
-        self._eventBus.emit(EVENTS.FLOW_CDU, { oldProps, newProps: target });
+      get: (target, prop, receiver) => {
+        return Reflect.get(target, prop, receiver);
+      },
+      set: (target, prop, value) => {
+        if (typeof prop !== 'string') return false;
+        const key = prop as keyof TProps;
+        const oldValue = target[key];
+        if (oldValue !== value) {
+          const oldProps = { ...target };
+          const success = Reflect.set(target, key, value);
+
+          if (success) {
+            this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, target);
+          }
+          return success;
+        }
         return true;
       },
     });

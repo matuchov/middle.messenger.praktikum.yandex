@@ -5,8 +5,6 @@ import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '../pages/ErrorPage';
 import { Block } from './utils/Block';
 
-console.log('hello');
-
 const routes: Record<string, () => string> = {
   '/': () => ChatPage(),
   '/profile': () => Profile({ page: 'default' }),
@@ -36,8 +34,8 @@ window.addEventListener('load', handleRoute);
 type TProps = { text: string };
 
 class Testblock extends Block<TProps> {
-  constructor(props) {
-    super('button', props);
+  constructor(props: TProps) {
+    super(props, 'button');
   }
 
   render() {
@@ -45,6 +43,6 @@ class Testblock extends Block<TProps> {
   }
 }
 
-const block = new Testblock({});
+const block = new Testblock({ text: 'ds' });
 
 document.body.append(block.getContent()!);
