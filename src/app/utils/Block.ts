@@ -8,10 +8,10 @@ enum EVENTS {
 }
 
 type TEventBus = {
-  [EVENTS.INIT]: void;
-  [EVENTS.FLOW_CDM]: void;
-  [EVENTS.FLOW_RENDER]: void;
-  [EVENTS.FLOW_CDU]: { oldProps: unknown; newProps: unknown };
+  [EVENTS.INIT]: [];
+  [EVENTS.FLOW_CDM]: [];
+  [EVENTS.FLOW_RENDER]: [];
+  [EVENTS.FLOW_CDU]: [oldProps: unknown, newProps: unknown];
 };
 
 type Tmeta = {
@@ -21,8 +21,11 @@ type Tmeta = {
 
 export class Block<TProps extends object> {
   private _element: HTMLElement | null = null;
+
   private _meta: Tmeta;
+
   protected props: TProps;
+
   private readonly _eventBus: EventBus<TEventBus>;
 
   constructor(tagName = 'div', props: TProps) {
@@ -114,5 +117,3 @@ export class Block<TProps extends object> {
     if (el) el.style.display = 'none';
   }
 }
-
-

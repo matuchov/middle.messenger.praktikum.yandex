@@ -4,7 +4,6 @@ export default function vitePluginMtmp() {
   return {
     name: 'vite-plugin-data',
     enforce: 'pre',
-
     load(id: string) {
       if (id.endsWith('.mtmp')) {
         const raw = fs.readFileSync(id, 'utf-8');
@@ -42,7 +41,6 @@ export default function vitePluginMtmp() {
 
         return result;
       }
-      return '';
     },
   };
 }

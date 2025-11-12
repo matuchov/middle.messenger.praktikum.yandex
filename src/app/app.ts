@@ -33,10 +33,18 @@ function handleRoute() {
 
 window.addEventListener('load', handleRoute);
 
-// type TProps = { text: string };
+type TProps = { text: string };
 
-// const block = new Block<TProps>('div', { text: 'hello' });
+class Testblock extends Block<TProps> {
+  constructor(props) {
+    super('button', props);
+  }
 
-// block.setProps({ text: 'updated' }); // ✅ тип безопасен
+  render() {
+    return `<div>${this.props.text}</div>`;
+  }
+}
 
-// document.body.append(block.getContent()!);
+const block = new Testblock({});
+
+document.body.append(block.getContent()!);

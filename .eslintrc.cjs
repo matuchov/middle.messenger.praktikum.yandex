@@ -23,6 +23,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],
+    'no-underscore-dangle': 'off',
   },
   settings: {
     'import/resolver': {
