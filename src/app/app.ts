@@ -68,10 +68,16 @@ const result: Record<string, ((arg: HTMLElement) => void) | ((arg: string) => vo
 function traverseAllNodes(node: HTMLElement) {
   const triple = /\{\{\{([^{}]+)\}\}\}/g;
   const double = /(?<!\{)\{\{([^{}]+)\}\}(?!\})/g;
-  const clear = /[^a-zA-Z0-9_-]/g;
+  const clear = /[^a-zA-Z0-9]/g;
   if (node.nodeType === Node.ELEMENT_NODE) {
     for (const attr of node.attributes) {
+      const { value } = attr;
       console.log(attr.name, '=', attr.value);
+      if (value.match(double)) {
+        result[value.replace(clear, '')] = (attrValue: string) => {
+          attr.value = attr.value.replace(/\{\{(.*?)\}\}/g, attrValue);
+        };
+      }
     }
   }
   if (node.nodeType === Node.TEXT_NODE) {
@@ -79,8 +85,8 @@ function traverseAllNodes(node: HTMLElement) {
     if (text && typeof text === 'string') {
       if (text.match(triple)) {
         console.log(node);
-        result[text.replace(clear, '')] = (el: HTMLElement) => {
-          node.replaceWith(el);
+        result[text.match(/\{\{(.*?)\}\}/)[1]] = (element: HTMLElement) => {
+          node.replaceWith(element);
         };
       } else if (text.match(double)) {
         result[text.replace(clear, '')] = (value: string) => {
@@ -99,7 +105,7 @@ traverseAllNodes(el);
 console.log(result);
 
 result.Avatar(document.createElement('Avatar'));
-result.name('new name');
+result.sidebarchatlisttextsds('new name');
 
 console.log(el);
 

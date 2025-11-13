@@ -24,6 +24,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],
     'no-underscore-dangle': 'off',
+    'no-restricted-syntax': 'off',
   },
   settings: {
     'import/resolver': {
