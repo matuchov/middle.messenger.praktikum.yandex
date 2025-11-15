@@ -83,12 +83,10 @@ export class Block<TProps extends object> {
 
   private _render() {
     const block = this.render();
-    if (this._element) this._element.innerHTML = block;
+    if (this._element) this._element = block;
   }
 
-  protected render(): string {
-    return '';
-  }
+  protected render(): HTMLElement {}
 
   getContent() {
     return this.element;

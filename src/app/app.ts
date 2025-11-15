@@ -5,6 +5,7 @@ import { ChatPage } from '@/pages/ChatPage';
 import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '../pages/ErrorPage';
 import { Block } from './utils/Block';
+import { testFN } from './testFn';
 
 const routes: Record<string, () => string> = {
   '/': () => ChatPage(),
@@ -32,6 +33,7 @@ function handleRoute() {
 
 window.addEventListener('load', handleRoute);
 
+const { el, result } = testFN();
 type TProps = { text: string };
 
 class Testblock extends Block<TProps> {
@@ -40,73 +42,13 @@ class Testblock extends Block<TProps> {
   }
 
   render() {
-    return `<div>${this.props.text}</div>`;
+    return el;
   }
 }
 
 const block = new Testblock({ text: 'ds' });
 
-const el = document.createElement('div');
-
-el.innerHTML = `<div class="sidebar__chatlist-row">
-  {{{ Avatar }}} <div>
-  {{{ Avatar2 }}} </div>
-  <div class="sidebar__chatlist-info_row">
-    <div class="sidebar__chatlist-text {{sds}}">
-      <div class="sidebar__chatlist-name">{{ name }}</div>
-      <div class="sidebar__chatlist-lastmessage">{{ messageText }}</div>
-    </div>
-    <div class="sidebar__chatlist-info">
-      <div class="sidebar__chatlist-time">{{ time }}</div>
-      <div class="sidebar__chatlist-counter">{{ counter }}</div>
-    </div>
-  </div>
-</div>`;
-
-const result: Record<string, ((arg: HTMLElement) => void) | ((arg: string) => void)> = {};
-
-function traverseAllNodes(node: HTMLElement) {
-  const triple = /\{\{\{([^{}]+)\}\}\}/g;
-  const double = /(?<!\{)\{\{([^{}]+)\}\}(?!\})/g;
-  const clear = /[^a-zA-Z0-9]/g;
-  if (node.nodeType === Node.ELEMENT_NODE) {
-    for (const attr of node.attributes) {
-      const { value } = attr;
-      console.log(attr.name, '=', attr.value);
-      if (value.match(double)) {
-        result[value.replace(clear, '')] = (attrValue: string) => {
-          attr.value = attr.value.replace(/\{\{(.*?)\}\}/g, attrValue);
-        };
-      }
-    }
-  }
-  if (node.nodeType === Node.TEXT_NODE) {
-    const text = node.textContent.trim();
-    if (text && typeof text === 'string') {
-      if (text.match(triple)) {
-        console.log(node);
-        result[text.match(/\{\{(.*?)\}\}/)[1]] = (element: HTMLElement) => {
-          node.replaceWith(element);
-        };
-      } else if (text.match(double)) {
-        result[text.replace(clear, '')] = (value: string) => {
-          node.textContent = value;
-        };
-      }
-    }
-  }
-  for (const child of node.childNodes) {
-    traverseAllNodes(child);
-  }
-}
-
-traverseAllNodes(el);
-
-console.log(result);
-
-result.Avatar(document.createElement('Avatar'));
-result.sidebarchatlisttextsds('new name');
-
-console.log(el);
+result.Avatar.forEach((fn) => fn(document.createElement('Avatar')));
+result.name.forEach((fn) => fn(' <div class="sidebar__chatlist-time">{{ time }}</div>'));
 
 document.body.append(block.getContent()!);
