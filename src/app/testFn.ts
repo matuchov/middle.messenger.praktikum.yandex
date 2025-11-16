@@ -1,22 +1,27 @@
-export const testFN = () => {
-  const el = document.createElement('div');
-
-  el.innerHTML = `<div class="sidebar__chatlist-row">
-  {{{ Avatar }}} <divide></divide>
-  {{{ Avatar }}} 
-  <div class="sidebar__chatlist-info_row">
-    <div class="sidebar__chatlist-text {{ name }}">
-      <div class="sidebar__chatlist-name {{ name }}">{{ name }}</div>
-      <div class="sidebar__chatlist-lastmessage">{{ messageText }}</div>
-    </div>
-    <div class="sidebar__chatlist-info">
-      <div class="sidebar__chatlist-time">{{ time }}</div>
-      <div class="sidebar__chatlist-counter">{{ counter }}</div>
-    </div>
+const html = `<div class="sidebar__chatlist-row">
+{{{ Avatar }}} <divide></divide>
+{{{ Avatar }}}
+<div class="sidebar__chatlist-info_row">
+  <div class="sidebar__chatlist-text {{ name }}">
+    <div class="sidebar__chatlist-name {{ name }}">{{ name }}</div>
+    <div class="sidebar__chatlist-lastmessage">{{ messageText }}</div>
   </div>
+  <div class="sidebar__chatlist-info">
+    <div class="sidebar__chatlist-time">{{ time }}</div>
+    <div class="sidebar__chatlist-counter">{{ counter }}</div>
+  </div>
+</div>
 </div>`;
 
-  const result: Record<string, Function[]> = {};
+export const testFN = (template: string) => {
+  const el = document.createElement('div');
+
+  el.innerHTML = template;
+
+  const bindings: {
+    setProps: Record<string, ((value: string) => void)[]>;
+    setChildrens: Record<string, ((value: HTMLElement) => void)[]>;
+  } = { setProps: {}, setChildrens: {} };
 
   function traverseAllNodes(node: ChildNode) {
     const triple = /\{\{\{([^{}]+)\}\}\}/g;
@@ -30,8 +35,8 @@ export const testFN = () => {
         const match = value.match(double);
         if (match) {
           const name = match[0].replace(clear, '');
-          if (!result[name]) result[name] = [];
-          result[name].push(
+          if (!bindings.setProps[name]) bindings.setProps[name] = [];
+          bindings.setProps[name].push(
             (() => {
               const defaultValue = value;
               return (attrValue: string) => {
@@ -49,14 +54,14 @@ export const testFN = () => {
         const matchD = text.match(double);
         if (matchT) {
           const name = matchT[0].replace(clear, '');
-          if (!result[name]) result[name] = [];
-          result[name].push((element: HTMLElement) => {
+          if (!bindings.setChildrens[name]) bindings.setChildrens[name] = [];
+          bindings.setChildrens[name].push((element: HTMLElement) => {
             node.replaceWith(element);
           });
         } else if (matchD) {
           const name = matchD[0].replace(clear, '');
-          if (!result[name]) result[name] = [];
-          result[name].push((value: string) => {
+          if (!bindings.setProps[name]) bindings.setProps[name] = [];
+          bindings.setProps[name].push((value: string) => {
             node.textContent = value;
           });
         }
@@ -69,5 +74,10 @@ export const testFN = () => {
 
   traverseAllNodes(el);
 
-  return { el, result };
+  const result = {
+    setProps: {},
+    setChildrens: {},
+  };
+
+  return { el, bindings };
 };

@@ -26,6 +26,8 @@ export class Block<TProps extends object> {
 
   protected props: TProps;
 
+  protected childrens: [];
+
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
   constructor(props: TProps, tagName = 'div') {
@@ -34,14 +36,15 @@ export class Block<TProps extends object> {
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
     this._registerEvents(eventBus);
+    this.childrens = [];
     eventBus.emit(EVENTS.INIT);
     eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
   private _registerEvents(eventBus: EventBus<TEventBus<TProps>>) {
     eventBus.on(EVENTS.INIT, this.init.bind(this));
-    eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
   }
 
@@ -77,16 +80,42 @@ export class Block<TProps extends object> {
     Object.assign(this.props, nextProps);
   }
 
+  // _applyBindings(value) {
+  //   Object.keys(this._bindings).forEach((key) => {
+  //     this._bindings[key][value]?.forEach(fn => {
+
+  //     })
+  //   });
+  // }
+
   get element() {
     return this._element;
   }
 
   private _render() {
-    const block = this.render();
-    if (this._element) this._element = block;
+    const rendered = this.render();
+    if (this._element) this._element = rendered.el;
+    this.bindings = rendered.bindings;
+
+    Object.keys(this.props).forEach((prop) => {
+      this.bindings.setProps[prop]?.forEach((fn) => {
+        fn(this.props[prop]);
+      });
+      this.bindings.setChildrens[prop]?.forEach((fn) => {
+        fn(this.props[prop]);
+      });
+    });
   }
 
-  protected render(): HTMLElement {}
+  protected render(): {
+    el: HTMLElement;
+    bindings: {
+      setProps: Record<string, ((value: string) => void)[]>;
+      setChildrens: Record<string, ((value: HTMLElement) => void)[]>;
+    };
+  } {
+    return { el: document.createElement('div'), bindings: { setProps: {}, setChildrens: {} } };
+  }
 
   getContent() {
     return this.element;
@@ -110,6 +139,7 @@ export class Block<TProps extends object> {
           }
           return success;
         }
+
         return true;
       },
     });

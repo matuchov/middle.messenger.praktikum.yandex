@@ -33,8 +33,10 @@ function handleRoute() {
 
 window.addEventListener('load', handleRoute);
 
-const { el, result } = testFN();
-type TProps = { text: string };
+const template = testFN();
+
+type TProps = { name: string };
+console.log(template);
 
 class Testblock extends Block<TProps> {
   constructor(props: TProps) {
@@ -42,13 +44,22 @@ class Testblock extends Block<TProps> {
   }
 
   render() {
-    return el;
+    return template;
+    this.props;
   }
 }
 
-const block = new Testblock({ text: 'ds' });
-
-result.Avatar.forEach((fn) => fn(document.createElement('Avatar')));
-result.name.forEach((fn) => fn(' <div class="sidebar__chatlist-time">{{ time }}</div>'));
+const block = new Testblock({ name: 'ds' });
+console.log(block);
+// result.setChildrens.Avatar.forEach((fn) => fn(document.createElement('Avatar')));
+// result.setProps.name.forEach((fn) => fn(' <div class="sidebar__chatlist-time">{{ time }}</div>'));
 
 document.body.append(block.getContent()!);
+
+block.bindings.setChildrens.Avatar.forEach((fn) => {
+  fn(document.createElement('div'));
+});
+
+block.bindings.setChildrens.Avatar.forEach((fn) => {
+  fn(document.createElement('nav'));
+});
