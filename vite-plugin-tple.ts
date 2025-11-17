@@ -8,27 +8,55 @@ export default function vitePluginTple() {
       if (id.endsWith('.tple')) {
         const raw = fs.readFileSync(id, 'utf-8');
 
-        const result: Record<string, ((arg: HTMLElement) => void) | ((arg: string) => void)> = {};
-        const el = document.createElement('div');
+        return `export default function render() { const bindings: {
+          setProps: Record<string, ((value: string) => void)[]>;
+          setChildrens: Record<string, ((value: HTMLElement) => void)[]>;
+        } = { setProps: {}, setChildrens: {} };
 
-        el.innerHTML = raw;
+        const el = document.createElement('div');
+        el.innerHTML = ${raw};
 
         const traverseAllNodes = (node: ChildNode) => {
           const triple = /\{\{\{([^{}]+)\}\}\}/g;
           const double = /(?<!\{)\{\{([^{}]+)\}\}(?!\})/g;
-          const clear = /[^a-zA-Z0-9_-]/g;
+          const clear = /[^a-zA-Z0-9]/g;
+
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const currNode = node as HTMLElement;
+            for (const attr of currNode.attributes) {
+              const { value } = attr;
+              const match = value.match(double);
+              if (match) {
+                const name = match[0].replace(clear, '');
+                if (!bindings.setProps[name]) bindings.setProps[name] = [];
+                bindings.setProps[name].push(
+                  (() => {
+                    const defaultValue = value;
+                    return (attrValue: string) => {
+                      attr.value = defaultValue.replace(/\{\{(.*?)\}\}/g, attrValue);
+                    };
+                  })()
+                );
+              }
+            }
+          }
           if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent?.trim();
             if (text && typeof text === 'string') {
-              if (text.match(triple)) {
-                console.log(node);
-                result[text.replace(clear, '')] = (element: HTMLElement) => {
+              const matchT = text.match(triple);
+              const matchD = text.match(double);
+              if (matchT) {
+                const name = matchT[0].replace(clear, '');
+                if (!bindings.setChildrens[name]) bindings.setChildrens[name] = [];
+                bindings.setChildrens[name].push((element: HTMLElement) => {
                   node.replaceWith(element);
-                };
-              } else if (text.match(double)) {
-                result[text.replace(clear, '')] = (value: string) => {
+                });
+              } else if (matchD) {
+                const name = matchD[0].replace(clear, '');
+                if (!bindings.setProps[name]) bindings.setProps[name] = [];
+                bindings.setProps[name].push((value: string) => {
                   node.textContent = value;
-                };
+                });
               }
             }
           }
@@ -36,41 +64,27 @@ export default function vitePluginTple() {
             traverseAllNodes(child);
           }
         };
+
         traverseAllNodes(el);
-        // const values: string[] = [];
 
-        // const processed = raw.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, name) => {
-        //   values.push(name);
-        //   return `\${data.${name}}`;
-        // });
+        
 
-        // const typeFile = `export default function render(data?: { ${values
-        //   .map((value) => `${value}: string;`)
-        //   .join('')} }): string\n`;
-
-        // const result = `export default function render(data = { }){ return \`${processed}\` }
-        // \n
-        // `;
-        // const typePath = `${id}.d.ts`;
-        // let shouldWrite = true;
-
-        // try {
-        //   const existing = fs.readFileSync(typePath, 'utf-8');
-
-        //   const normalize = (str: string) => str.replace(/\s+/g, ' ').trim();
-
-        //   if (normalize(existing) === normalize(typeFile)) {
-        //     shouldWrite = false;
-        //   }
-        // } catch {
-        //   console.log('error');
-        // }
-
-        // if (shouldWrite) {
-        //   fs.writeFileSync(typePath, typeFile);
-        // }
-
-        return result;
+        return (props: {
+          setProps: { [K in keyof typeof bindings.setProps]: string };
+          setChildrens: { [K in keyof typeof bindings.setChildrens]: HTMLElement };
+        }) => {
+          Object.keys(bindings.setProps).forEach((prop) => {
+            bindings.setProps[prop].forEach((fn) => {
+              fn(props.setProps[prop]);
+            });
+          });
+          Object.keys(bindings.setChildrens).forEach((prop) => {
+            bindings.setChildrens[prop].forEach((fn) => {
+              fn(props.setChildrens[prop]);
+            });
+          });
+          return el;
+        };}`;
       }
     },
   };

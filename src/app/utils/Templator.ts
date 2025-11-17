@@ -1,19 +1,4 @@
-const html = `<div class="sidebar__chatlist-row">
-{{{ Avatar }}} <divide></divide>
-{{{ Avatar }}}
-<div class="sidebar__chatlist-info_row">
-  <div class="sidebar__chatlist-text {{ name }}">
-    <div class="sidebar__chatlist-name {{ name }}">{{ name }}</div>
-    <div class="sidebar__chatlist-lastmessage">{{ messageText }}</div>
-  </div>
-  <div class="sidebar__chatlist-info">
-    <div class="sidebar__chatlist-time">{{ time }}</div>
-    <div class="sidebar__chatlist-counter">{{ counter }}</div>
-  </div>
-</div>
-</div>`;
-
-export const testFN = (template: string) => {
+export const templator = (template: string) => {
   const el = document.createElement('div');
 
   el.innerHTML = template;
@@ -74,10 +59,22 @@ export const testFN = (template: string) => {
 
   traverseAllNodes(el);
 
-  const result = {
-    setProps: {},
-    setChildrens: {},
-  };
+  console.log(bindings);
 
-  return { el, bindings };
+  return (props: {
+    setProps: { [K in keyof typeof bindings.setProps]: string };
+    setChildrens: { [K in keyof typeof bindings.setChildrens]: HTMLElement };
+  }) => {
+    Object.keys(bindings.setProps).forEach((prop) => {
+      bindings.setProps[prop].forEach((fn) => {
+        fn(props.setProps[prop]);
+      });
+    });
+    Object.keys(bindings.setChildrens).forEach((prop) => {
+      bindings.setChildrens[prop].forEach((fn) => {
+        fn(props.setChildrens[prop]);
+      });
+    });
+    return el;
+  };
 };

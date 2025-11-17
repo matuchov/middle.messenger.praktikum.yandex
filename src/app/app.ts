@@ -1,65 +1,37 @@
-import { Avatar } from '@/shared/Avatar';
-import { Profile } from '@/pages/Profile';
-import { Auth } from '@/pages/Auth';
-import { ChatPage } from '@/pages/ChatPage';
-import { AvatarUpload } from '@/pages/AvatarUpload';
-import { ErrorPage } from '../pages/ErrorPage';
+import { childClass } from './childClass';
+import { handleRoute } from './router/router';
 import { Block } from './utils/Block';
-import { testFN } from './testFn';
-
-const routes: Record<string, () => string> = {
-  '/': () => ChatPage(),
-  '/profile': () => Profile({ page: 'default' }),
-  '/changepass': () => Profile({ page: 'changepass' }),
-  '/edit': () => Profile({ page: 'edit' }),
-  '/login': () => Auth({ page: 'login' }),
-  '/registration': () => Auth({ page: 'registration' }),
-  '/AvatarUpload': () => AvatarUpload(),
-  '/500': () => ErrorPage({ error: '500' }),
-};
-
-function handleRoute() {
-  let el;
-  const path = window.location.pathname;
-
-  if (routes[path]) {
-    el = routes[path]();
-  } else {
-    el = ErrorPage({ error: '404' });
-  }
-
-  document.querySelector<HTMLDivElement>('#app')!.innerHTML = el;
-}
+import { templator } from './utils/Templator';
 
 window.addEventListener('load', handleRoute);
 
-const template = testFN();
+const crTemp = templator(`<main class="auth">
+  {{{ children }}}
+</main>
+`);
 
-type TProps = { name: string };
-console.log(template);
+type TProps = {
+  children: HTMLElement;
+  name?: string;
+};
 
-class Testblock extends Block<TProps> {
-  constructor(props: TProps) {
-    super(props, 'button');
-  }
-
+class LoginPageClass extends Block<TProps> {
   render() {
-    return template;
-    this.props;
+    return {
+      el: crTemp({
+        setChildrens: {
+          children: this.props.children,
+        },
+        setProps: {},
+      }),
+      bindings: {
+        setProps: {},
+        setChildrens: {},
+      },
+    };
   }
 }
 
-const block = new Testblock({ name: 'ds' });
-console.log(block);
-// result.setChildrens.Avatar.forEach((fn) => fn(document.createElement('Avatar')));
-// result.setProps.name.forEach((fn) => fn(' <div class="sidebar__chatlist-time">{{ time }}</div>'));
+const LoginPage = new LoginPageClass({ children: document.createElement('div') });
 
-document.body.append(block.getContent()!);
-
-block.bindings.setChildrens.Avatar.forEach((fn) => {
-  fn(document.createElement('div'));
-});
-
-block.bindings.setChildrens.Avatar.forEach((fn) => {
-  fn(document.createElement('nav'));
-});
+document.body.appendChild(LoginPage.getContent()!);

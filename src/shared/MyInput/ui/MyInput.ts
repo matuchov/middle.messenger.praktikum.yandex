@@ -12,7 +12,6 @@ export const MyInput = ({
   value = '',
 }: MyInputProps) => {
   const isDisabled = disabled ? 'disabled' : '';
-
   const inputClass = `${itemsStyleClasses[inputStyle]} ${errorText ? 'myInput--error' : ''}`;
 
   return MyInputTemlpate({
