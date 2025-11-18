@@ -59,8 +59,6 @@ export const templator = (template: string) => {
 
   traverseAllNodes(el);
 
-  console.log(bindings);
-
   return (props: {
     setProps: { [K in keyof typeof bindings.setProps]: string };
     setChildrens: { [K in keyof typeof bindings.setChildrens]: HTMLElement };
@@ -75,6 +73,6 @@ export const templator = (template: string) => {
         fn(props.setChildrens[prop]);
       });
     });
-    return el;
+    return el.children[0];
   };
 };

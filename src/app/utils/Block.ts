@@ -24,7 +24,7 @@ export class Block<TProps extends object> {
 
   private _meta: Tmeta;
 
-  protected props: TProps;
+  props: TProps;
 
   protected childrens: [];
 
@@ -38,11 +38,10 @@ export class Block<TProps extends object> {
     this._registerEvents(eventBus);
     this.childrens = [];
     eventBus.emit(EVENTS.INIT);
-    eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
   private _registerEvents(eventBus: EventBus<TEventBus<TProps>>) {
-    eventBus.on(EVENTS.INIT, this.init.bind(this));
+    eventBus.on(EVENTS.INIT, this._init.bind(this));
     eventBus.on(EVENTS.FLOW_RENDER, this._render.bind(this));
     eventBus.on(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -53,9 +52,13 @@ export class Block<TProps extends object> {
     this._element = document.createElement(tagName);
   }
 
-  protected init() {
+  private _init() {
     this._createResources();
+    this.init();
+    this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
+
+  protected init() {}
 
   private _componentDidMount() {
     this.componentDidMount();
@@ -69,6 +72,7 @@ export class Block<TProps extends object> {
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     this.componentDidUpdate(oldProps, newProps);
+    this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
   protected componentDidUpdate(oldProps: TProps, newProps: TProps) {
@@ -94,27 +98,11 @@ export class Block<TProps extends object> {
 
   private _render() {
     const rendered = this.render();
-    if (this._element) this._element = rendered.el;
-    this.bindings = rendered.bindings;
-
-    Object.keys(this.props).forEach((prop) => {
-      this.bindings.setProps[prop]?.forEach((fn) => {
-        fn(this.props[prop]);
-      });
-      this.bindings.setChildrens[prop]?.forEach((fn) => {
-        fn(this.props[prop]);
-      });
-    });
+    if (this._element) this._element = rendered;
   }
 
-  protected render(): {
-    el: HTMLElement;
-    bindings: {
-      setProps: Record<string, ((value: string) => void)[]>;
-      setChildrens: Record<string, ((value: HTMLElement) => void)[]>;
-    };
-  } {
-    return { el: document.createElement('div'), bindings: { setProps: {}, setChildrens: {} } };
+  protected render(): HTMLElement {
+    return document.createElement('div');
   }
 
   getContent() {

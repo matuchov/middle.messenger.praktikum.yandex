@@ -1,0 +1,8 @@
+<button
+  onclick="{{ onclick }}"
+  type="{{ btnType }}"
+  class="{{ templateBtnClass }}"
+>
+  {{ icon }}
+  <span class="{{ templateTextClass }}">{{ btnText }}</span>
+</button>

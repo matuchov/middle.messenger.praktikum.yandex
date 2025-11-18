@@ -6,23 +6,17 @@ const crTemp = templator(`<form class="auth">
 </form>
 `);
 
-type TProps = {
+export type TChildClass = {
   name: string;
 };
 
-export class childClass extends Block<TProps> {
+export class ChildClass extends Block<TChildClass> {
   render() {
-    return {
-      el: crTemp({
-        setChildrens: {},
-        setProps: {
-          name: this.props.name,
-        },
-      }),
-      bindings: {
-        setProps: {},
-        setChildrens: {},
+    return crTemp({
+      setChildrens: {},
+      setProps: {
+        name: this.props.name,
       },
-    };
+    });
   }
 }

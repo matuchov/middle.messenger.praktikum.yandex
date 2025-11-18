@@ -25,6 +25,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn'],
     'no-underscore-dangle': 'off',
     'no-restricted-syntax': 'off',
+    'class-methods-use-this': 'off',
   },
   settings: {
     'import/resolver': {
