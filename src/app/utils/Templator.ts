@@ -5,7 +5,7 @@ export const templator = (template: string) => {
 
   const bindings: {
     setProps: Record<string, ((value: string) => void)[]>;
-    setChildrens: Record<string, ((value: HTMLElement) => void)[]>;
+    setChildrens: Record<string, ((value: HTMLElement | DocumentFragment) => void)[]>;
   } = { setProps: {}, setChildrens: {} };
 
   function traverseAllNodes(node: ChildNode) {
@@ -40,8 +40,9 @@ export const templator = (template: string) => {
         if (matchT) {
           const name = matchT[0].replace(clear, '');
           if (!bindings.setChildrens[name]) bindings.setChildrens[name] = [];
-          bindings.setChildrens[name].push((element: HTMLElement) => {
-            node.replaceWith(element);
+          bindings.setChildrens[name].push((element: HTMLElement | DocumentFragment) => {
+            node.parentElement?.replaceChild(element, node);
+            // node.replaceWith(element);
           });
         } else if (matchD) {
           const name = matchD[0].replace(clear, '');

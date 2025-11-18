@@ -1,5 +1,5 @@
 import type { MyButtonProps } from '@/shared/MyButtonBlock';
-import { MyButtonBlock } from './../shared/MyButtonBlock/ui/MyButton';
+import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 import { handleRoute } from './router/router';
 import { Block } from './utils/Block';
 import { templator } from './utils/Templator';
