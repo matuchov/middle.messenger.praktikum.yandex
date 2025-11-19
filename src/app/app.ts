@@ -4,7 +4,7 @@ import { handleRoute } from './router/router';
 import { Block } from './utils/Block';
 import { templator } from './utils/Templator';
 
-window.addEventListener('load', handleRoute);
+// window.addEventListener('load', handleRoute);
 
 const crTemp = templator(`<main class="auth">
     {{text}}
@@ -15,19 +15,26 @@ const crTemp = templator(`<main class="auth">
 
 type TProps = {
   text: string;
-  button: Block<MyButtonProps>;
   name?: string;
 };
 
+const data = [
+  { btnText: '1', theme: 'default' },
+  { btnText: '23', theme: 'default' },
+  { btnText: '3', theme: 'default' },
+  { btnText: '5', theme: 'default' },
+];
+
 class LoginPageClass extends Block<TProps> {
   protected init(): void {
-    this.props.button = new MyButtonBlock({ btnText: this.props.text });
+    // this.children.buttonList = data
+    console.log(this.children.buttonList);
   }
 
   render() {
     return crTemp({
       setChildrens: {
-        children: this.props.button.getContent()!,
+        children: this.compile(MyButtonBlock, data),
       },
       setProps: {
         text: this.props.text,
@@ -38,4 +45,6 @@ class LoginPageClass extends Block<TProps> {
 
 const LoginPage = new LoginPageClass({ name: 'adsdsdsds', text: 'text' });
 
-document.body.append(LoginPage.getContent()!);
+console.log(LoginPage);
+
+document.getElementById('app')?.append(LoginPage.getContent()!);

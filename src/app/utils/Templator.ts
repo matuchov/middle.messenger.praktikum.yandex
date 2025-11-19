@@ -74,6 +74,6 @@ export const templator = (template: string) => {
         fn(props.setChildrens[prop]);
       });
     });
-    return el.children[0];
+    return el.children[0] as HTMLElement;
   };
 };

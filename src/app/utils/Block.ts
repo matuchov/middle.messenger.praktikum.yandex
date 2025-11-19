@@ -19,24 +19,27 @@ type Tmeta = {
   props: unknown;
 };
 
+type Children = Record<string, Block<any> | Block<any>[]>;
+
 export class Block<TProps extends object> {
   private _element: HTMLElement | null = null;
+
+  public children: Children;
 
   private _meta: Tmeta;
 
   props: TProps;
 
-  protected childrens: [];
-
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
-  constructor(props: TProps, tagName = 'div') {
+  constructor(propsAndChildren: TProps, tagName = 'div') {
+    const { children, props } = this._getChildren(propsAndChildren);
     const eventBus = new EventBus<TEventBus<TProps>>();
+    this.children = children;
     this._meta = { tagName, props };
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
     this._registerEvents(eventBus);
-    this.childrens = [];
     eventBus.emit(EVENTS.INIT);
   }
 
@@ -58,6 +61,23 @@ export class Block<TProps extends object> {
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
+  private _getChildren(propsAndChildren: TProps): { children: Children; props: TProps } {
+    const children: Children = {};
+    const props: Partial<TProps> = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value;
+      } else if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
+        children[key] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+
+    return { children, props: props as TProps };
+  }
+
   protected init() {}
 
   private _componentDidMount() {
@@ -68,6 +88,23 @@ export class Block<TProps extends object> {
 
   dispatchComponentDidMount() {
     this._eventBus.emit(EVENTS.FLOW_CDM);
+  }
+
+  protected compile<const T extends object>(Item: Block<T>, data: T | T[]) {
+    if (Array.isArray(data)) {
+      const container = new DocumentFragment();
+
+      data.forEach((bl) => {
+        const el = new Item(bl);
+        console.log(el.getContent()!);
+
+        container.append(el.getContent()!);
+      });
+
+      return container;
+    }
+
+    return new Item(data);
   }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
@@ -97,8 +134,11 @@ export class Block<TProps extends object> {
   }
 
   private _render() {
-    const rendered = this.render();
-    if (this._element) this._element = rendered;
+    const block = this.render();
+    if (this._element && this._element.parentNode) {
+      this._element.parentNode.replaceChild(block, this._element);
+    }
+    this._element = block;
   }
 
   protected render(): HTMLElement {
@@ -133,13 +173,16 @@ export class Block<TProps extends object> {
     });
   }
 
-  show() {
-    const el = this.getContent();
-    if (el) el.style.display = 'block';
-  }
-
-  hide() {
-    const el = this.getContent();
-    if (el) el.style.display = 'none';
+  public destroy() {
+    if (this._element) {
+      this._element.remove();
+    }
+    Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((c) => c.destroy());
+      } else {
+        child.destroy();
+      }
+    });
   }
 }

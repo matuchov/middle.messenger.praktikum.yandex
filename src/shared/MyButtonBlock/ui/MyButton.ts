@@ -33,7 +33,7 @@ export class MyButtonBlock extends Block<MyButtonProps> {
       setProps: {
         templateTextClass: textClass || '',
         theme: theme || '',
-        templateBtnClass: theme === 'default' ? `mybutton${btnClass}` : btnClass || '',
+        templateBtnClass: theme === 'default' ? `mybutton ${btnClass || ''}` : btnClass || '',
 
         btnText: btnText || '',
         btnType: btnType || '',
