@@ -4,27 +4,25 @@ import type { MyButtonProps } from '../model/types';
 import './MyButton.css';
 import { Block } from '@/app/utils/Block';
 
-const MyButtonIconTemlpate = templator(
-  `<img src="{{ iconSrc }}" alt="" class="mybutton__icon {{ iconClass }}" />`
-);
+const MyButtonIconTemlpate = `<img src="{{ iconSrc }}" alt="" class="mybutton__icon {{ iconClass }}" />`;
 
-const MyButtonTemplate = templator(`<button
-  
+const MyButtonTemplate = `<button
+
   type="{{ btnType }}"
   class="{{ templateBtnClass }}"
 >
   {{{ icon }}}
   <span class="{{ templateTextClass }}">{{ btnText }}</span>
 </button>
-`);
+`;
 
 export class MyButtonBlock extends Block<MyButtonProps> {
   render() {
     const { theme, btnClass, iconSrc, iconClass, textClass, btnText, btnType } = this.props;
-    return MyButtonTemplate({
+    return templator(MyButtonTemplate)({
       setChildrens: {
         icon: iconSrc
-          ? MyButtonIconTemlpate({
+          ? templator(MyButtonIconTemlpate)({
               setProps: { iconSrc, iconClass: iconClass || '' },
               setChildrens: {},
             })

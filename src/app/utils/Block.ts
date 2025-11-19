@@ -5,7 +5,7 @@ const EVENTS = {
   FLOW_CDM: 'flow:component-did-mount',
   FLOW_RENDER: 'flow:render',
   FLOW_CDU: 'flow:component-did-update',
-};
+} as const;
 
 type TEventBus<T> = {
   [EVENTS.INIT]: [];
@@ -19,7 +19,7 @@ type Tmeta = {
   props: unknown;
 };
 
-type Children = Record<string, Block<any> | Block<any>[]>;
+type Children = Record<string, Block<object> | Block<object>[]>;
 
 export class Block<TProps extends object> {
   private _element: HTMLElement | null = null;
@@ -28,7 +28,9 @@ export class Block<TProps extends object> {
 
   private _meta: Tmeta;
 
-  props: TProps;
+  props: TProps & object;
+
+  private _unnamedChildrens: Block<object>[];
 
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
@@ -39,6 +41,7 @@ export class Block<TProps extends object> {
     this._meta = { tagName, props };
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
+    this._unnamedChildrens = [];
     this._registerEvents(eventBus);
     eventBus.emit(EVENTS.INIT);
   }
@@ -63,7 +66,7 @@ export class Block<TProps extends object> {
 
   private _getChildren(propsAndChildren: TProps): { children: Children; props: TProps } {
     const children: Children = {};
-    const props: Partial<TProps> = {};
+    const props: Record<string, unknown> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -90,25 +93,25 @@ export class Block<TProps extends object> {
     this._eventBus.emit(EVENTS.FLOW_CDM);
   }
 
-  protected compile<const T extends object>(Item: Block<T>, data: T | T[]) {
+  protected compile(Item: typeof Block<object>, data: object | object[]) {
     if (Array.isArray(data)) {
       const container = new DocumentFragment();
 
       data.forEach((bl) => {
-        const el = new Item(bl);
-        console.log(el.getContent()!);
-
+        const el = new Item({ ...bl });
+        this._unnamedChildrens.push(el);
         container.append(el.getContent()!);
       });
 
       return container;
     }
 
-    return new Item(data);
+    return new Item(data).getContent();
   }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     this.componentDidUpdate(oldProps, newProps);
+    this._unnamedChildrens.forEach((child) => child.destroy());
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
@@ -120,14 +123,6 @@ export class Block<TProps extends object> {
     if (!nextProps) return;
     Object.assign(this.props, nextProps);
   }
-
-  // _applyBindings(value) {
-  //   Object.keys(this._bindings).forEach((key) => {
-  //     this._bindings[key][value]?.forEach(fn => {
-
-  //     })
-  //   });
-  // }
 
   get element() {
     return this._element;

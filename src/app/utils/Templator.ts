@@ -5,7 +5,7 @@ export const templator = (template: string) => {
 
   const bindings: {
     setProps: Record<string, ((value: string) => void)[]>;
-    setChildrens: Record<string, ((value: HTMLElement | DocumentFragment) => void)[]>;
+    setChildrens: Record<string, ((value: HTMLElement | DocumentFragment | null) => void)[]>;
   } = { setProps: {}, setChildrens: {} };
 
   function traverseAllNodes(node: ChildNode) {
@@ -40,15 +40,15 @@ export const templator = (template: string) => {
         if (matchT) {
           const name = matchT[0].replace(clear, '');
           if (!bindings.setChildrens[name]) bindings.setChildrens[name] = [];
-          bindings.setChildrens[name].push((element: HTMLElement | DocumentFragment) => {
-            node.parentElement?.replaceChild(element, node);
-            // node.replaceWith(element);
+          bindings.setChildrens[name].push((element: HTMLElement | DocumentFragment | null) => {
+            if (element) node.parentElement?.replaceChild(element, node);
           });
         } else if (matchD) {
           const name = matchD[0].replace(clear, '');
           if (!bindings.setProps[name]) bindings.setProps[name] = [];
           bindings.setProps[name].push((value: string) => {
-            node.textContent = value;
+            const newNode = node;
+            newNode.textContent = value;
           });
         }
       }
@@ -62,7 +62,9 @@ export const templator = (template: string) => {
 
   return (props: {
     setProps: { [K in keyof typeof bindings.setProps]: string };
-    setChildrens: { [K in keyof typeof bindings.setChildrens]: HTMLElement };
+    setChildrens: {
+      [K in keyof typeof bindings.setChildrens]: HTMLElement | DocumentFragment | null;
+    };
   }) => {
     Object.keys(bindings.setProps).forEach((prop) => {
       bindings.setProps[prop].forEach((fn) => {
