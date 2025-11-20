@@ -1,14 +1,40 @@
-export class templator2 {
-  constructor(html: string) {
-    this.bindings = {
-      setProps: {},
-      setChildrens: {}
-    };
+export class Templator2 {
+  elementsPlaceholders: string[];
+
+  html: string;
+
+  textElements: HTMLElement[];
+
+  regExes = {
+    triple: /\{\{\{([^{}]+)\}\}\}/g,
+    double: /(?<!\{)\{\{([^{}]+)\}\}(?!\})/g,
+    clear: /[^a-zA-Z0-9]/g,
+  };
+
+  el: DocumentFragment;
+
+  constructor(rawHtml: string) {
+    this.elementsPlaceholders = [];
+    this.html = '';
+    this.createPlaseholders(rawHtml);
+    this.el = document.createRange().createContextualFragment(this.html);
+    this.traverce();
   }
 
+  private createPlaseholders(rawHtml: string) {
+    this.html = rawHtml.replace(this.regExes.triple, (_, rawName: string) => {
+      const name = rawName.trim();
+      this.elementsPlaceholders.push(name);
+      return `<${name}></${name}>`;
+    });
+  }
 
-
-
+  private traverce() {
+    for (const element of this.el.children) {
+      console.log(element);
+    }
+  }
+}
 
 export const templator = (template: string) => {
   const el = document.createElement('div');

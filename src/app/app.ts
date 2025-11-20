@@ -2,6 +2,7 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 
 import { Block } from './utils/Block';
 import { templator } from './utils/Templator';
+import { Templator2 } from './utils/TemplatorClass';
 
 // window.addEventListener('load', handleRoute);
 //
@@ -12,6 +13,8 @@ const crTemp = `<main class="auth">
   {{{ children }}}
 </main>
 `;
+
+const tem = new Templator2(crTemp);
 
 type TProps = {
   text: string;
