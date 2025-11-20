@@ -1,8 +1,10 @@
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
+
 import { Block } from './utils/Block';
 import { templator } from './utils/Templator';
 
 // window.addEventListener('load', handleRoute);
+//
 
 const crTemp = `<main class="auth">
     {{text}}
