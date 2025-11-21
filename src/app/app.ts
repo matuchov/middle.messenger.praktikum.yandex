@@ -9,8 +9,9 @@ import { Templator2 } from './utils/TemplatorClass';
 
 const crTemp = `<main class="auth">
     {{text}}
-    <br/>
+    </br>
   {{{ children }}}
+
 </main>
 `;
 
@@ -36,14 +37,6 @@ const data2 = [
   { btnText: 'dsgfdd', theme: 'default' },
 ];
 
-new Array(1000).fill(0).forEach(() => {
-  data.push({ btnText: '1', theme: 'default' });
-});
-
-new Array(1000).fill(0).forEach(() => {
-  data2.push({ btnText: '2', theme: 'default' });
-});
-
 class LoginPageClass extends Block<TProps> {
   protected init(): void {
     this.props.data = data;
@@ -62,6 +55,7 @@ class LoginPageClass extends Block<TProps> {
 }
 
 const LoginPage = new LoginPageClass({ name: 'adsdsdsds', text: 'text' });
+console.log(LoginPage.getContent());
 
 setTimeout(() => {
   const start = Date.now();

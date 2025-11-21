@@ -1,9 +1,16 @@
 export class Templator2 {
-  elementsPlaceholders: string[];
+  elementsPlaceholders: string[] = [];
 
   html: string;
 
-  textElements: HTMLElement[];
+  textElements: Record<string, Node[]> = {};
+
+  childElements: Record<string, Node[]> = {};
+
+  bindings: Record<
+    string,
+    ((value: HTMLElement | DocumentFragment | null) => void)[] | ((value: string) => void)[]
+  > = {};
 
   regExes = {
     triple: /\{\{\{([^{}]+)\}\}\}/g,
@@ -11,27 +18,55 @@ export class Templator2 {
     clear: /[^a-zA-Z0-9]/g,
   };
 
-  el: DocumentFragment;
+  el: Element;
 
   constructor(rawHtml: string) {
-    this.elementsPlaceholders = [];
-    this.html = '';
-    this.createPlaseholders(rawHtml);
+    this.html = this.createPlaseholders(rawHtml);
     this.el = document.createRange().createContextualFragment(this.html);
-    this.traverce();
+    this.traverce(this.el);
+    console.log(this.textElements);
+    console.log(this.childElements);
   }
 
   private createPlaseholders(rawHtml: string) {
-    this.html = rawHtml.replace(this.regExes.triple, (_, rawName: string) => {
+    return rawHtml.replace(this.regExes.triple, (_, rawName: string) => {
       const name = rawName.trim();
       this.elementsPlaceholders.push(name);
       return `<${name}></${name}>`;
     });
   }
 
-  private traverce() {
-    for (const element of this.el.children) {
-      console.log(element);
+  private traverce(el: Node) {
+    if (!el.childNodes) return;
+    if (
+      el.nodeType === Node.ELEMENT_NODE &&
+      el instanceof Element &&
+      this.elementsPlaceholders.includes(el.localName)
+    ) {
+      if (!this.bindings[el.localName]) this.bindings[el.localName] = [];
+      if (!this.childElements[el.localName]) this.childElements[el.localName] = [];
+      this.childElements[el.localName].push(el);
+
+      this.bindings[el.localName].push((node: HTMLElement | DocumentFragment | null) => {
+        if (node) el.parentElement?.replaceChild(node, el);
+      });
+    }
+    if (el.nodeType === Node.TEXT_NODE) {
+      const match = el.textContent?.trim().match(this.regExes.double);
+      if (!match) return;
+      const name = match[0].replace(this.regExes.clear, '');
+
+      if (!this.textElements[name]) this.textElements[name] = [];
+      this.textElements[name].push(el);
+
+      if (!this.bindings[name]) this.bindings[name] = [];
+      this.bindings[name].push((value: string) => {
+        const newNode = el;
+        newNode.textContent = value;
+      });
+    }
+    for (const element of el.childNodes) {
+      this.traverce(element);
     }
   }
 }
