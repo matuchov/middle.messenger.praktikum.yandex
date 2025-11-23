@@ -1,41 +1,24 @@
-import { templator } from '@/app/utils/Templator';
 import type { MyButtonProps } from '../model/types';
 
 import './MyButton.css';
 import { Block } from '@/app/utils/Block';
+import { Templator } from '@/app/utils/TemplatorClass';
+import { MyButtonIconTemlpate, MyButtonTemplate } from '../template/MyButtonTemplate';
 
-const MyButtonIconTemlpate = `<img src="{{ iconSrc }}" alt="" class="mybutton__icon {{ iconClass }}" />`;
-
-const MyButtonTemplate = `<button
-
-  type="{{ btnType }}"
-  class="{{ templateBtnClass }}"
->
-  {{{ icon }}}
-  <span class="{{ templateTextClass }}">{{ btnText }}</span>
-</button>
-`;
+const iconTemlpate = new Templator(MyButtonIconTemlpate);
+const buttonTemplate = new Templator(MyButtonTemplate);
 
 export class MyButtonBlock extends Block<MyButtonProps> {
   render() {
     const { theme, btnClass, iconSrc, iconClass, textClass, btnText, btnType } = this.props;
-    return templator(MyButtonTemplate)({
-      setChildrens: {
-        icon: iconSrc
-          ? templator(MyButtonIconTemlpate)({
-              setProps: { iconSrc, iconClass: iconClass || '' },
-              setChildrens: {},
-            })
-          : document.createElement('div'),
-      },
-      setProps: {
-        templateTextClass: textClass || '',
-        theme: theme || '',
-        templateBtnClass: theme === 'default' ? `mybutton ${btnClass || ''}` : btnClass || '',
+    return buttonTemplate.compile({
+      icon: iconSrc ? iconTemlpate.compile({ iconSrc, iconClass: iconClass || '' }) : undefined,
 
-        btnText: btnText || '',
-        btnType: btnType || '',
-      },
+      templateTextClass: textClass,
+      theme,
+      templateBtnClass: theme === 'default' ? `mybutton ${btnClass}` : btnClass,
+      btnText,
+      btnType,
     });
   }
 }

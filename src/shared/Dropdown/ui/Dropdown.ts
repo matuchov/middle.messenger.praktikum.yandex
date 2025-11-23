@@ -1,21 +1,20 @@
 import './Dropdown.css';
 import { directions, type DropdownProps } from '../model/types';
-import DropdownTemplate from '../templates/Dropdown.mtmp';
-import DropdownItemTemplate from '../templates/DropdownItem.mtmp';
+import { dropdownTemplate, dropdownItemTemplate } from '../templates/Dropdown';
 
-export const Dropdown = ({
-  direction = 'bottomLeft',
-  icons = [],
-  btnIconSrc = '',
-  onclick = '',
-}: DropdownProps) => {
-  const directionClass = directions[direction];
-  const iconsHTML = icons.map(DropdownItemTemplate).join('');
+import { Block } from '@/app/utils/Block';
 
-  return DropdownTemplate({
-    btnIconSrc,
-    directionClass,
-    items: iconsHTML,
-    onclick,
-  });
-};
+import { Templator } from '@/app/utils/TemplatorClass';
+
+const tepmlate = new Templator(dropdownTemplate);
+const tepmlateItem = new Templator(dropdownItemTemplate);
+
+export class Dropdown extends Block<DropdownProps> {
+  render() {
+    const { direction = 'bottomLeft', icons = [], btnIconSrc = '', onclick = '' } = this.props;
+    const directionClass = directions[direction];
+    const iconsHTML = '';
+    // icons.map(DropdownItemTemplate).join('');
+    return tepmlate.compile({ btnIconSrc, directionClass, items: iconsHTML, onclick });
+  }
+}

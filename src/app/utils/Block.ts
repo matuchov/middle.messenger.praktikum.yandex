@@ -22,7 +22,7 @@ type Tmeta = {
 type Children = Record<string, Block<object> | Block<object>[]>;
 
 export class Block<TProps extends object> {
-  private _element: HTMLElement | DocumentFragment | null = null;
+  private _element: HTMLElement | DocumentFragment | null | undefined = null;
 
   public children: Children;
 
@@ -30,7 +30,7 @@ export class Block<TProps extends object> {
 
   props: TProps & object;
 
-  private _unnamedChildrens: Block<object>[];
+  private _unnamedChildrens: Block<any>[];
 
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
@@ -93,7 +93,7 @@ export class Block<TProps extends object> {
     this._eventBus.emit(EVENTS.FLOW_CDM);
   }
 
-  protected compile(Item: typeof Block<object>, data: object | object[]) {
+  protected compile<T extends object>(Item: typeof Block<T>, data: T | T[]) {
     if (Array.isArray(data)) {
       const container = new DocumentFragment();
 

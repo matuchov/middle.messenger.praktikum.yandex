@@ -1,4 +1,4 @@
-<div class="sidebar__chatlist-row">
+export const chatListRowTemplate = `<div class="sidebar__chatlist-row">
   {{ Avatar }}
   <div class="sidebar__chatlist-info_row">
     <div class="sidebar__chatlist-text">
@@ -10,4 +10,4 @@
       <div class="sidebar__chatlist-counter">{{ counter }}</div>
     </div>
   </div>
-</div>
+</div>`;

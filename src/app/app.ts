@@ -1,7 +1,6 @@
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 
 import { Block } from './utils/Block';
-import { templator } from './utils/Templator';
 import { Templator } from './utils/TemplatorClass';
 
 // window.addEventListener('load', handleRoute);
@@ -36,10 +35,6 @@ const data2 = [
   { btnText: 'ddsgcv', theme: 'default' },
   { btnText: 'dsgfdd', theme: 'default' },
 ];
-
-// new Array(1000).fill('123').forEach((el) => {
-//   data2.push({ btnText: el, theme: 'default' });
-// });
 
 class LoginPageClass extends Block<TProps> {
   protected init(): void {

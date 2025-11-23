@@ -1,26 +1,34 @@
+import { Templator } from '@/app/utils/TemplatorClass';
 import { itemsStyleClasses, type MyInputProps } from '../model/types';
-import MyInputTemlpate from '../template/MyInput.mtmp';
+
 import './MyInput.css';
+import { myInputTemplate } from '../template/MyInput';
+import { Block } from '@/app/utils/Block';
 
-export const MyInput = ({
-  disabled = false,
-  inputStyle,
-  inputType,
-  label,
-  name,
-  errorText,
-  value = '',
-}: MyInputProps) => {
-  const isDisabled = disabled ? 'disabled' : '';
-  const inputClass = `${itemsStyleClasses[inputStyle]} ${errorText ? 'myInput--error' : ''}`;
+const template = new Templator(myInputTemplate);
 
-  return MyInputTemlpate({
-    isDisabled,
-    errorText: errorText || '',
-    inputClass,
-    inputType,
-    label,
-    name,
-    value,
-  });
-};
+export class MyInput extends Block<MyInputProps> {
+  render() {
+    const {
+      disabled = false,
+      inputStyle,
+      inputType,
+      label,
+      name,
+      errorText,
+      value = '',
+    } = this.props;
+    const isDisabled = disabled ? 'disabled' : '';
+    const inputClass = `${itemsStyleClasses[inputStyle]} ${errorText ? 'myInput--error' : ''}`;
+
+    return template.compile({
+      isDisabled,
+      errorText: errorText || '',
+      inputClass,
+      inputType,
+      label,
+      name,
+      value,
+    });
+  }
+}

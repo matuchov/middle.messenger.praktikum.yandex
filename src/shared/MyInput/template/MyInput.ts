@@ -1,4 +1,4 @@
-<div class="myInput {{ inputClass }}">
+export const myInputTemplate = `<div class="myInput {{ inputClass }}">
   <label for="{{ name }}">{{ label }}</label>
   <input
     name="{{ name }}"
@@ -10,4 +10,4 @@
     }}
   />
   <div class="myInput__error">{{ errorText }}</div>
-</div>
+</div>`;

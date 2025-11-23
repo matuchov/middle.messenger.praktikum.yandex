@@ -1,6 +1,19 @@
-import SearchTemplate from '../template/Search.mtmp';
+import { searchTemplate } from '../template/Search';
 import './Search.css';
 
-export const Search = ({ value }: { value: string }) => {
-  return SearchTemplate({ value });
+import { Block } from '@/app/utils/Block';
+
+import { Templator } from '@/app/utils/TemplatorClass';
+
+const tepmlate = new Templator(searchTemplate);
+
+type searchT = {
+  value: string;
 };
+
+export class Search extends Block<searchT> {
+  render() {
+    const { value } = this.props;
+    return tepmlate.compile({ value });
+  }
+}
