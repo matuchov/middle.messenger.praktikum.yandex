@@ -2,7 +2,7 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 
 import { Block } from './utils/Block';
 import { templator } from './utils/Templator';
-import { Templator2 } from './utils/TemplatorClass';
+import { Templator } from './utils/TemplatorClass';
 
 // window.addEventListener('load', handleRoute);
 //
@@ -15,7 +15,7 @@ const crTemp = `<main class="auth">
 </main>
 `;
 
-const tem = new Templator2(crTemp);
+const template = new Templator(crTemp);
 
 type TProps = {
   text: string;
@@ -37,25 +37,24 @@ const data2 = [
   { btnText: 'dsgfdd', theme: 'default' },
 ];
 
+// new Array(1000).fill('123').forEach((el) => {
+//   data2.push({ btnText: el, theme: 'default' });
+// });
+
 class LoginPageClass extends Block<TProps> {
   protected init(): void {
     this.props.data = data;
   }
 
   render() {
-    return templator(crTemp)({
-      setChildrens: {
-        children: this.compile(MyButtonBlock, this.props.data!),
-      },
-      setProps: {
-        text: this.props.text,
-      },
+    return template.compile({
+      children: this.compile(MyButtonBlock, this.props.data!),
+      text: this.props.text,
     });
   }
 }
 
 const LoginPage = new LoginPageClass({ name: 'adsdsdsds', text: 'text' });
-console.log(LoginPage.getContent());
 
 setTimeout(() => {
   const start = Date.now();

@@ -22,7 +22,7 @@ type Tmeta = {
 type Children = Record<string, Block<object> | Block<object>[]>;
 
 export class Block<TProps extends object> {
-  private _element: HTMLElement | null = null;
+  private _element: HTMLElement | DocumentFragment | null = null;
 
   public children: Children;
 
@@ -130,18 +130,20 @@ export class Block<TProps extends object> {
 
   private _render() {
     const block = this.render();
+    const newElement =
+      block instanceof DocumentFragment ? (block.firstElementChild as HTMLElement) : block;
     if (this._element && this._element.parentNode) {
       this._element.parentNode.replaceChild(block, this._element);
     }
-    this._element = block;
+    this._element = newElement;
   }
 
-  protected render(): HTMLElement {
+  protected render(): HTMLElement | DocumentFragment {
     return document.createElement('div');
   }
 
   getContent() {
-    return this.element;
+    return this._element;
   }
 
   private _makePropsProxy(props: TProps): TProps {
@@ -169,7 +171,7 @@ export class Block<TProps extends object> {
   }
 
   public destroy() {
-    if (this._element) {
+    if (this._element && this._element instanceof Element) {
       this._element.remove();
     }
     Object.values(this.children).forEach((child) => {
