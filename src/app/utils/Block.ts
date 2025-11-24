@@ -19,9 +19,18 @@ type Tmeta = {
   props: unknown;
 };
 
+export type defaultProps = {
+  events?: Partial<{
+    [K in keyof HTMLElementEventMap]: {
+      listener: (e: HTMLElementEventMap[K]) => void;
+      useCapture?: boolean;
+    };
+  }>;
+};
+
 type Children = Record<string, Block<object> | Block<object>[]>;
 
-export class Block<TProps extends object> {
+export class Block<TProps extends defaultProps> {
   private _element: HTMLElement | DocumentFragment | null | undefined = null;
 
   public children: Children;
@@ -119,6 +128,20 @@ export class Block<TProps extends object> {
     return true;
   }
 
+  private _addEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      console.log(this._element);
+
+      this._element?.addEventListener(
+        eventName,
+        events[eventName].listener,
+        events[eventName].useCapture || false
+      );
+    });
+  }
+
   setProps(nextProps: Partial<TProps>) {
     if (!nextProps) return;
     Object.assign(this.props, nextProps);
@@ -136,6 +159,7 @@ export class Block<TProps extends object> {
       this._element.parentNode.replaceChild(block, this._element);
     }
     this._element = newElement;
+    this._addEvents();
   }
 
   protected render(): HTMLElement | DocumentFragment {

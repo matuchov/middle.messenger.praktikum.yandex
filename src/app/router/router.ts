@@ -6,10 +6,11 @@ export function handleRoute() {
   const path = window.location.pathname;
 
   if (routes[path]) {
-    el = routes[path]();
+    el = routes[path];
+    console.log(el);
   } else {
     el = ErrorPage({ error: '404' });
   }
 
-  document.querySelector<HTMLDivElement>('#app')!.innerHTML = el;
+  document.querySelector<HTMLDivElement>('#app')!.appendChild(el);
 }

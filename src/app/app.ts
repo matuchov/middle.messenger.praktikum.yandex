@@ -2,62 +2,63 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 
 import { Block } from './utils/Block';
 import { Templator } from './utils/TemplatorClass';
+import { handleRoute } from './router/router';
 
-// window.addEventListener('load', handleRoute);
+window.addEventListener('load', handleRoute);
 //
 
-const crTemp = `<main class="auth">
-    {{text}}
-    </br>
-  {{{ children }}}
+// const crTemp = `<main class="auth">
+//     {{text}}
+//     </br>
+//   {{{ children }}}
 
-</main>
-`;
+// </main>
+// `;
 
-const template = new Templator(crTemp);
+// const template = new Templator(crTemp);
 
-type TProps = {
-  text: string;
-  name?: string;
-  data?: object;
-};
+// type TProps = {
+//   text: string;
+//   name?: string;
+//   data?: object;
+// };
 
-const data = [
-  { btnText: '1', theme: 'default' },
-  { btnText: '23', theme: 'default' },
-  { btnText: '3', theme: 'default' },
-  { btnText: '5', theme: 'default' },
-];
+// const data = [
+//   { btnText: '1', theme: 'default' },
+//   { btnText: '23', theme: 'default' },
+//   { btnText: '3', theme: 'default' },
+//   { btnText: '5', theme: 'default' },
+// ];
 
-const data2 = [
-  { btnText: 'dsasda', theme: 'default' },
-  { btnText: 'bvchgdf', theme: 'default' },
-  { btnText: 'ddsgcv', theme: 'default' },
-  { btnText: 'dsgfdd', theme: 'default' },
-];
+// const data2 = [
+//   { btnText: 'dsasda', theme: 'default' },
+//   { btnText: 'bvchgdf', theme: 'default' },
+//   { btnText: 'ddsgcv', theme: 'default' },
+//   { btnText: 'dsgfdd', theme: 'default' },
+// ];
 
-class LoginPageClass extends Block<TProps> {
-  protected init(): void {
-    this.props.data = data;
-  }
+// class LoginPageClass extends Block<TProps> {
+//   protected init(): void {
+//     this.props.data = data;
+//   }
 
-  render() {
-    return template.compile({
-      children: this.compile(MyButtonBlock, this.props.data!),
-      text: this.props.text,
-    });
-  }
-}
+//   render() {
+//     return template.compile({
+//       children: this.compile(MyButtonBlock, this.props.data!),
+//       text: this.props.text,
+//     });
+//   }
+// }
 
-const LoginPage = new LoginPageClass({ name: 'adsdsdsds', text: 'text' });
+// const LoginPage = new LoginPageClass({ name: 'adsdsdsds', text: 'text' });
 
-setTimeout(() => {
-  const start = Date.now();
-  LoginPage.setProps({
-    text: 'new text',
-    data: data2,
-  });
-  console.log(`Time taken: ${Date.now() - start}ms`);
-}, 2000);
+// setTimeout(() => {
+//   const start = Date.now();
+//   LoginPage.setProps({
+//     text: 'new text',
+//     data: data2,
+//   });
+//   console.log(`Time taken: ${Date.now() - start}ms`);
+// }, 2000);
 
-document.getElementById('app')?.append(LoginPage.getContent()!);
+// document.getElementById('app')?.append(LoginPage.getContent()!);

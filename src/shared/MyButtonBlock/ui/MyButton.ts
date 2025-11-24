@@ -10,9 +10,9 @@ const buttonTemplate = new Templator(MyButtonTemplate);
 
 export class MyButtonBlock extends Block<MyButtonProps> {
   render() {
-    const { theme, btnClass, iconSrc, iconClass, textClass, btnText, btnType } = this.props;
+    const { theme, btnClass = '', iconSrc, iconClass, textClass, btnText, btnType } = this.props;
     return buttonTemplate.compile({
-      icon: iconSrc ? iconTemlpate.compile({ iconSrc, iconClass: iconClass || '' }) : undefined,
+      icon: iconSrc ? iconTemlpate.compile({ iconSrc, iconClass: iconClass || '' }) : '',
 
       templateTextClass: textClass,
       theme,

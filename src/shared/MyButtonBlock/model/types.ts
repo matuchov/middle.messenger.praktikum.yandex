@@ -1,8 +1,10 @@
+import type { defaultProps } from '@/app/utils/Block';
+
 export const btnThemes = {
   default: 'mybutton',
   clear: '',
 };
-export interface MyButtonProps {
+export interface MyButtonProps extends defaultProps {
   btnType?: 'submit' | 'button';
   theme?: keyof typeof btnThemes;
   onclick?: string;

@@ -2,7 +2,7 @@ import { Dropdown } from '@/shared/Dropdown';
 import ChatFooterTemlpate from './template/ChatFooter.mtmp';
 import './ChatFooter.css';
 
-const dropdownComponent = Dropdown({
+const dropdownComponent = new Dropdown({
   direction: 'topLeft',
   icons: [
     { iconSrc: '/assets/fileIcon.svg', itemText: 'Файл', onclick: '' },
