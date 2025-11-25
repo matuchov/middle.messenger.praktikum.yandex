@@ -1,6 +1,7 @@
+import type { defaultProps } from '@/app/utils/Block';
 import type { MyInputProps } from '@/shared/MyInput';
 
-export interface FormProps {
+export interface FormProps extends defaultProps {
   formClass?: string;
   formAction?: string;
   formMetod?: 'dialog' | 'get' | 'post';

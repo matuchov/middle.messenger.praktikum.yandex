@@ -51,6 +51,7 @@ export class Block<TProps extends defaultProps> {
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
     this._unnamedChildrens = [];
+
     this._registerEvents(eventBus);
     eventBus.emit(EVENTS.INIT);
   }
@@ -105,7 +106,6 @@ export class Block<TProps extends defaultProps> {
   protected compile<T extends object>(Item: typeof Block<T>, data: T | T[]) {
     if (Array.isArray(data)) {
       const container = new DocumentFragment();
-
       data.forEach((bl) => {
         const el = new Item({ ...bl });
         this._unnamedChildrens.push(el);
@@ -131,13 +131,11 @@ export class Block<TProps extends defaultProps> {
   private _addEvents() {
     const { events = {} } = this.props;
 
-    Object.keys(events).forEach((eventName) => {
-      console.log(this._element);
-
+    (Object.keys(events) as (keyof typeof events)[]).forEach((eventName) => {
       this._element?.addEventListener(
         eventName,
-        events[eventName].listener,
-        events[eventName].useCapture || false
+        events[eventName]?.listener as EventListener,
+        events[eventName]?.useCapture || false
       );
     });
   }

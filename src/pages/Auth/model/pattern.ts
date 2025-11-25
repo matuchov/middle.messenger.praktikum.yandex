@@ -1,3 +1,4 @@
+import { valudateInput } from '../utils/Validate';
 import type { AuthPatternsType } from './types';
 
 export const AuthPatterns: AuthPatternsType = {
@@ -8,14 +9,6 @@ export const AuthPatterns: AuthPatternsType = {
         inputType: 'text',
         label: 'Логин',
         name: 'login',
-        events: {
-          blur: {
-            listener: (e) => {
-              console.log(e.target);
-            },
-            useCapture: true,
-          },
-        },
       },
 
       {

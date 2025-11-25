@@ -1,4 +1,4 @@
 export interface BoxProps {
   boxClass?: string;
-  children?: HTMLElement;
+  children?: HTMLElement | null;
 }

@@ -1,3 +1,4 @@
+import type { defaultProps } from '@/app/utils/Block';
 import type { MyButtonProps } from '@/shared/MyButton';
 import type { MyInputProps } from '@/shared/MyInput';
 import type { MyLinkProps } from '@/shared/MyLink';
@@ -10,6 +11,6 @@ type PatternType = {
 
 export type AuthPatternsType = Record<string, PatternType>;
 
-export type AuthProps = {
+export interface AuthProps extends defaultProps {
   page: 'login' | 'registration';
-};
+}
