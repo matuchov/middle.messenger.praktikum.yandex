@@ -39,7 +39,7 @@ export class Block<TProps extends defaultProps> {
 
   props: TProps & object;
 
-  private _unnamedChildrens: Block<any>[];
+  public unnamedChildrens: Block<any>[];
 
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
@@ -50,7 +50,7 @@ export class Block<TProps extends defaultProps> {
     this._meta = { tagName, props };
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
-    this._unnamedChildrens = [];
+    this.unnamedChildrens = [];
 
     this._registerEvents(eventBus);
     eventBus.emit(EVENTS.INIT);
@@ -108,7 +108,8 @@ export class Block<TProps extends defaultProps> {
       const container = new DocumentFragment();
       data.forEach((bl) => {
         const el = new Item({ ...bl });
-        this._unnamedChildrens.push(el);
+        console.log(this.unnamedChildrens);
+        this.unnamedChildrens.push(el);
         container.append(el.getContent()!);
       });
 
@@ -120,7 +121,7 @@ export class Block<TProps extends defaultProps> {
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     this.componentDidUpdate(oldProps, newProps);
-    this._unnamedChildrens.forEach((child) => child.destroy());
+    this.unnamedChildrens.forEach((child) => child.destroy());
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 

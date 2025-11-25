@@ -25,7 +25,11 @@ export class Auth extends Block<AuthProps> {
           events: {
             blur: {
               listener: (e) => {
-                console.log(this.children);
+                this.unnamedChildrens.forEach((el) => {
+                  if (el instanceof MyInput) {
+                    el.validate();
+                  }
+                });
               },
               useCapture: true,
             },
