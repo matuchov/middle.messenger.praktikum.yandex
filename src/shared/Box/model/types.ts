@@ -1,4 +1,4 @@
 export interface BoxProps {
   boxClass?: string;
-  children?: HTMLElement | null;
+  children?: HTMLElement | null | DocumentFragment;
 }

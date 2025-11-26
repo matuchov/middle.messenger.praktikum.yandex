@@ -8,7 +8,6 @@ import type { AuthProps } from '../model/types';
 import { authTemplate } from '../template/Auth.ts';
 import { AuthPatterns } from '../model/pattern';
 import './Auth.css';
-import { valudateInput } from '../utils/Validate.ts';
 
 const template = new Templator(authTemplate);
 
@@ -17,7 +16,7 @@ export class Auth extends Block<AuthProps> {
     const { page } = this.props;
 
     return template.compile({
-      children: this.compile(Box, {
+      pageContent: this.compile(Box, {
         children: this.compile(Form, {
           formClass: 'auth__form',
           formContent: this.compile(MyInput, AuthPatterns[page].inputs),
@@ -26,7 +25,7 @@ export class Auth extends Block<AuthProps> {
             blur: {
               listener: (e) => {
                 this.unnamedChildrens.forEach((el) => {
-                  if (el instanceof MyInput) {
+                  if (el instanceof MyInput && el.props.name === e.target.id) {
                     el.validate();
                   }
                 });

@@ -5,6 +5,6 @@ export interface FormProps extends defaultProps {
   formClass?: string;
   formAction?: string;
   formMetod?: 'dialog' | 'get' | 'post';
-  subminBtn?: Element | DocumentFragment;
-  formContent?: Element | DocumentFragment;
+  subminBtn?: Element | DocumentFragment | null;
+  formContent?: Element | DocumentFragment | null;
 }
