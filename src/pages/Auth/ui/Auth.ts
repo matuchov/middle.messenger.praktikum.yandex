@@ -32,6 +32,15 @@ export class Auth extends Block<AuthProps> {
               },
               useCapture: true,
             },
+            submit: {
+              listener: (e) => {
+                e.preventDefault();
+                const data = new FormData(e.target);
+                console.log([...data.entries()]);
+
+                console.log(data);
+              },
+            },
           },
         }),
         boxClass: 'auth__box',
