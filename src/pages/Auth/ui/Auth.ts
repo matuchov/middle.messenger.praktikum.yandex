@@ -12,39 +12,48 @@ import './Auth.css';
 const template = new Templator(authTemplate);
 
 export class Auth extends Block<AuthProps> {
-  render() {
+  protected init(): void {
     const { page } = this.props;
-
-    return template.compile({
-      pageContent: this.compile(Box, {
-        children: this.compile(Form, {
-          formClass: 'auth__form',
-          formContent: this.compile(MyInput, AuthPatterns[page].inputs),
-          subminBtn: this.compile(MyButtonBlock, AuthPatterns[page].button),
-          events: {
-            blur: {
-              listener: (e) => {
-                this.unnamedChildrens.forEach((el) => {
-                  if (el instanceof MyInput && el.props.name === e.target.id) {
-                    el.validate();
-                  }
-                });
-              },
-              useCapture: true,
-            },
-            submit: {
-              listener: (e) => {
-                e.preventDefault();
-                const data = new FormData(e.target);
-                console.log([...data.entries()]);
-
-                console.log(data);
-              },
-            },
+    this.props.inputs = AuthPatterns[page].inputs.map((el) => new MyInput(el));
+    this.props.subminBtn = new MyButtonBlock(AuthPatterns[page].button);
+    this.props.form = new Form({
+      formClass: 'auth__form',
+      formContent: this.getDom(this.props.inputs),
+      subminBtn: this.getDom(this.props.subminBtn),
+      events: {
+        submit: {
+          listener: (e) => {
+            this.onSubmit(e);
           },
-        }),
-        boxClass: 'auth__box',
-      }),
+        },
+      },
+    });
+    this.props.box = new Box({
+      boxClass: 'auth__box',
+      children: this.getDom(this.props.form),
+    });
+  }
+
+  protected onSubmit(e: SubmitEvent) {
+    e.preventDefault();
+    let isValid = true;
+    this.props.inputs?.forEach((el) => {
+      if (el instanceof MyInput) {
+        if (el.validate() === false) {
+          isValid = false;
+        }
+      }
+    });
+
+    if (isValid && e.target instanceof HTMLFormElement) {
+      const data = new FormData(e.target);
+      console.log([...data.entries()]);
+    }
+  }
+
+  render() {
+    return template.compile({
+      pageContent: this.getDom(this.props.box),
     });
   }
 }

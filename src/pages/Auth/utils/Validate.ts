@@ -1,98 +1,99 @@
-import { Block } from '@/app/utils/Block';
+type Validator = (value: string) => string | null;
 
-const checks = {
-  //   length: (min: number, max: number) => {
-  //     return (value: string) => {
-  //       if (!value && !value.length) {
-  //         return 'поле не должно быть пустым';
-  //       }
-  //       if (value.length > max) {
-  //         return `максимум ${max} символов`;
-  //       }
-  //       if (value.length < min) {
-  //         return `минимум ${min} символов`;
-  //       }
-  //       return undefined;
-  //     };
-  //   },
-  empty: (value: string) => {
-    if (value.length) return undefined;
-    return `поле не заполнено`;
-  },
-  spaces: (value: string) => {
-    const match = value.match(' ');
-    if (match) {
-      return `поле не должно содержать пробелы`;
-    }
-    return undefined;
-  },
-  capital: (value: string) => {
-    const capital = /^[A-ZА-ЯЁ]/;
-    const matchCapital = value.match(capital);
-    if (!matchCapital) {
-      return 'должно начинаться с большой буквы';
-    }
-    return undefined;
-  },
-  name: (value: string) => {
-    const regex = /[a-zA-Zа-яА-ЯёЁ]/g;
-    const result = value.replace(regex, '');
-    if (result) {
-      return `поле должно содержать только буквы, недопускаются символы "${result}"`;
-    }
-    return undefined;
-  },
-  login: (value: string) => {
-    const onlyNumbers = /^\d+$/;
-    if (value.match(onlyNumbers)) {
-      return `поле содержит только цифры`;
-    }
-    const regex = /[a-zA-Z0-9-_]/g;
-    const result = value.replace(regex, '');
-    if (result) {
-      return `допускаются только латинские буквы, символы "-" "_", недопускаются символы "${result}"`;
-    }
-    return undefined;
-  },
-  email: (value: string) => {
-    const regex = /^[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_]+\.[a-zA-Z]{2,}$/;
-    if (!value.match(regex)) {
-      return `введите e-mail формата examle@mailbox.com`;
-    }
-    return undefined;
-  },
-  password: (value: string) => {
-    const regex = /^(?=.*\d)(?=.*[A-Z])[^\s]+$/;
-    if (!regex.test(value)) {
-      return `в пароле должна содержаться хотя бы одна заглавная буква и цифра`;
-    }
-    return undefined;
-  },
-  phone: (value: string) => {
-    const regex = /^\+\d+/;
-    if (!regex.test(value)) {
-      return `телефон должен быть в формате +7987654321`;
-    }
-    return undefined;
-  },
+// --- 1. Фабрики валидаторов ---
+
+const validators = {
+  // Обязательное поле
+  required:
+    (msg = 'Поле не может быть пустым'): Validator =>
+    (value) =>
+      !value ? msg : null,
+
+  // Минимальная длина
+  minLength:
+    (min: number, msg?: string): Validator =>
+    (value) =>
+      value.length < min ? msg || `Минимум ${min} символов` : null,
+
+  // Максимальная длина
+  maxLength:
+    (max: number, msg?: string): Validator =>
+    (value) =>
+      value.length > max ? msg || `Максимум ${max} символов` : null,
+
+  // Проверка регулярным выражением
+  pattern:
+    (regex: RegExp, msg: string): Validator =>
+    (value) =>
+      !regex.test(value) ? msg : null,
+
+  // Специальный валидатор: первая буква заглавная
+  capitalized:
+    (msg = 'Должно начинаться с заглавной буквы'): Validator =>
+    (value) =>
+      /^[A-ZА-ЯЁ]/.test(value) ? null : msg,
+
+  // Специальный валидатор: не состоит только из цифр (для логина)
+  notOnlyNumbers:
+    (msg = 'Не может состоять только из цифр'): Validator =>
+    (value) =>
+      /^\d+$/.test(value) ? msg : null,
+
+  // Валидатор телефона (простой)
+  phone:
+    (msg = 'Некорректный формат телефона'): Validator =>
+    (value) =>
+      /^\+?\d{10,15}$/.test(value) ? null : msg,
 };
 
-const rules: Record<string, (keyof typeof checks)[]> = {
-  first_name: ['capital', 'spaces', 'name', 'empty'],
-  second_name: ['capital', 'spaces', 'name', 'empty'],
-  login: ['login', 'empty'],
-  email: ['email', 'empty'],
-  password: ['password', 'spaces', 'empty'],
-  phone: ['phone', 'empty'],
+// --- 2. Конфигурация правил для полей ---
+
+const rules: Record<string, Validator[]> = {
+  first_name: [
+    validators.required(),
+    validators.capitalized(),
+    validators.pattern(/^[A-ZА-ЯЁa-zа-яё\-]+$/, 'Только буквы и дефис'),
+  ],
+  second_name: [
+    validators.required(),
+    validators.capitalized(),
+    validators.pattern(/^[A-ZА-ЯЁa-zа-яё\-]+$/, 'Только буквы и дефис'),
+  ],
+  login: [
+    validators.required(),
+    validators.minLength(3),
+    validators.maxLength(20),
+    validators.pattern(/^[a-zA-Z0-9\-_]+$/, 'Только латиница, цифры, дефис и подчеркивание'),
+    validators.notOnlyNumbers(),
+  ],
+  email: [
+    validators.required(),
+    validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Некорректный email'),
+  ],
+  password: [
+    validators.required(),
+    validators.minLength(8),
+    validators.maxLength(40),
+    validators.pattern(/[A-Z]/, 'Должна быть хотя бы одна заглавная буква'),
+    validators.pattern(/\d/, 'Должна быть хотя бы одна цифра'),
+  ],
+  phone: [validators.required(), validators.phone()],
 };
 
-export const validateInput = (inputName: string, value: string) => {
-  if (!inputName || !rules[inputName]) return '';
-  const errors: string[] = [];
-  rules[inputName].forEach((check) => {
-    const error = checks[check](value);
-    if (error) errors.push(error);
-  });
+// --- 3. Основная функция валидации ---
 
-  return errors.join(', ');
+export const validateInput = (fieldName: string, value: string): string | null => {
+  const fieldRules = rules[fieldName];
+
+  // Если правил нет, считаем поле валидным
+  if (!fieldRules) return null;
+
+  for (const rule of fieldRules) {
+    const error = rule(value);
+    if (error) {
+      return error; // Возвращаем первую найденную ошибку
+    }
+  }
+
+  return null;
 };

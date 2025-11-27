@@ -28,18 +28,18 @@ export type defaultProps = {
   }>;
 };
 
-type Children = Record<string, Block<object> | Block<object>[]>;
+type Children = Record<string, Block<object & defaultProps> | Block<object & defaultProps>[]>;
 
 export class Block<TProps extends defaultProps> {
   private _element: HTMLElement | DocumentFragment | null | undefined = null;
+
+  renderFlag = false;
 
   public children: Children;
 
   private _meta: Tmeta;
 
   props: TProps & object;
-
-  public unnamedChildrens: Block<any>[];
 
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
@@ -50,8 +50,6 @@ export class Block<TProps extends defaultProps> {
     this._meta = { tagName, props };
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
-    this.unnamedChildrens = [];
-
     this._registerEvents(eventBus);
     eventBus.emit(EVENTS.INIT);
   }
@@ -103,25 +101,22 @@ export class Block<TProps extends defaultProps> {
     this._eventBus.emit(EVENTS.FLOW_CDM);
   }
 
-  protected compile<T extends object>(Item: typeof Block<T>, data: T | T[]) {
-    if (Array.isArray(data)) {
-      const container = new DocumentFragment();
-      data.forEach((bl) => {
-        const el = new Item({ ...bl });
-        console.log(this.unnamedChildrens);
-        this.unnamedChildrens.push(el);
-        container.append(el.getContent()!);
+  protected getDom<T extends object>(rawElement: Block<T> | Block<T>[] | undefined) {
+    if (!rawElement) return null;
+    const listContainer = document.createDocumentFragment();
+    if (Array.isArray(rawElement)) {
+      rawElement.forEach((el) => {
+        listContainer.appendChild(el.getContent()!);
       });
-
-      return container;
+      return listContainer;
     }
-
-    return new Item(data).getContent();
+    listContainer.appendChild(rawElement.getContent()!);
+    return listContainer;
   }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     this.componentDidUpdate(oldProps, newProps);
-    this.unnamedChildrens.forEach((child) => child.destroy());
+
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
@@ -143,7 +138,11 @@ export class Block<TProps extends defaultProps> {
 
   setProps(nextProps: Partial<TProps>) {
     if (!nextProps) return;
+    const oldProps = { ...this.props };
+    this.renderFlag = true;
     Object.assign(this.props, nextProps);
+    this.renderFlag = false;
+    this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, this.props);
   }
 
   get element() {
@@ -182,7 +181,7 @@ export class Block<TProps extends defaultProps> {
           const oldProps = { ...target };
           const success = Reflect.set(target, key, value);
 
-          if (success) {
+          if (success && !this.renderFlag) {
             this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, target);
           }
           return success;
@@ -193,7 +192,18 @@ export class Block<TProps extends defaultProps> {
     });
   }
 
+  private _removeEvents() {
+    const { events = {} } = this.props;
+    if (!this._element) return;
+
+    Object.keys(events).forEach((eventName) => {
+      const { listener, useCapture = false } = events[eventName];
+      this._element!.removeEventListener(eventName, listener, useCapture);
+    });
+  }
+
   public destroy() {
+    this._removeEvents();
     if (this._element && this._element instanceof Element) {
       this._element.remove();
     }
@@ -204,5 +214,27 @@ export class Block<TProps extends defaultProps> {
         child.destroy();
       }
     });
+  }
+
+  protected compile<T extends object>(Item: typeof Block<T>, data: T | T[]) {
+    if (Array.isArray(data)) {
+      const container = new DocumentFragment();
+      data.forEach((bl) => {
+        const el = new Item({ ...bl });
+        container.append(el.getContent()!);
+      });
+
+      return container;
+    }
+
+    return new Item(data).getContent();
+  }
+
+  public compileList(list: Block<defaultProps>[]) {
+    const listContainer = document.createDocumentFragment();
+    list.forEach((el) => {
+      listContainer.appendChild(el.getContent()!);
+    });
+    return listContainer;
   }
 }

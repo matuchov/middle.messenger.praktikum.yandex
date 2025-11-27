@@ -1,3 +1,5 @@
+import type { defaultProps } from '@/app/utils/Block';
+
 interface icon {
   iconSrc: string;
   itemText: string;
@@ -11,7 +13,7 @@ export const directions = {
   bottomRight: 'dropdown__container--bottom dropdown__container--right',
 };
 
-export interface DropdownProps {
+export interface DropdownProps extends defaultProps {
   icons: icon[];
   btnIconSrc?: string;
   onclick?: string;

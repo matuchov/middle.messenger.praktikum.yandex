@@ -1,6 +1,9 @@
 import type { defaultProps } from '@/app/utils/Block';
+import type { Form } from '@/entities/Form';
+import type { Box } from '@/shared/Box';
 import type { MyButtonProps } from '@/shared/MyButton';
-import type { MyInputProps } from '@/shared/MyInput';
+import type { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
+import type { MyInput, MyInputProps } from '@/shared/MyInput';
 import type { MyLinkProps } from '@/shared/MyLink';
 
 type PatternType = {
@@ -13,4 +16,8 @@ export type AuthPatternsType = Record<string, PatternType>;
 
 export interface AuthProps extends defaultProps {
   page: 'login' | 'registration';
+  inputs?: MyInput[];
+  form?: Form;
+  subminBtn?: MyButtonBlock;
+  box?: Box;
 }

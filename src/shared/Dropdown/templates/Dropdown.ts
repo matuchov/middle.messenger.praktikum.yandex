@@ -22,7 +22,7 @@ export const dropdownTemplate = `<div class="dropdown">
 `;
 
 export const dropdownItemTemplate = `<li class="dropdown__item">
-  <button onclick="{{ onclick }}" type="button" class="dropdown__action">
+  <button  type="button" class="dropdown__action">
     <img src="{{ iconSrc }}" alt="" class="dropdown__icon" />
     <span class="dropdown__text">{{ itemText }}</span>
   </button>
