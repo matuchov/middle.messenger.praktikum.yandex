@@ -14,12 +14,13 @@ const template = new Templator(authTemplate);
 export class Auth extends Block<AuthProps> {
   protected init(): void {
     const { page } = this.props;
-    this.props.inputs = AuthPatterns[page].inputs.map((el) => new MyInput(el));
-    this.props.subminBtn = new MyButtonBlock(AuthPatterns[page].button);
-    this.props.form = new Form({
+
+    const inputs = AuthPatterns[page].inputs.map((el) => new MyInput(el));
+    const subminBtn = new MyButtonBlock(AuthPatterns[page].button);
+    const form = new Form({
       formClass: 'auth__form',
-      formContent: this.getDom(this.props.inputs),
-      subminBtn: this.getDom(this.props.subminBtn),
+      formContent: this.getDom(inputs),
+      subminBtn: this.getDom(subminBtn),
       events: {
         submit: {
           listener: (e) => {
@@ -28,16 +29,22 @@ export class Auth extends Block<AuthProps> {
         },
       },
     });
-    this.props.box = new Box({
+    const box = new Box({
       boxClass: 'auth__box',
-      children: this.getDom(this.props.form),
+      children: this.getDom(form),
+    });
+    this.setProps({
+      inputs,
+      subminBtn,
+      form,
+      box,
     });
   }
 
   protected onSubmit(e: SubmitEvent) {
     e.preventDefault();
     let isValid = true;
-    this.props.inputs?.forEach((el) => {
+    this.children.inputs?.forEach((el) => {
       if (el instanceof MyInput) {
         if (el.validate() === false) {
           isValid = false;
@@ -53,7 +60,7 @@ export class Auth extends Block<AuthProps> {
 
   render() {
     return template.compile({
-      pageContent: this.getDom(this.props.box),
+      pageContent: this.getDom(this.children.box),
     });
   }
 }

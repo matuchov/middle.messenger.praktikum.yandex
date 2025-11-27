@@ -1,17 +1,17 @@
 import { Avatar } from '@/shared/Avatar/';
 import './ChatlistRow.css';
 import { chatListRowTemplate } from './template/ChatlistRow';
-import { Block } from '@/app/utils/Block';
+import { Block, type defaultProps } from '@/app/utils/Block';
 
 import { Templator } from '@/app/utils/TemplatorClass';
 
-export type ChatListRowProps = {
+export interface ChatListRowProps extends defaultProps {
   name: string;
   messageText: string;
   time: string;
   counter: string;
   avatarSrc: string;
-};
+}
 
 const tepmlate = new Templator(chatListRowTemplate);
 

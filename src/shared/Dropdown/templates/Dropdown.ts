@@ -1,6 +1,6 @@
 export const dropdownTemplate = `<div class="dropdown">
   <button
-    onclick="{{ onclick }}"
+
     title="dropdown"
     type="button"
     class="dropdown__action"
@@ -11,9 +11,9 @@ export const dropdownTemplate = `<div class="dropdown">
     <div class="box">
       <div class="dropdown__content">
         <ul class="dropdown__list">
-          {{
+          {{{
             items
-          }}
+          }}}
         </ul>
       </div>
     </div>

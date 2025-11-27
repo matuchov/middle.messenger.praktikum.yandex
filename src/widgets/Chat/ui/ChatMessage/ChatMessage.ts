@@ -1,15 +1,21 @@
 import { directions, types, type ChatMessageProps } from './model/types';
-import ChatMessageTemlpate from './template/ChatMessage.mtmp';
-import ChatMessagePictureTemlpate from './template/ChatMessagePicture.mtmp';
-
+import { ChatMessageTemplate } from './template/ChatMessage';
+import { ChatMessagePictureTemplate } from './template/ChatMessagePicture';
 import './ChatMessage.css';
+import { Block } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/TemplatorClass';
 
-export const ChatMessage = ({ messageText = '', type, direction, src }: ChatMessageProps) => {
-  const messageType = ` ${directions[direction]} ${types[type]}`;
+const messageTemplate = new Templator(ChatMessageTemplate);
+const messagePictureTemplate = new Templator(ChatMessagePictureTemplate);
 
-  if (src) {
-    return ChatMessagePictureTemlpate({ messageType, src });
+export class ChatMessage extends Block<ChatMessageProps> {
+  render() {
+    const { messageText = '', type, direction, src } = this.props;
+    const messageType = ` ${directions[direction]} ${types[type]}`;
+    if (src) {
+      return messagePictureTemplate.compile({ messageType, src });
+    }
+
+    return messageTemplate.compile({ messageText, messageType });
   }
-
-  return ChatMessageTemlpate({ messageText, messageType });
-};
+}

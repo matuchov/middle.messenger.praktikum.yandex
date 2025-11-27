@@ -28,12 +28,12 @@ export type defaultProps = {
   }>;
 };
 
-type Children = Record<string, Block<object & defaultProps> | Block<object & defaultProps>[]>;
+type Children = Record<string, Block<unknown & defaultProps> | Block<unknown & defaultProps>[]>;
 
 export class Block<TProps extends defaultProps> {
   private _element: HTMLElement | DocumentFragment | null | undefined = null;
 
-  renderFlag = false;
+  renderFlag = true;
 
   public children: Children;
 
@@ -138,11 +138,23 @@ export class Block<TProps extends defaultProps> {
 
   setProps(nextProps: Partial<TProps>) {
     if (!nextProps) return;
-    const oldProps = { ...this.props };
-    this.renderFlag = true;
-    Object.assign(this.props, nextProps);
-    this.renderFlag = false;
-    this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, this.props);
+
+    const { children, props } = this._getChildren(nextProps as TProps);
+
+    if (Object.keys(children).length) {
+      Object.assign(this.children, children);
+    }
+
+    if (Object.keys(props).length) {
+      const oldProps = { ...this.props };
+
+      this.renderFlag = true;
+      Object.assign(this.props, props);
+      this.renderFlag = false;
+      this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, this.props);
+    } else if (Object.keys(children).length) {
+      this._eventBus.emit(EVENTS.FLOW_CDU, this.props, this.props);
+    }
   }
 
   get element() {
@@ -228,13 +240,5 @@ export class Block<TProps extends defaultProps> {
     }
 
     return new Item(data).getContent();
-  }
-
-  public compileList(list: Block<defaultProps>[]) {
-    const listContainer = document.createDocumentFragment();
-    list.forEach((el) => {
-      listContainer.appendChild(el.getContent()!);
-    });
-    return listContainer;
   }
 }

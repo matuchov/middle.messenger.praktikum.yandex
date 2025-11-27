@@ -1,6 +1,6 @@
 import './Avatar.css';
 import { avatarTemplate } from '../template/Avatar';
-import { Block } from '@/app/utils/Block';
+import { Block, type defaultProps } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
 
 const avatarSizes = {
@@ -8,10 +8,10 @@ const avatarSizes = {
   large: 'avatar--large',
 } as const;
 
-type avatarProps = {
+interface avatarProps extends defaultProps {
   avatarSrc?: string;
   size?: keyof typeof avatarSizes;
-};
+}
 
 const tepmlate = new Templator(avatarTemplate);
 

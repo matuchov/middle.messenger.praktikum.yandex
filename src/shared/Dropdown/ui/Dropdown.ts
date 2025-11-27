@@ -14,7 +14,7 @@ export class Dropdown extends Block<DropdownProps> {
     const { direction = 'bottomLeft', icons = [], btnIconSrc = '', onclick = '' } = this.props;
     const directionClass = directions[direction];
     const iconsHTML = '';
-    // icons.map(DropdownItemTemplate).join('');
+    icons.map((el) => tepmlateItem.compile(el));
     return tepmlate.compile({ btnIconSrc, directionClass, items: iconsHTML, onclick });
   }
 }

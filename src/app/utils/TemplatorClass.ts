@@ -1,3 +1,5 @@
+import { Block } from './Block';
+
 type Props = Record<string, HTMLElement | string | DocumentFragment | unknown>;
 
 export class Templator {
@@ -17,7 +19,22 @@ export class Templator {
     this._templateEl = document.createRange().createContextualFragment(processedHtml);
   }
 
-  compile(ctx: Props): DocumentFragment {
+  compile(rawCtx: Props): DocumentFragment {
+    const ctx: Props = {};
+    Object.entries(rawCtx).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        ctx[key] = value.getContent()!;
+      } else if (Array.isArray(value) && value.every((item) => item instanceof Block)) {
+        const cont = document.createDocumentFragment();
+        value.forEach((block) => {
+          cont.append(block.getContent()!);
+        });
+        ctx[key] = cont;
+      } else {
+        ctx[key] = value;
+      }
+    });
+
     const fragment = this._templateEl.cloneNode(true) as DocumentFragment;
     this._traverse(fragment, ctx);
     return fragment;
