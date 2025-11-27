@@ -4,10 +4,10 @@ import { ChatPage } from '@/pages/ChatPage';
 import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '@/pages/ErrorPage';
 
-export const routes: Record<string, HTMLElement | DocumentFragment> = {
-  '/': new ChatPage({}).getContent()!,
-  '/login': new Auth({ page: 'login' }).getContent()!,
-  '/registration': new Auth({ page: 'registration' }).getContent()!,
+export const routes: Record<string, () => HTMLElement | DocumentFragment> = {
+  '/': () => new ChatPage({}).getContent()!,
+  '/login': () => new Auth({ page: 'login' }).getContent()!,
+  '/registration': () => new Auth({ page: 'registration' }).getContent()!,
 
   // '/profile': () => Profile({ page: 'default' }),
   // '/changepass': () => Profile({ page: 'changepass' }),

@@ -35,6 +35,8 @@ export class Templator {
       }
     });
 
+    console.log(ctx);
+
     const fragment = this._templateEl.cloneNode(true) as DocumentFragment;
     this._traverse(fragment, ctx);
     return fragment;

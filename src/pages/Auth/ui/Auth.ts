@@ -19,7 +19,7 @@ export class Auth extends Block<AuthProps> {
     const subminBtn = new MyButtonBlock(AuthPatterns[page].button);
     const form = new Form({
       formClass: 'auth__form',
-      formContent: this.getDom(inputs),
+      formContent: inputs,
       subminBtn: this.getDom(subminBtn),
       events: {
         submit: {

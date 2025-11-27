@@ -13,8 +13,9 @@ export class Form extends Block<FormProps> {
       formAction,
       formMetod = 'post',
       subminBtn = new MyButtonBlock({ btnType: 'submit', btnText: 'Отправить' }).getContent(),
-      formContent,
     } = this.props;
+
+    const { formContent } = this.children;
 
     return temlpate.compile({
       formAction,
