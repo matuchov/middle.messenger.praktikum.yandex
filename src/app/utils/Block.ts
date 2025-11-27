@@ -28,18 +28,18 @@ export type defaultProps = {
   }>;
 };
 
-type Children = Record<string, Block<unknown & defaultProps> | Block<unknown & defaultProps>[]>;
+type Children<T extends object> = Record<string, Block<T> | Block<T>[]>;
 
 export class Block<TProps extends defaultProps> {
   private _element: HTMLElement | DocumentFragment | null | undefined = null;
 
   renderFlag = true;
 
-  public children: Children;
+  public children: Children<Partial<TProps>>;
 
   private _meta: Tmeta;
 
-  props: TProps & object;
+  props: TProps;
 
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
@@ -72,8 +72,11 @@ export class Block<TProps extends defaultProps> {
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
-  private _getChildren(propsAndChildren: TProps): { children: Children; props: TProps } {
-    const children: Children = {};
+  private _getChildren(propsAndChildren: TProps): {
+    children: Children<Partial<TProps>>;
+    props: TProps;
+  } {
+    const children: Children<Partial<TProps>> = {};
     const props: Record<string, unknown> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {

@@ -44,6 +44,7 @@ export class Auth extends Block<AuthProps> {
   protected onSubmit(e: SubmitEvent) {
     e.preventDefault();
     let isValid = true;
+
     this.children.inputs?.forEach((el) => {
       if (el instanceof MyInput) {
         if (el.validate() === false) {
