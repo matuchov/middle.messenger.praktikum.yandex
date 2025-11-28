@@ -8,12 +8,10 @@ export const routes: Record<string, () => HTMLElement | DocumentFragment> = {
   '/': () => new ChatPage({}).getContent()!,
   '/login': () => new Auth({ page: 'login' }).getContent()!,
   '/registration': () => new Auth({ page: 'registration' }).getContent()!,
+  '/profile': () => new Profile({ page: 'default' }).getContent()!,
+  '/changepass': () => new Profile({ page: 'changepass' }).getContent()!,
+  '/edit': () => new Profile({ page: 'edit' }).getContent()!,
+  '/500': () => new ErrorPage({ error: '500' }).getContent()!,
 
-  // '/profile': () => Profile({ page: 'default' }),
-  // '/changepass': () => Profile({ page: 'changepass' }),
-  // '/edit': () => Profile({ page: 'edit' }),
-  // '/login': () => Auth({ page: 'login' }),
-  // '/registration': () => Auth({ page: 'registration' }),
   // '/AvatarUpload': () => AvatarUpload(),
-  // '/500': () => ErrorPage({ error: '500' }),
 };

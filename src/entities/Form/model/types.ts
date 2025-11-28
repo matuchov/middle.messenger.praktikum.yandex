@@ -1,10 +1,11 @@
 import type { defaultProps } from '@/app/utils/Block';
-import type { MyInputProps } from '@/shared/MyInput';
+import type { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
+import type { MyInput, MyInputProps } from '@/shared/MyInput';
 
 export interface FormProps extends defaultProps {
   formClass?: string;
   formAction?: string;
   formMetod?: 'dialog' | 'get' | 'post';
-  subminBtn?: Element | DocumentFragment | null;
-  formContent?: Element | DocumentFragment | null;
+  subminBtn?: MyButtonBlock;
+  formContent?: MyInput[];
 }

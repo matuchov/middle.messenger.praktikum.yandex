@@ -7,7 +7,6 @@ export function handleRoute() {
 
   if (routes[path]) {
     el = routes[path];
-    console.log(el);
   }
   // } else {
   //   el = ErrorPage({ error: '404' });

@@ -28,14 +28,12 @@ export type defaultProps = {
   }>;
 };
 
-type Children<T extends object> = Record<string, Block<T> | Block<T>[]>;
-
 export class Block<TProps extends defaultProps> {
   private _element: HTMLElement | DocumentFragment | null | undefined = null;
 
   renderFlag = true;
 
-  public children: Children<Partial<TProps>>;
+  public children: Partial<TProps>;
 
   private _meta: Tmeta;
 
@@ -75,10 +73,10 @@ export class Block<TProps extends defaultProps> {
   }
 
   private _getChildren(propsAndChildren: TProps): {
-    children: Children<Partial<TProps>>;
+    children: Partial<TProps>;
     props: TProps;
   } {
-    const children: Children<Partial<TProps>> = {};
+    const children: Record<string, unknown> = {};
     const props: Record<string, unknown> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
@@ -91,7 +89,7 @@ export class Block<TProps extends defaultProps> {
       }
     });
 
-    return { children, props: props as TProps };
+    return { children: children as Partial<TProps>, props: props as TProps };
   }
 
   protected init() {}
@@ -171,7 +169,8 @@ export class Block<TProps extends defaultProps> {
     const newElement =
       block instanceof DocumentFragment ? (block.firstElementChild as HTMLElement) : block;
     if (this._element && this._element.parentNode) {
-      this._element.parentNode.replaceChild(block, this._element);
+      this._element.parentNode?.replaceChild(block, this._element);
+      console.log(this);
     }
     this._element = newElement;
     this._addEvents();
@@ -214,8 +213,13 @@ export class Block<TProps extends defaultProps> {
     if (!this._element) return;
 
     Object.keys(events).forEach((eventName) => {
-      const { listener, useCapture = false } = events[eventName];
-      this._element!.removeEventListener(eventName, listener, useCapture);
+      const listener = events[eventName as keyof typeof events]?.listener;
+      const useCapture = events[eventName as keyof typeof events]?.useCapture;
+      if (!listener) return;
+      if (useCapture !== undefined) {
+        this._element!.removeEventListener(eventName, listener, useCapture);
+      }
+      this._element!.removeEventListener(eventName, listener);
     });
   }
 

@@ -35,8 +35,6 @@ export class Templator {
       }
     });
 
-    console.log(ctx);
-
     const fragment = this._templateEl.cloneNode(true) as DocumentFragment;
     this._traverse(fragment, ctx);
     return fragment;
@@ -66,6 +64,13 @@ export class Templator {
 
   private _updateElementAttributes(element: HTMLElement, ctx: Props) {
     Array.from(element.attributes).forEach((attr) => {
+      if (attr.name === '{{isdisabled}}') {
+        element.removeAttribute(attr.name);
+        if (ctx.isDisabled) {
+          element.setAttribute('disabled', '');
+        }
+      }
+
       if (this._regExes.double.test(attr.value)) {
         const newValue = attr.value.replace(this._regExes.doubleGlobal, (_, key) => {
           const val = ctx[key];

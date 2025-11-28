@@ -3,7 +3,7 @@ import { Templator } from '@/app/utils/TemplatorClass';
 import { itemsStyleClasses, type MyInputProps } from '../model/types';
 import { myInputTemplate } from '../template/MyInput';
 import './MyInput.css';
-import { validateInput } from '@/pages/Auth/utils/Validate';
+import { validateInput } from '@/pages/Auth/utils/validate';
 
 const template = new Templator(myInputTemplate);
 
@@ -14,7 +14,7 @@ export class MyInput extends Block<MyInputProps> {
       events: {
         ...(props.events || {}),
         blur: {
-          listener: () => this.validate(),
+          listener: () => setTimeout(() => this.validate(), 0),
           useCapture: true,
         },
       },
@@ -36,8 +36,6 @@ export class MyInput extends Block<MyInputProps> {
   }
 
   render() {
-    console.log('input render ');
-
     const {
       disabled = false,
       inputStyle,
@@ -47,11 +45,11 @@ export class MyInput extends Block<MyInputProps> {
       errorText,
       value = '',
     } = this.props;
-    const isDisabled = disabled ? 'disabled' : '';
+
     const inputClass = `${itemsStyleClasses[inputStyle]} ${errorText ? 'myInput--error' : ''}`;
 
     return template.compile({
-      isDisabled,
+      isDisabled: disabled,
       errorText: errorText || '',
       inputClass,
       inputType,

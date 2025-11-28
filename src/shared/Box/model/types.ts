@@ -1,6 +1,6 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { Block, defaultProps } from '@/app/utils/Block';
 
 export interface BoxProps extends defaultProps {
   boxClass?: string;
-  children?: HTMLElement | null | DocumentFragment;
+  children?: Block<object>;
 }

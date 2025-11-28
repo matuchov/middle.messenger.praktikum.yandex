@@ -8,7 +8,8 @@ const template = new Templator(boxTemplate);
 
 export class Box extends Block<BoxProps> {
   render() {
-    const { boxClass = '', children } = this.props;
+    const { boxClass = '' } = this.props;
+    const { children } = this.children;
     return template.compile({ boxClass, children });
   }
 }

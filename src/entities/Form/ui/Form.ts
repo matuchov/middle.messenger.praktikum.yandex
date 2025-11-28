@@ -8,14 +8,10 @@ const temlpate = new Templator(formTemlpate);
 
 export class Form extends Block<FormProps> {
   render() {
-    const {
-      formClass,
-      formAction,
-      formMetod = 'post',
-      subminBtn = new MyButtonBlock({ btnType: 'submit', btnText: 'Отправить' }).getContent(),
-    } = this.props;
+    const { formClass, formAction, formMetod = 'post' } = this.props;
 
-    const { formContent } = this.children;
+    const { formContent, subminBtn } = this.children;
+    console.log('form render');
 
     return temlpate.compile({
       formAction,

@@ -1,1 +1,1 @@
-export default `<a href="{{ linkHref }}" class="{{ linkClassName }}">{{ linkText }}</a>`;
+export default `<a href="{{ linkHref }}" class="{{ linkClassName }}">{{ linkText }}{{{child}}}</a>`;

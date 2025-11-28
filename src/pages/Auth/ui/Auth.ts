@@ -12,15 +12,15 @@ import './Auth.css';
 const template = new Templator(authTemplate);
 
 export class Auth extends Block<AuthProps> {
-  protected init(): void {
-    const { page } = this.props;
+  constructor(props: AuthProps) {
+    const { page } = props;
 
     const inputs = AuthPatterns[page].inputs.map((el) => new MyInput(el));
     const subminBtn = new MyButtonBlock(AuthPatterns[page].button);
     const form = new Form({
       formClass: 'auth__form',
       formContent: inputs,
-      subminBtn: this.getDom(subminBtn),
+      subminBtn,
       events: {
         submit: {
           listener: (e) => {
@@ -29,22 +29,20 @@ export class Auth extends Block<AuthProps> {
         },
       },
     });
+
     const box = new Box({
       boxClass: 'auth__box',
-      children: this.getDom(form),
+      children: form,
     });
-    this.setProps({
-      inputs,
-      subminBtn,
-      form,
-      box,
-    });
+
+    console.log(box);
+
+    super({ ...props, inputs, subminBtn, form, box });
   }
 
   protected onSubmit(e: SubmitEvent) {
     e.preventDefault();
     let isValid = true;
-
     this.children.inputs?.forEach((el) => {
       if (el instanceof MyInput) {
         if (el.validate() === false) {
@@ -60,8 +58,10 @@ export class Auth extends Block<AuthProps> {
   }
 
   render() {
+    console.log(this.children);
+
     return template.compile({
-      pageContent: this.getDom(this.children.box),
+      pageContent: this.children.box,
     });
   }
 }
