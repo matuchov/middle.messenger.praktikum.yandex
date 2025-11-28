@@ -7,7 +7,8 @@ const tepmlate = new Templator(MyLinkTemlpate);
 
 export class MyLink extends Block<MyLinkProps> {
   render() {
-    const { linkClassName = '', linkText = '', linkHref = '#', child } = this.props;
+    const { linkClassName = '', linkText = '', linkHref = '#' } = this.props;
+    const { child } = this.children;
     return tepmlate.compile({ linkClassName, linkText, linkHref, child });
   }
 }

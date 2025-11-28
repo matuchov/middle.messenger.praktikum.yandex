@@ -1,9 +1,9 @@
 import { MyLink } from '@/shared/MyLink';
-import { ErrorPageTemlpate } from '../template/ErrorPage.ts';
-import './ErrorPage.css';
-import type { ErrorPageProps } from '../model/types';
 import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
+import { ErrorPageTemlpate } from '../template/ErrorPage.ts';
+import type { ErrorPageProps } from '../model/types';
+import './ErrorPage.css';
 
 const template = new Templator(ErrorPageTemlpate);
 

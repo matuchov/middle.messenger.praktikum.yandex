@@ -12,6 +12,5 @@ export const routes: Record<string, () => HTMLElement | DocumentFragment> = {
   '/changepass': () => new Profile({ page: 'changepass' }).getContent()!,
   '/edit': () => new Profile({ page: 'edit' }).getContent()!,
   '/500': () => new ErrorPage({ error: '500' }).getContent()!,
-
-  // '/AvatarUpload': () => AvatarUpload(),
+  '/AvatarUpload': () => new AvatarUpload({}).getContent()!,
 };
