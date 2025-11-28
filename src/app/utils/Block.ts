@@ -45,7 +45,9 @@ export class Block<TProps extends defaultProps> {
 
   constructor(propsAndChildren: TProps, tagName = 'div') {
     const { children, props } = this._getChildren(propsAndChildren);
+
     const eventBus = new EventBus<TEventBus<TProps>>();
+
     this.children = children;
     this._meta = { tagName, props };
     this._eventBus = eventBus;
