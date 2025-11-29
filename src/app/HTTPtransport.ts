@@ -8,18 +8,15 @@ const METHODS = {
 
 type Method = keyof typeof METHODS;
 
-// Заменяем any на unknown
 type PlainObject = Record<string, unknown>;
 type RequestData = PlainObject | FormData | string;
 
 type Options = {
-  method: Method;
+  method?: Method;
   data?: RequestData;
   headers?: Record<string, string>;
   timeout?: number;
 };
-
-type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 function queryStringify(data: PlainObject) {
   if (typeof data !== 'object') {
@@ -32,25 +29,27 @@ function queryStringify(data: PlainObject) {
   }, '?');
 }
 
+type HTTPMethod = <R = unknown>(url: string, options: Options) => Promise<R>;
+
 export class HTTPTransport {
-  get = (url: string, options: OptionsWithoutMethod = {}) => {
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+  get: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.GET });
   };
 
-  post = (url: string, options: OptionsWithoutMethod = {}) => {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.POST });
   };
 
-  put = (url: string, options: OptionsWithoutMethod = {}) => {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.PUT });
   };
 
-  delete = (url: string, options: OptionsWithoutMethod = {}) => {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.DELETE });
   };
 
-  request = (url: string, options: Options, timeout = 5000): Promise<XMLHttpRequest> => {
-    const { headers = {}, method, data } = options;
+  request: HTTPMethod = (url, options) => {
+    const { headers = {}, method, data, timeout = 5000 } = options;
 
     return new Promise((resolve, reject) => {
       if (!method) {
@@ -70,7 +69,7 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, headers[key]);
       });
 
-      xhr.onload = () => resolve(xhr);
+      xhr.onload = () => resolve(xhr.response);
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.timeout = timeout;
