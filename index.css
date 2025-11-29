@@ -1,14 +1,14 @@
 :root {
   --main-color: #1e1e1e;
-  --secondary-color: #999999;
+  --secondary-color: #999;
   --accent-color: #3369f3;
-  --warning-color: #ff0000;
+  --warning-color: #ff0;
   --background-color: #efefef;
   --background-hover-color: #7b94e23d;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
