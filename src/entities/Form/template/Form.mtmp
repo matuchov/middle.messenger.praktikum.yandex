@@ -1,8 +1,0 @@
-<form
-  class="Form {{ formClass }}"
-  action="{{ formAction }}"
-  method="{{ formMetod }}"
->
-  {{ formContent }}
-  {{ subminBtn }}
-</form>

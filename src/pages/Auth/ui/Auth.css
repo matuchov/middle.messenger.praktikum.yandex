@@ -1,5 +1,5 @@
 .auth {
-  margin: auto auto;
+  margin: auto;
 }
 
 .auth__box {
@@ -7,6 +7,7 @@
   flex-direction: column;
   padding-bottom: 30px;
 }
+
 .auth__form {
   display: flex;
   flex-direction: column;
@@ -18,6 +19,7 @@
 .auth__form button {
   align-self: center;
 }
+
 .auth__link {
   font-size: 12px;
   font-weight: 400;

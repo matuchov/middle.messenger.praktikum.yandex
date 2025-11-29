@@ -1,0 +1,3 @@
+export const ChatMessagesTemplate = `<main class="chat__messages_container">
+  <div class="chat__messages">{{{ messages }}}</div>
+</main>`;

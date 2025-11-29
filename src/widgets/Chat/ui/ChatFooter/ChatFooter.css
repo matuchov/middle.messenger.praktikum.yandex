@@ -16,6 +16,7 @@
   background: var(--background-color);
   border-radius: 30px;
 }
+
 .chat__send-button {
   color: white;
   border: none;

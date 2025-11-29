@@ -1,10 +1,18 @@
-import ChatDateTemlpate from './template/ChatDate.mtmp';
 import './ChatDate.css';
 
-type ChatDateProps = {
-  date: string;
-};
+import { Block, type defaultProps } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/TemplatorClass';
+import { ChatDateTemplate } from './template/ChatDate';
 
-export const ChatDate = ({ date }: ChatDateProps) => {
-  return ChatDateTemlpate({ date });
-};
+interface ChatDateProps extends defaultProps {
+  date?: string;
+}
+
+const template = new Templator(ChatDateTemplate);
+
+export class ChatDate extends Block<ChatDateProps> {
+  render() {
+    const { date } = this.props;
+    return template.compile({ date });
+  }
+}

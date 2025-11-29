@@ -1,33 +1,74 @@
 import { Avatar } from '@/shared/Avatar';
-import { MyButton } from '@/shared/MyButton';
 import { MyLink } from '@/shared/MyLink';
 import { Form } from '@/entities/Form';
+import { Block } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/TemplatorClass';
+import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
+import { MyInput } from '@/shared/MyInput/index.ts';
 import { ProfilePatterns } from '../model/pattern';
-import ProfileTemlpate from '../template/Profile.mtmp';
+import { ProfileTemlpate } from '../template/Profile.ts';
 import type { ProfileProps } from '../model/types';
 import './Profile.css';
 
-export const Profile = ({ page }: ProfileProps) => {
-  const avatarComponent = MyLink({
-    linkText: Avatar({ size: 'large' }),
-    linkClassName: 'profile__avatar_change',
-    linkHref: '/AvatarUpload',
-  });
+const template = new Templator(ProfileTemlpate);
 
-  const inputs = ProfilePatterns[page].inputs;
+export class Profile extends Block<ProfileProps> {
+  constructor(props: ProfileProps) {
+    const { page } = props;
+    const { disabled, isValidate } = ProfilePatterns[page];
+    const avatar = new Avatar({ size: 'large' });
+    const inputsPattern = ProfilePatterns[page].inputs;
+    const inputs = inputsPattern.map((el) => new MyInput({ ...el, disabled, isValidate }));
+    const sumbitBtn = ProfilePatterns[page].submitBtn
+      ? new MyButtonBlock(ProfilePatterns[page].submitBtn)
+      : undefined;
 
-  const sumbitBtn = ProfilePatterns[page].submitBtn
-    ? MyButton(ProfilePatterns[page].submitBtn)
-    : '';
+    const avatarComponent = new MyLink({
+      linkText: '',
+      linkClassName: 'profile__avatar_change',
+      linkHref: '/AvatarUpload',
+      child: avatar,
+    });
 
-  const formContent = Form({
-    disabled: ProfilePatterns[page].disabled,
-    inputs,
-    formClass: 'profile__form',
-    subminBtn: sumbitBtn,
-  });
+    const formContent = new Form({
+      formClass: 'profile__form',
+      subminBtn: sumbitBtn,
+      formContent: inputs,
+      events: {
+        submit: {
+          listener: (e) => {
+            this.onSubmit(e);
+          },
+        },
+      },
+    });
 
-  const links = ProfilePatterns[page].links ? ProfilePatterns[page].links.map(MyLink).join('') : '';
+    const links = ProfilePatterns[page].links
+      ? ProfilePatterns[page].links.map((el) => new MyLink(el))
+      : undefined;
 
-  return ProfileTemlpate({ formContent, avatarComponent, links });
-};
+    super({ ...props, avatarComponent, formContent, links, inputs });
+  }
+
+  protected onSubmit(e: SubmitEvent) {
+    e.preventDefault();
+    let isValid = true;
+    this.children.inputs?.forEach((el) => {
+      if (el instanceof MyInput) {
+        if (el.validate() === false) {
+          isValid = false;
+        }
+      }
+    });
+
+    if (isValid && e.target instanceof HTMLFormElement) {
+      const data = new FormData(e.target);
+      console.log([...data.entries()]);
+    }
+  }
+
+  render() {
+    const { formContent, avatarComponent, links } = this.children;
+    return template.compile({ formContent, avatarComponent, links });
+  }
+}

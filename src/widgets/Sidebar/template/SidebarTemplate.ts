@@ -1,0 +1,7 @@
+export const sidebarTemplate = `<div class="sidebar">
+  <div class="sidebar__profile">
+    {{{ link }}}
+  </div>
+  {{{ search }}}
+  {{{ shatlist }}}
+</div>`;

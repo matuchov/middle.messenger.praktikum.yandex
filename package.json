@@ -8,16 +8,32 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "tsc && vite build && vite preview",
+    "start": "tsc  && vite build && vite preview",
+    "test": "tsc --noEmit && eslint . --ext .ts,.tsx && stylelint src/**/*.css",
     "buildTS": "tsc && vite build",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "stylelint": "stylelint src/**/*.css",
+    "stylelint:fix": "stylelint src/**/*.css --fix"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "postcss": "^8.5.6",
     "postcss-scss": "^4.0.9",
+    "prettier": "^3.6.2",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "~5.9.3",
     "vite": "^7.1.7"
   },
@@ -25,5 +41,8 @@
     ">0.5%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "overrides": {
+    "esbuild": "npm:esbuild-wasm@latest"
+  }
 }

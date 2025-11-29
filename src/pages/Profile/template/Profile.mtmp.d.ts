@@ -1,1 +1,0 @@
-export default function render(data?: { avatarComponent: string;formContent: string;links: string; }): string

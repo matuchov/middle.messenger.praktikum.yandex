@@ -1,5 +1,5 @@
 .sidebar__chatlist-row {
-  padding: 12px 0px;
+  padding: 12px 0;
   display: flex;
   gap: 10px;
   border-top: 2px solid var(--background-color);
@@ -28,6 +28,7 @@
   padding-bottom: 5px;
   font-size: 13px;
 }
+
 .sidebar__chatlist-lastmessage {
   font-size: 12px;
   max-height: 24px;
@@ -49,6 +50,7 @@
 .sidebar__chatlist-time {
   font-size: 9px;
 }
+
 .sidebar__chatlist-counter {
   font-size: 9px;
   color: var(--background-color);

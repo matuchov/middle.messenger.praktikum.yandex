@@ -17,7 +17,7 @@ export const AuthPatterns: AuthPatternsType = {
         name: 'password',
       },
     ],
-    button: { btnText: 'Войти', btnType: 'submit' },
+    button: { btnText: 'Войти', btnType: 'submit', theme: 'default' },
 
     link: {
       linkText: 'Зарегистрироваться',
@@ -67,6 +67,7 @@ export const AuthPatterns: AuthPatternsType = {
     button: {
       btnText: 'Зарегистрироваться',
       btnType: 'submit',
+      theme: 'default',
     },
     link: {
       linkText: 'Войти',

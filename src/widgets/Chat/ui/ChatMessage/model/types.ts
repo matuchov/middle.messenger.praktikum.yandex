@@ -1,9 +1,4 @@
-export interface ChatMessageProps {
-  messageText: string;
-  type: keyof typeof types;
-  direction: keyof typeof directions;
-  src?: string;
-}
+import type { defaultProps } from '@/app/utils/Block';
 
 export const directions = {
   inbox: 'chat__message--inbox',
@@ -14,3 +9,10 @@ export const types = {
   text: '',
   picture: 'chat__message--picture',
 };
+
+export interface ChatMessageProps extends defaultProps {
+  messageText: string;
+  type: keyof typeof types;
+  direction: keyof typeof directions;
+  src?: string;
+}

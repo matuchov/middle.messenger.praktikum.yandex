@@ -1,0 +1,4 @@
+export const searchTemplate = `<div class="search">
+  <input type="search" id="search" value="{{ value }}" class="search__input" />
+  <label class="search__label" for="search">Поиск...</label>
+</div>`;

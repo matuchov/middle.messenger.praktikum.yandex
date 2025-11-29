@@ -2,15 +2,18 @@
   position: relative;
   display: inline-block;
 }
+
 .dropdown__action {
   white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 15px;
 }
+
 .dropdown__icon {
   flex-shrink: 0;
 }
+
 .dropdown__container {
   display: none;
   position: absolute;
@@ -39,9 +42,11 @@
   flex-direction: column;
   gap: 16px;
 }
+
 .dropdown__item:hover {
   color: var(--accent-color);
 }
+
 .dropdown__text {
   width: 100%;
 }

@@ -1,0 +1,8 @@
+export const ChatHeaderTemplate = `<header class="chat__header">
+  <div class="chat__user">
+   {{{ avatarComponent }}}
+    <div class="chat__username">{{ name }}</div>
+  </div>
+  <div class="chat__menu">{{{ dropdownComponent }}}</div>
+</header>
+`;
