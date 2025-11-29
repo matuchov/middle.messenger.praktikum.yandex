@@ -3,16 +3,7 @@ import type { ChatMessageProps } from '../../ChatMessage/model/types';
 export const messages: ChatMessageProps[] = [
   {
     messageText: `
-    Перечень ссылок:<br/>
-<br/>
-    <a href="/profile">Профиль: /profile</a><br/>
-    <a href="/changepass">Изменение пароля: /changepass</a><br/>
-    <a href="/edit">Изменение профиля: /edit</a><br/>
-    <a href="/login">Логин: /login</a><br/>
-    <a href="/registration">Регистрация: /registration</a><br/>
-    <a href="/AvatarUpload">Загрузка аватара: /AvatarUpload</a><br/>
-    <a href="/500">Ошибка 500 /500</a><br/>
-    <a href="/dsadsads">Ошибка 404 /500</a><br/>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularis
     `,
     direction: 'inbox',
     type: 'text',
