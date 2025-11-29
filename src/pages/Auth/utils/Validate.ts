@@ -66,14 +66,14 @@ const rules: Record<string, Validator[]> = {
     validators.pattern(/[A-Z]/, 'Должна быть хотя бы одна заглавная буква'),
     validators.pattern(/\d/, 'Должна быть хотя бы одна цифра'),
   ],
-  new_password: [
+  newPassword: [
     validators.required(),
     validators.minLength(8),
     validators.maxLength(40),
     validators.pattern(/[A-Z]/, 'Должна быть хотя бы одна заглавная буква'),
     validators.pattern(/\d/, 'Должна быть хотя бы одна цифра'),
   ],
-  old_password: [validators.required()],
+  oldPassword: [validators.required()],
   phone: [validators.required(), validators.phone()],
   message: [validators.required(), validators.minLength(1), validators.maxLength(1000)],
 };
