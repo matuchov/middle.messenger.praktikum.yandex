@@ -1,3 +1,3 @@
 import { handleRoute } from './router/router';
 
-window.addEventListener('load', handleRoute);
+window.addEventListener('DOMContentLoaded', handleRoute);
