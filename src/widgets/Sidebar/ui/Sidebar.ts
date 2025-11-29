@@ -1,29 +1,29 @@
 import { Chatlist } from '@/features/Chatlist/';
 import { MyLink } from '@/shared/MyLink';
 import { Search } from '@/features/Search';
-import { Block, type defaultProps } from '@/app/utils/Block.ts';
+import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
 
 import { sidebarTemplate } from '../template/SidebarTemplate';
 import './Sidebar.css';
+import type { SidebarProps } from '../model/types';
 
 const template = new Templator(sidebarTemplate);
 
-export class Sidebar extends Block<defaultProps> {
-  init() {
-    this.children = {
-      link: new MyLink({ linkText: 'Профиль', linkHref: '/profile' }),
-      search: new Search({ value: '' }),
-      shatlist: new Chatlist({}),
-    };
+export class Sidebar extends Block<SidebarProps> {
+  constructor(props: SidebarProps) {
+    const link = new MyLink({ linkText: 'Профиль', linkHref: '/profile' });
+    const search = new Search({ value: '' });
+    const shatlist = new Chatlist();
+    super({ ...props, link, search, shatlist });
   }
 
   render() {
     const { link, search, shatlist } = this.children;
     return template.compile({
-      link: this.getDom(link),
-      search: this.getDom(search),
-      shatlist: this.getDom(shatlist),
+      link,
+      search,
+      shatlist,
     });
   }
 }

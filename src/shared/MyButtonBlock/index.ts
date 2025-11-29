@@ -1,2 +1,2 @@
-export { MyButton } from './ui/MyButton';
+export { MyButtonBlock } from './ui/MyButton';
 export type { MyButtonProps } from './model/types';

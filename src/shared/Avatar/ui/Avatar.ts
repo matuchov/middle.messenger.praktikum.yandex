@@ -1,7 +1,7 @@
 import './Avatar.css';
-import { avatarTemplate } from '../template/Avatar';
 import { Block, type defaultProps } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
+import { avatarTemplate } from '../template/Avatar';
 
 const avatarSizes = {
   small: 'avatar--small',

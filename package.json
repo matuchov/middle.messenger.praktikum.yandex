@@ -8,12 +8,15 @@
   },
   "scripts": {
     "dev": "vite",
-    "start": "tsc && vite build && vite preview",
+    "start": "tsc  && vite build && vite preview",
+    "test": "tsc --noEmit && eslint . --ext .ts,.tsx && stylelint src/**/*.css",
     "buildTS": "tsc && vite build",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "stylelint": "stylelint src/**/*.css",
+    "stylelint:fix": "stylelint src/**/*.css --fix"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
@@ -29,6 +32,8 @@
     "postcss": "^8.5.6",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "typescript": "~5.9.3",
     "vite": "^7.1.7"
   },

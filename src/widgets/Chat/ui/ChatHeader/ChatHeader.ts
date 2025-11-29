@@ -1,41 +1,40 @@
 import { Avatar } from '@/shared/Avatar';
 import { Dropdown } from '@/shared/Dropdown';
-import { ChatHeaderTemplate } from './template/ChatHeader';
-import './Chatheader.css';
-
 import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
+import { ChatHeaderTemplate } from './template/ChatHeader';
+import './Chatheader.css';
 import type { ChatHeaderProps } from './model/types';
 
 const template = new Templator(ChatHeaderTemplate);
 
 export class ChatHeader extends Block<ChatHeaderProps> {
-  protected init(): void {
-    this.props.avatarComponent = new Avatar({});
-    this.props.dropdownComponent = new Dropdown({
+  constructor(props: ChatHeaderProps) {
+    const avatarComponent = new Avatar({});
+    const dropdownComponent = new Dropdown({
       direction: 'bottomRight',
-      icons: [
+      items: [
         {
-          iconSrc: '/assets/addUser.svg',
+          itemSrc: '/assets/addUser.svg',
           itemText: 'Добавить пользователя',
-          onclick: '',
         },
         {
-          iconSrc: '/assets/deleteUser.svg',
+          itemSrc: '/assets/deleteUser.svg',
           itemText: 'Удалить пользователя',
-          onclick: '',
         },
       ],
       btnIconSrc: '/assets/dots.svg',
     });
+    super({ ...props, avatarComponent, dropdownComponent });
   }
 
   render() {
     const { name } = this.props;
+    const { avatarComponent, dropdownComponent } = this.children;
     return template.compile({
       name,
-      avatarComponent: this.getDom(this.props.avatarComponent),
-      dropdownComponent: this.getDom(this.props.dropdownComponent),
+      avatarComponent,
+      dropdownComponent,
     });
   }
 }

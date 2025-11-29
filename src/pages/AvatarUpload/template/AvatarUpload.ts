@@ -1,4 +1,4 @@
-export const AvatarUploadTemplate = `<main class="avatar-upload">
+export const AvatarUploadTemplate = `<main class="avatar-upload box">
   <h1>Загрузите файл</h1>
 
   <form class="avatar-upload__form" action="">
@@ -6,8 +6,6 @@ export const AvatarUploadTemplate = `<main class="avatar-upload">
       <input class="avatar-upload__input" name="avatar" type="file" id="fileInput" />
       Выбрать файл на компьютере
     </label>
-    {{ submitBtn }}
+    {{{ submitBtn }}}
   </form>
 </main>`;
-
-export const Container = `{{{box}}}`;

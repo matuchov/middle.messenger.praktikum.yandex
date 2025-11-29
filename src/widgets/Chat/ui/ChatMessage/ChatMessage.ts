@@ -1,9 +1,9 @@
+import { Block } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/TemplatorClass';
 import { directions, types, type ChatMessageProps } from './model/types';
 import { ChatMessageTemplate } from './template/ChatMessage';
 import { ChatMessagePictureTemplate } from './template/ChatMessagePicture';
 import './ChatMessage.css';
-import { Block } from '@/app/utils/Block.ts';
-import { Templator } from '@/app/utils/TemplatorClass';
 
 const messageTemplate = new Templator(ChatMessageTemplate);
 const messagePictureTemplate = new Templator(ChatMessagePictureTemplate);

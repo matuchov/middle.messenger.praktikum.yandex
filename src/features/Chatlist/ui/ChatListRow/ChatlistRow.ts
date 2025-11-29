@@ -1,9 +1,9 @@
 import { Avatar } from '@/shared/Avatar/';
 import './ChatlistRow.css';
-import { chatListRowTemplate } from './template/ChatlistRow';
 import { Block, type defaultProps } from '@/app/utils/Block';
 
 import { Templator } from '@/app/utils/TemplatorClass';
+import { chatListRowTemplate } from './template/ChatlistRow';
 
 export interface ChatListRowProps extends defaultProps {
   name: string;

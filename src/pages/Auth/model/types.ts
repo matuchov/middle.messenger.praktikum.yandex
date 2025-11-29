@@ -1,7 +1,7 @@
 import type { defaultProps } from '@/app/utils/Block';
 import type { Form } from '@/entities/Form';
 import type { Box } from '@/shared/Box';
-import type { MyButtonProps } from '@/shared/MyButton';
+import type { MyButtonProps } from '@/shared/MyButtonBlock';
 import type { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 import type { MyInput, MyInputProps } from '@/shared/MyInput';
 import type { MyLinkProps } from '@/shared/MyLink';

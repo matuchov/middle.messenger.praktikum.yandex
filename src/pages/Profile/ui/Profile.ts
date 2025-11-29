@@ -3,8 +3,8 @@ import { MyLink } from '@/shared/MyLink';
 import { Form } from '@/entities/Form';
 import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
-import { MyInput } from '@/shared/MyInput/index.ts';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
+import { MyInput } from '@/shared/MyInput/index.ts';
 import { ProfilePatterns } from '../model/pattern';
 import { ProfileTemlpate } from '../template/Profile.ts';
 import type { ProfileProps } from '../model/types';
@@ -15,10 +15,10 @@ const template = new Templator(ProfileTemlpate);
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { page } = props;
-    const { disabled } = ProfilePatterns[page];
+    const { disabled, isValidate } = ProfilePatterns[page];
     const avatar = new Avatar({ size: 'large' });
     const inputsPattern = ProfilePatterns[page].inputs;
-    const inputs = inputsPattern.map((el) => new MyInput({ ...el, disabled }));
+    const inputs = inputsPattern.map((el) => new MyInput({ ...el, disabled, isValidate }));
     const sumbitBtn = ProfilePatterns[page].submitBtn
       ? new MyButtonBlock(ProfilePatterns[page].submitBtn)
       : undefined;
@@ -33,6 +33,7 @@ export class Profile extends Block<ProfileProps> {
     const formContent = new Form({
       formClass: 'profile__form',
       subminBtn: sumbitBtn,
+      formContent: inputs,
       events: {
         submit: {
           listener: (e) => {
@@ -67,8 +68,7 @@ export class Profile extends Block<ProfileProps> {
   }
 
   render() {
-    const { formContent, avatarComponent, links, inputs } = this.children;
-    formContent?.setProps({ formContent: inputs });
+    const { formContent, avatarComponent, links } = this.children;
     return template.compile({ formContent, avatarComponent, links });
   }
 }

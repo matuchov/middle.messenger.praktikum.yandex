@@ -1,33 +1,25 @@
-import { Box } from '@/shared/Box/ui/Box';
-import { AvatarUploadTemplate, Container } from '../template/AvatarUpload.ts';
-import './AvatarUpload.css';
-import { Block, type defaultProps } from '@/app/utils/Block';
+import { Block } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
+import type { AvatarUploadProps } from '../model/types.ts';
+import { AvatarUploadTemplate } from '../template/AvatarUpload.ts';
+import './AvatarUpload.css';
 
-const tepmlate = new Templator(AvatarUploadTemplate);
-const tepmlateContainer = new Templator(Container);
+const template = new Templator(AvatarUploadTemplate);
 
-interface AvatarUploadT extends defaultProps {
-  submitBtn?: MyButtonBlock;
-  box?: Box;
-}
-
-export class AvatarUpload extends Block<AvatarUploadT> {
-  constructor(props: AvatarUploadT) {
+export class AvatarUpload extends Block<AvatarUploadProps> {
+  constructor(props: AvatarUploadProps) {
     const submitBtn = new MyButtonBlock({
       btnText: 'Поменять',
       btnType: 'submit',
+      theme: 'default',
     });
-    const box = new Box({
-      boxClass: 'avatar-upload',
-      children: tepmlate.compile({ submitBtn }),
-    });
-    super({ ...props, box });
+
+    super({ ...props, submitBtn });
   }
 
   render() {
-    const { box } = this.children;
-    return tepmlateContainer.compile({ box });
+    const { submitBtn } = this.children;
+    return template.compile({ submitBtn });
   }
 }

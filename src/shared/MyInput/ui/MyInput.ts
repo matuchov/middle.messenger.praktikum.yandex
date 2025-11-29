@@ -1,28 +1,42 @@
+import { validateInput } from '@/pages/Auth/utils/Validate';
 import { Block } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { itemsStyleClasses, type MyInputProps } from '../model/types';
-import { myInputTemplate } from '../template/MyInput';
+import { clearInputTemplate, myInputTemplate } from '../template/MyInput';
 import './MyInput.css';
-import { validateInput } from '@/pages/Auth/utils/validate';
 
 const template = new Templator(myInputTemplate);
+const cleanTemplate = new Templator(clearInputTemplate);
 
 export class MyInput extends Block<MyInputProps> {
   constructor(props: MyInputProps) {
+    const { isValidate = false } = props;
+    const events = isValidate
+      ? {
+          blur: {
+            listener: () => setTimeout(() => this.validate(), 0),
+            useCapture: true,
+          },
+        }
+      : {};
+
     super({
       ...props,
       events: {
         ...(props.events || {}),
-        blur: {
-          listener: () => setTimeout(() => this.validate(), 0),
-          useCapture: true,
-        },
+        ...events,
       },
     });
   }
 
   public validate() {
-    const input = this.element?.querySelector('input');
+    let input;
+    if (this.element instanceof HTMLInputElement) {
+      input = this.element;
+    } else {
+      input = this.element?.querySelector('input');
+    }
+
     const value = input?.value || '';
     const errorText = validateInput(this.props.name, value);
 
@@ -38,17 +52,18 @@ export class MyInput extends Block<MyInputProps> {
   render() {
     const {
       disabled = false,
-      inputStyle,
+      inputStyle = 'column',
       inputType,
       label,
       name,
       errorText,
       value = '',
+      isClean = false,
+      placeholder,
+      inputClassname,
     } = this.props;
-
     const inputClass = `${itemsStyleClasses[inputStyle]} ${errorText ? 'myInput--error' : ''}`;
-
-    return template.compile({
+    const compileProps = {
       isDisabled: disabled,
       errorText: errorText || '',
       inputClass,
@@ -56,6 +71,10 @@ export class MyInput extends Block<MyInputProps> {
       label,
       name,
       value,
-    });
+      placeholder,
+      inputClassname,
+    };
+
+    return isClean ? cleanTemplate.compile(compileProps) : template.compile(compileProps);
   }
 }

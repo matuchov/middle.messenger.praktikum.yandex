@@ -1,9 +1,9 @@
-import { ChatMessagesTemplate } from './template/ChatMessages';
-import { messages } from './model/messages';
-import { ChatMessage } from '../ChatMessage/ChatMessage';
-import './ChatMessages.css';
 import { Block, type defaultProps } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
+import { ChatMessagesTemplate } from './template/ChatMessages';
+import { messages as messagesData } from './model/messages';
+import { ChatMessage } from '../ChatMessage/ChatMessage';
+import './ChatMessages.css';
 
 const template = new Templator(ChatMessagesTemplate);
 
@@ -12,11 +12,14 @@ interface ChatMessagesProps extends defaultProps {
 }
 
 export class ChatMessages extends Block<ChatMessagesProps> {
-  init() {
-    this.props.messages = messages.map((el) => new ChatMessage(el));
+  constructor(props: ChatMessagesProps) {
+    const messages = messagesData.map((el) => new ChatMessage(el));
+
+    super({ ...props, messages });
   }
 
   render() {
-    return template.compile({ messages: this.getDom(this.props.messages) });
+    const { messages } = this.children;
+    return template.compile({ messages });
   }
 }

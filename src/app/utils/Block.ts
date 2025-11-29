@@ -98,23 +98,12 @@ export class Block<TProps extends defaultProps> {
     this.componentDidMount();
   }
 
-  protected componentDidMount(oldProps?: TProps) {}
+  protected componentDidMount(oldProps?: TProps) {
+    return oldProps;
+  }
 
   dispatchComponentDidMount() {
     this._eventBus.emit(EVENTS.FLOW_CDM);
-  }
-
-  protected getDom<T extends object>(rawElement: Block<T> | Block<T>[] | undefined) {
-    if (!rawElement) return null;
-    const listContainer = document.createDocumentFragment();
-    if (Array.isArray(rawElement)) {
-      rawElement.forEach((el) => {
-        listContainer.appendChild(el.getContent()!);
-      });
-      return listContainer;
-    }
-    listContainer.appendChild(rawElement.getContent()!);
-    return listContainer;
   }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
@@ -124,7 +113,10 @@ export class Block<TProps extends defaultProps> {
   }
 
   protected componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    return true;
+    if (oldProps !== newProps) {
+      return true;
+    }
+    return false;
   }
 
   private _addEvents() {
@@ -170,7 +162,6 @@ export class Block<TProps extends defaultProps> {
       block instanceof DocumentFragment ? (block.firstElementChild as HTMLElement) : block;
     if (this._element && this._element.parentNode) {
       this._element.parentNode?.replaceChild(block, this._element);
-      console.log(this);
     }
     this._element = newElement;
     this._addEvents();
@@ -212,14 +203,14 @@ export class Block<TProps extends defaultProps> {
     const { events = {} } = this.props;
     if (!this._element) return;
 
-    Object.keys(events).forEach((eventName) => {
-      const listener = events[eventName as keyof typeof events]?.listener;
-      const useCapture = events[eventName as keyof typeof events]?.useCapture;
+    Object.entries(events).forEach(([eventName, config]) => {
+      if (!config) return;
+
+      const { listener, useCapture } = config;
+
       if (!listener) return;
-      if (useCapture !== undefined) {
-        this._element!.removeEventListener(eventName, listener, useCapture);
-      }
-      this._element!.removeEventListener(eventName, listener);
+
+      this._element!.removeEventListener(eventName, listener as EventListener, useCapture);
     });
   }
 
@@ -235,19 +226,5 @@ export class Block<TProps extends defaultProps> {
         child.destroy();
       }
     });
-  }
-
-  protected compile<T extends object>(Item: typeof Block<T>, data: T | T[]) {
-    if (Array.isArray(data)) {
-      const container = new DocumentFragment();
-      data.forEach((bl) => {
-        const el = new Item({ ...bl });
-        container.append(el.getContent()!);
-      });
-
-      return container;
-    }
-
-    return new Item(data).getContent();
   }
 }

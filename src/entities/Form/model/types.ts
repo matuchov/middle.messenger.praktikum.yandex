@@ -1,6 +1,6 @@
 import type { defaultProps } from '@/app/utils/Block';
 import type { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
-import type { MyInput, MyInputProps } from '@/shared/MyInput';
+import type { MyInput } from '@/shared/MyInput';
 
 export interface FormProps extends defaultProps {
   formClass?: string;

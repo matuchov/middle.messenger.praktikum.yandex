@@ -1,9 +1,9 @@
 import type { defaultProps } from '@/app/utils/Block';
+import type { DropdownItem } from '../ui/DropdownItem/DropdownTtem';
 
-interface icon {
-  iconSrc: string;
+interface item {
+  itemSrc: string;
   itemText: string;
-  onclick: string;
 }
 
 export const directions = {
@@ -14,7 +14,8 @@ export const directions = {
 };
 
 export interface DropdownProps extends defaultProps {
-  icons: icon[];
+  items: item[];
+  itemsBlock?: DropdownItem[];
   btnIconSrc?: string;
   onclick?: string;
   direction: keyof typeof directions;

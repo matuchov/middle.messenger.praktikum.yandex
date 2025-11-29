@@ -1,9 +1,8 @@
-import type { MyButtonProps } from '../model/types';
-
-import './MyButton.css';
 import { Block } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonIconTemlpate, MyButtonTemplate } from '../template/MyButtonTemplate';
+import type { MyButtonProps } from '../model/types';
+import './MyButton.css';
 
 const iconTemlpate = new Templator(MyButtonIconTemlpate);
 const buttonTemplate = new Templator(MyButtonTemplate);

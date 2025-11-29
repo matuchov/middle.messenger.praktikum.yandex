@@ -92,12 +92,12 @@ export class Templator {
     }
   }
 
-  private _processTextNode(node: Node, ctx: Props) {
+  private _processTextNode(intNode: Node, ctx: Props) {
+    let node = intNode;
     let text = node.textContent || '';
-
     let match;
     this._regExes.double.lastIndex = 0;
-
+    // eslint-disable-next-line no-cond-assign
     while ((match = this._regExes.double.exec(text)) !== null) {
       const [fullMatch, key] = match;
       const { index } = match;

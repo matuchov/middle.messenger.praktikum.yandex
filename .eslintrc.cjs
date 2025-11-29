@@ -20,17 +20,14 @@ module.exports = {
       },
     ],
     'import/extensions': 'off',
-    'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn'],
     'no-underscore-dangle': 'off',
-    'no-restricted-syntax': 'off',
     'class-methods-use-this': 'off',
-    'no-use-before-define': 'off',
+    'no-cond-assign': ['error', 'except-parens'],
   },
   settings: {
     'import/resolver': {
-      typescript: {}, // чтобы ESLint понимал TS alias'ы
+      typescript: {},
     },
   },
 };

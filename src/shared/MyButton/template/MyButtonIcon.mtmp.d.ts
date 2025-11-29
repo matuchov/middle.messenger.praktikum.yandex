@@ -1,1 +1,0 @@
-export default function render(data?: { iconSrc: string;iconClass: string; }): string

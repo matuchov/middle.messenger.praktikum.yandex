@@ -1,5 +1,5 @@
 import type { MyInputProps } from '@/shared/MyInput';
-import type { MyButtonProps } from '@/shared/MyButton';
+import type { MyButtonProps } from '@/shared/MyButtonBlock';
 import type { MyLinkProps } from '@/shared/MyLink';
 import type { pageTypes } from './types';
 
@@ -8,6 +8,7 @@ type ProfilePattern = {
   submitBtn?: MyButtonProps;
   links?: MyLinkProps[];
   disabled: boolean;
+  isValidate?: boolean;
 };
 type ProfilePatternsType = Record<pageTypes, ProfilePattern>;
 
@@ -53,8 +54,9 @@ const profileInputs: MyInputProps[] = [
 export const ProfilePatterns: ProfilePatternsType = {
   edit: {
     inputs: profileInputs,
-    submitBtn: { btnText: 'Сохранить', btnType: 'submit' },
+    submitBtn: { btnText: 'Сохранить', btnType: 'submit', theme: 'default' },
     disabled: false,
+    isValidate: true,
     links: [
       {
         linkText: 'Отмена',
@@ -85,6 +87,7 @@ export const ProfilePatterns: ProfilePatternsType = {
     ],
   },
   changepass: {
+    isValidate: true,
     inputs: [
       {
         name: 'oldPassword',
@@ -100,6 +103,6 @@ export const ProfilePatterns: ProfilePatternsType = {
       },
     ],
     disabled: false,
-    submitBtn: { btnText: 'Сохранить', btnType: 'submit' },
+    submitBtn: { btnText: 'Сохранить', btnType: 'submit', theme: 'default' },
   },
 };

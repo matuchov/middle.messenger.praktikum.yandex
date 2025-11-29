@@ -7,10 +7,9 @@ export function handleRoute() {
 
   if (routes[path]) {
     el = routes[path];
+  } else {
+    el = () => new ErrorPage({ error: '404' }).getContent()!;
   }
-  // } else {
-  //   el = ErrorPage({ error: '404' });
-  // }
 
-  document.querySelector<HTMLDivElement>('#app')!.appendChild(el()!);
+  document.querySelector<HTMLDivElement>('#app')!.appendChild(el());
 }

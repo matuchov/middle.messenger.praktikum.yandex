@@ -1,7 +1,7 @@
 import { Block } from '@/app/utils/Block';
+import { Templator } from '@/app/utils/TemplatorClass';
 import type { MyLinkProps } from '../model/types';
 import MyLinkTemlpate from '../template/MyLink';
-import { Templator } from '@/app/utils/TemplatorClass';
 
 const tepmlate = new Templator(MyLinkTemlpate);
 

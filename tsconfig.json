@@ -18,6 +18,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
@@ -26,6 +29,5 @@
       "@/*": ["src/*"],
       "~components/*": ["src/components/*"]
     }
-  },
-  "include": ["src"]
+  }
 }

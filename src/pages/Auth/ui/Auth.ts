@@ -15,7 +15,7 @@ export class Auth extends Block<AuthProps> {
   constructor(props: AuthProps) {
     const { page } = props;
 
-    const inputs = AuthPatterns[page].inputs.map((el) => new MyInput(el));
+    const inputs = AuthPatterns[page].inputs.map((el) => new MyInput({ ...el, isValidate: true }));
     const subminBtn = new MyButtonBlock(AuthPatterns[page].button);
     const form = new Form({
       formClass: 'auth__form',
@@ -34,8 +34,6 @@ export class Auth extends Block<AuthProps> {
       boxClass: 'auth__box',
       children: form,
     });
-
-    console.log(box);
 
     super({ ...props, inputs, subminBtn, form, box });
   }
@@ -58,8 +56,6 @@ export class Auth extends Block<AuthProps> {
   }
 
   render() {
-    console.log(this.children);
-
     return template.compile({
       pageContent: this.children.box,
     });
