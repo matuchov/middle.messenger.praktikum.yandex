@@ -1,11 +1,21 @@
 import { Chat } from '@/widgets/Chat/ui/Chat';
-import ChatPageTemlpate from '../template/ChatPage.mtmp';
 import { Sidebar } from '@/widgets/Sidebar/ui/Sidebar';
+import { Block, type defaultProps } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/TemplatorClass';
+import { ChatPageTemlpate } from '../template/ChatPage';
+import type { ChatPageProps } from '../model/types';
 
-export const ChatPage = () => {
-  const chat = Chat();
+const template = new Templator(ChatPageTemlpate);
 
-  const sidebar = Sidebar();
+export class ChatPage extends Block<ChatPageProps> {
+  constructor(props: defaultProps) {
+    const chat = new Chat({});
+    const sidebar = new Sidebar({});
+    super({ ...props, chat, sidebar });
+  }
 
-  return ChatPageTemlpate({ chat, sidebar });
-};
+  render() {
+    const { chat, sidebar } = this.children;
+    return template.compile({ chat, sidebar });
+  }
+}

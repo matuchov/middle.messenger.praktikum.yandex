@@ -1,5 +1,5 @@
 .avatar-upload {
-  margin: auto auto;
+  margin: auto;
   min-width: 340px;
   min-height: 257px;
   display: flex;
@@ -9,6 +9,7 @@
   align-items: center;
   gap: 60px;
 }
+
 .avatar-upload__form {
   display: flex;
   flex-direction: column;

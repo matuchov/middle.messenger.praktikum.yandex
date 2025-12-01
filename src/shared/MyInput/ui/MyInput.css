@@ -52,7 +52,7 @@
 }
 
 .myInput__error {
-  display: none;
+  display: block;
   padding-top: 5px;
   color: var(--warning-color);
   font-size: 11px;

@@ -1,22 +1,63 @@
-import { MyButton } from '@/shared/MyButton/ui/MyButton';
-import { MyLink } from '@/shared/MyLink';
 import { Form } from '@/entities/Form';
 import { Box } from '@/shared/Box';
-import AuthTemplate from '../template/Auth.mtmp';
+import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block.ts';
+import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
+import { MyInput } from '@/shared/MyInput/index.ts';
 import type { AuthProps } from '../model/types';
-import './Auth.css';
+import { authTemplate } from '../template/Auth.ts';
 import { AuthPatterns } from '../model/pattern';
+import './Auth.css';
 
-export const Auth = ({ page }: AuthProps) => {
-  const inputs = AuthPatterns[page].inputs;
-  const subminBtn = MyButton(AuthPatterns[page].button);
-  const link = MyLink(AuthPatterns[page].link);
+const template = new Templator(authTemplate);
 
-  const form = Form({
-    inputs,
-    formClass: 'auth__form',
-    subminBtn: subminBtn,
-  });
+export class Auth extends Block<AuthProps> {
+  constructor(props: AuthProps) {
+    const { page } = props;
 
-  return AuthTemplate({ children: Box({ children: form + link, boxClass: 'auth__box' }) });
-};
+    const inputs = AuthPatterns[page].inputs.map((el) => new MyInput({ ...el, isValidate: true }));
+    const subminBtn = new MyButtonBlock(AuthPatterns[page].button);
+    const form = new Form({
+      formClass: 'auth__form',
+      formContent: inputs,
+      subminBtn,
+      events: {
+        submit: {
+          listener: (e) => {
+            this.onSubmit(e);
+          },
+        },
+      },
+    });
+
+    const box = new Box({
+      boxClass: 'auth__box',
+      children: form,
+    });
+
+    super({ ...props, inputs, subminBtn, form, box });
+  }
+
+  protected onSubmit(e: SubmitEvent) {
+    e.preventDefault();
+    let isValid = true;
+    this.children.inputs?.forEach((el) => {
+      if (el instanceof MyInput) {
+        if (el.validate() === false) {
+          isValid = false;
+        }
+      }
+    });
+
+    if (isValid && e.target instanceof HTMLFormElement) {
+      const data = new FormData(e.target);
+      console.log([...data.entries()]);
+    }
+  }
+
+  render() {
+    return template.compile({
+      pageContent: this.children.box,
+    });
+  }
+}

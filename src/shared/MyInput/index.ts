@@ -1,2 +1,2 @@
-export { MyInput } from "./ui/MyInput";
-export type { MyInputProps } from "./model/types";
+export { MyInput } from './ui/MyInput';
+export type { MyInputProps } from './model/types';

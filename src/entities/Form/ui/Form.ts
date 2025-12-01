@@ -1,27 +1,22 @@
-import { MyButton } from '@/shared/MyButton';
+import { Block } from '@/app/utils/Block';
+import { Templator } from '@/app/utils/TemplatorClass';
 import type { FormProps } from '../model/types';
-import FormTemlpate from '../template/Form.mtmp';
-import { MyInput } from '@/shared/MyInput';
+import { formTemlpate } from '../template/Form';
 
-export const Form = ({
-  inputs,
-  formClass = '',
-  formAction = '',
-  formMetod = 'post',
-  subminBtn = MyButton({ btnType: 'submit', btnText: 'Отправить' }),
-  disabled = false,
-}: FormProps) => {
-  if (disabled) {
-    inputs = inputs.map((el) => ({ ...el, disabled: true }));
+const temlpate = new Templator(formTemlpate);
+
+export class Form extends Block<FormProps> {
+  render() {
+    const { formClass, formAction, formMetod = 'post' } = this.props;
+
+    const { formContent, subminBtn } = this.children;
+
+    return temlpate.compile({
+      formAction,
+      formClass,
+      formContent,
+      formMetod,
+      subminBtn,
+    });
   }
-
-  const formContent = inputs.map(MyInput).join('');
-
-  return FormTemlpate({
-    formAction,
-    formClass,
-    formContent,
-    formMetod,
-    subminBtn,
-  });
-};
+}

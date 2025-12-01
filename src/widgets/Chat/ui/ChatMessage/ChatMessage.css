@@ -19,20 +19,22 @@
   color: var(--secondary-color);
   align-self: end;
 }
+
 .chat__message--inbox {
-  border-top-left-radius: 0px;
+  border-top-left-radius: 0;
   max-width: 400px;
   margin-right: 100px;
   background-color: var(--background-color);
 }
+
 .chat__message--sent {
-  justify-self: end;
-  align-self: flex-end;
+  place-self: flex-end end;
   margin-left: 100px;
   padding-right: 55px;
   background-color: var(--background-color);
-  border-bottom-right-radius: 0px;
+  border-bottom-right-radius: 0;
 }
+
 .chat__message--picture {
   padding: 0;
   overflow: hidden;

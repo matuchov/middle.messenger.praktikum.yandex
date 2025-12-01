@@ -1,14 +1,9 @@
-interface icon {
-  iconSrc: string;
-  itemText: string;
-  onclick: string;
-}
+import type { defaultProps } from '@/app/utils/Block';
+import type { DropdownItem } from '../ui/DropdownItem/DropdownTtem';
 
-export interface DropdownProps {
-  icons: icon[];
-  btnIconSrc?: string;
-  onclick?: string;
-  direction: keyof typeof directions;
+interface item {
+  itemSrc: string;
+  itemText: string;
 }
 
 export const directions = {
@@ -17,3 +12,11 @@ export const directions = {
   bottomLeft: 'dropdown__container--bottom',
   bottomRight: 'dropdown__container--bottom dropdown__container--right',
 };
+
+export interface DropdownProps extends defaultProps {
+  items: item[];
+  itemsBlock?: DropdownItem[];
+  btnIconSrc?: string;
+  onclick?: string;
+  direction: keyof typeof directions;
+}

@@ -1,9 +1,20 @@
+import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block';
 import { ChatlistData } from '../../model/ChatlistData';
 import { ChatListRow } from '../ChatListRow/ChatlistRow';
-import ChatlistTemplate from './template/Chatlist.mtmp';
+import { chatlistTemplate } from './template/Chatlist';
+import type { ChatlistProps } from '../../model/types';
 
-export const Chatlist = () => {
-  return ChatlistTemplate({
-    chatlistRows: ChatlistData.map((el) => ChatListRow(el)).join(''),
-  });
-};
+const tepmlate = new Templator(chatlistTemplate);
+
+export class Chatlist extends Block<ChatlistProps> {
+  constructor() {
+    const chatlistRows = ChatlistData.map((item) => new ChatListRow(item));
+    super({ chatlistRows });
+  }
+
+  render() {
+    const { chatlistRows } = this.children;
+    return tepmlate.compile({ chatlistRows });
+  }
+}

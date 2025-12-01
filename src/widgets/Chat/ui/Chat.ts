@@ -1,35 +1,25 @@
-import ChatTemplate from '../template/Chat.mtmp';
+import { Block } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/TemplatorClass';
+import { ChatTemplate } from '../template/Chat';
 import { ChatHeader } from './ChatHeader/ChatHeader';
-import { Avatar } from '@/shared/Avatar';
-import { Dropdown } from '@/shared/Dropdown';
 import { ChatMessages } from './ChatMessages/ChatMessages';
 import { ChatFooter } from './ChatFooter/ChatFooter';
 import './Chat.css';
+import type { ChatProps } from '../model/types';
 
-export const Chat = () => {
-  const content =
-    ChatHeader({
-      avatarComponent: Avatar({}),
-      dropdownComponent: Dropdown({
-        direction: 'bottomRight',
-        icons: [
-          {
-            iconSrc: '/assets/addUser.svg',
-            itemText: 'Добавить пользователя',
-            onclick: '',
-          },
-          {
-            iconSrc: '/assets/deleteUser.svg',
-            itemText: 'Удалить пользователя',
-            onclick: '',
-          },
-        ],
-        btnIconSrc: '/assets/dots.svg',
-      }),
-      name: 'Имя',
-    }) +
-    ChatMessages() +
-    ChatFooter();
+const template = new Templator(ChatTemplate);
 
-  return ChatTemplate({ content });
-};
+export class Chat extends Block<ChatProps> {
+  constructor(props: ChatProps) {
+    const header = new ChatHeader({});
+    const messages = new ChatMessages({});
+    const footer = new ChatFooter({});
+    super({ ...props, header, messages, footer });
+  }
+
+  render() {
+    const { header, messages, footer } = this.children;
+
+    return template.compile({ header, messages, footer });
+  }
+}

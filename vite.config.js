@@ -1,10 +1,8 @@
 import path from 'path';
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from 'vite';
-import vitePluginMtmp from './vite-plugin-mtmp';
 
 export default defineConfig({
-  plugins: [vitePluginMtmp()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -16,4 +14,5 @@ export default defineConfig({
   preview: {
     port: 3000,
   },
+  assetsInclude: ['**/*.tple'],
 });
