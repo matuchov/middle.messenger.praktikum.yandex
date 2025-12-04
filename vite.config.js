@@ -10,6 +10,14 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    proxy: {
+      '/api': {
+        target: 'https://ya-praktikum.tech',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost',
+      },
+    },
   },
   preview: {
     port: 3000,

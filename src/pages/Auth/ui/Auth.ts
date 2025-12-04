@@ -8,13 +8,15 @@ import type { AuthProps } from '../model/types';
 import { authTemplate } from '../template/Auth.ts';
 import { AuthPatterns } from '../model/pattern';
 import './Auth.css';
+import { AuthAPI } from '../model/api/authApi.ts';
 
 const template = new Templator(authTemplate);
+
+const api = new AuthAPI();
 
 export class Auth extends Block<AuthProps> {
   constructor(props: AuthProps) {
     const { page } = props;
-
     const inputs = AuthPatterns[page].inputs.map((el) => new MyInput({ ...el, isValidate: true }));
     const subminBtn = new MyButtonBlock(AuthPatterns[page].button);
     const form = new Form({
@@ -50,8 +52,13 @@ export class Auth extends Block<AuthProps> {
     });
 
     if (isValid && e.target instanceof HTMLFormElement) {
-      const data = new FormData(e.target);
-      console.log([...data.entries()]);
+      const page = this.props.page;
+      const data = Object.fromEntries(new FormData(e.target));
+      if (page === 'login') {
+        api.singin(data);
+      } else if (page === 'registration') {
+        api.singup(data);
+      }
     }
   }
 
