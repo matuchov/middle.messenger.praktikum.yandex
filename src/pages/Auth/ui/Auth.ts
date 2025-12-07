@@ -8,7 +8,7 @@ import type { AuthProps } from '../model/types';
 import { authTemplate } from '../template/Auth.ts';
 import { AuthPatterns } from '../model/pattern';
 import './Auth.css';
-import { AuthAPI } from '../model/api/authApi.ts';
+import { AuthAPI } from '../api/authApi.ts';
 
 const template = new Templator(authTemplate);
 

@@ -1,5 +1,8 @@
 import { ErrorPage } from '@/pages/ErrorPage';
 import { routes } from './routes';
+import { UserApi } from '@/entities/Session/api/SessionApi';
+
+const userApi = new UserApi();
 
 const handleRoute = (href: string) => {
   let el;
@@ -13,7 +16,6 @@ const handleRoute = (href: string) => {
 };
 
 export const init = () => {
-  handleRoute(window.location.pathname);
   document.addEventListener('click', (event) => {
     const target = event?.target;
     let link;
@@ -25,5 +27,8 @@ export const init = () => {
     event.preventDefault();
     window.history.pushState({}, '', href);
     handleRoute(href);
+  });
+  userApi.getUser().finally(() => {
+    handleRoute(window.location.pathname);
   });
 };
