@@ -9,7 +9,6 @@ export class SessionApi {
   }
   getUser() {
     const res = this.authAPIInstance.get(API_URL + '/auth/user', {});
-
     return res;
   }
   logout() {

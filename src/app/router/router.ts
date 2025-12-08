@@ -1,8 +1,10 @@
 import { ErrorPage } from '@/pages/ErrorPage';
 import { routes } from './routes';
-import { UserApi } from '@/entities/Session/api/SessionApi';
+import { SessionApi } from '@/entities/Session/api/SessionApi';
+import { SessionController } from '@/entities/Session';
+import store from '../store/store';
 
-const userApi = new UserApi();
+const session = new SessionController();
 
 const handleRoute = (href: string) => {
   let el;
@@ -28,7 +30,8 @@ export const init = () => {
     window.history.pushState({}, '', href);
     handleRoute(href);
   });
-  userApi.getUser().finally(() => {
+  session.getUser().finally(() => {
+    console.log(store.getState());
     handleRoute(window.location.pathname);
   });
 };

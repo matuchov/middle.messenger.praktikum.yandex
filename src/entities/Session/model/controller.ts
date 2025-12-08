@@ -5,14 +5,17 @@ const sessionAPI = new SessionApi();
 
 export class SessionController {
   public getUser() {
-    sessionAPI.getUser().then((res) => {
+    const res = sessionAPI.getUser();
+
+    res.then((res) => {
       const user = JSON.parse(res as string);
+
       if (Object.hasOwn(user, 'id')) {
         store.set({ user });
       } else {
         store.set({ user: null });
       }
-      console.log(user);
     });
+    return res;
   }
 }

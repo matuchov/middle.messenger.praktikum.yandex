@@ -12,12 +12,14 @@ class Store extends EventBus<Record<string, unknown[]>> {
   }
 
   private state: IStore = {};
+  public getState() {
+    return this.state;
+  }
 
   public set(value: unknown) {
     Object.assign(this.state, value);
 
     this.emit(StoreEvents.Updated);
-    console.log(this.state);
   }
 }
 
