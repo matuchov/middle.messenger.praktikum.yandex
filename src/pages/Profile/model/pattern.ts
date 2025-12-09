@@ -2,7 +2,6 @@ import type { MyInputProps } from '@/shared/MyInput';
 import type { MyButtonProps } from '@/shared/MyButtonBlock';
 import type { MyLinkProps } from '@/shared/MyLink';
 import type { pageTypes } from './types';
-import store from '@/app/store/store';
 
 type ProfilePattern = {
   inputs: MyInputProps[];
@@ -12,10 +11,6 @@ type ProfilePattern = {
   isValidate?: boolean;
 };
 type ProfilePatternsType = Record<pageTypes, ProfilePattern>;
-
-const user = store.getState().user;
-
-console.log(store.getState());
 
 const profileInputs: MyInputProps[] = [
   {

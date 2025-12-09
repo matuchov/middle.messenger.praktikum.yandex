@@ -1,15 +1,20 @@
-import store from '@/app/store/store';
-import type { Block } from '@/app/utils/Block';
+import store, { StoreEvents } from '@/app/store/store';
+import type { IStore } from '@/app/store/storeType';
+import type { Block, defaultProps } from '@/app/utils/Block';
 
-function connect(Component: typeof Block) {
+export function connect<const T extends defaultProps>(
+  Component: typeof Block,
+  mapStateToProps: (state: IStore) => IStore
+) {
   // используем class expression
-  return class extends Component<Record<string, unknown>> {
-    constructor(...args) {
-      super(...args);
+  return class extends Component<T> {
+    constructor(props: T) {
+      super({ ...props, ...mapStateToProps(store.getState()) });
 
+      // подписываемся на событие
       store.on(StoreEvents.Updated, () => {
         // вызываем обновление компонента, передав данные из хранилища
-        this.setProps({ ...store.getState() });
+        this.setProps({ ...mapStateToProps(store.getState()) });
       });
     }
   };

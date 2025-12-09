@@ -9,8 +9,12 @@ import { ProfilePatterns } from '../model/pattern';
 import { ProfileTemlpate } from '../template/Profile.ts';
 import type { ProfileProps } from '../model/types';
 import './Profile.css';
+import { connect } from '@/shared/utils/connect/model/connect.ts';
+import type { IStore } from '@/app/store/storeType.ts';
+import { ProfileController } from '../model/controller.ts';
 
 const template = new Templator(ProfileTemlpate);
+const profileController = new ProfileController();
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
@@ -62,13 +66,23 @@ export class Profile extends Block<ProfileProps> {
     });
 
     if (isValid && e.target instanceof HTMLFormElement) {
-      const data = new FormData(e.target);
-      console.log([...data.entries()]);
+      profileController.changeUser(e.target);
     }
   }
 
   render() {
-    const { formContent, avatarComponent, links } = this.children;
+    const { formContent, avatarComponent, links, inputs } = this.children;
+    inputs?.forEach((el) => {
+      el.setProps({ value: this.props.user[el.props.name] });
+    });
     return template.compile({ formContent, avatarComponent, links });
   }
 }
+
+function mapUserToProps(state: IStore) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(Profile, mapUserToProps);
