@@ -1,3 +1,3 @@
-import { Chatlist } from './ui/Chatlist/Chatlist';
+import Chatlist from './ui/Chatlist/Chatlist';
 
 export { Chatlist };

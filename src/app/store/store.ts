@@ -16,10 +16,11 @@ class Store extends EventBus<Record<string, unknown[]>> {
     return this.state;
   }
 
-  public set(value: unknown) {
+  public set(value: Partial<IStore>) {
     Object.assign(this.state, value);
 
     this.emit(StoreEvents.Updated);
+    console.log(this.state);
   }
 }
 

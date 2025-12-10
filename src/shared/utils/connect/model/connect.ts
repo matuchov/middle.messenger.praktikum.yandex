@@ -13,7 +13,6 @@ export function connect<const T extends defaultProps>(
 
       // подписываемся на событие
       store.on(StoreEvents.Updated, () => {
-        // вызываем обновление компонента, передав данные из хранилища
         this.setProps({ ...mapStateToProps(store.getState()) });
       });
     }

@@ -9,14 +9,17 @@ export class ChatlisController {
     const res = chatlistAPI.getChats();
 
     res.then((res) => {
-      const chatList: IChatlistResponce[] = JSON.parse(res as string);
+      const chatlist: IChatlistResponce[] = JSON.parse(res as string);
 
-      if (Array.isArray(chatList)) {
-        store.set({ chatList });
+      if (Array.isArray(chatlist)) {
+        store.set({ chatlist });
       } else {
-        store.set({ chatList: null });
+        store.set({ chatlist: null });
       }
     });
     return res;
+  }
+  public setCurentChat(chatId: number) {
+    store.set({ curentChatId: chatId });
   }
 }

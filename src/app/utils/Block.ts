@@ -82,7 +82,11 @@ export class Block<TProps extends defaultProps> {
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
-      } else if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
+      } else if (
+        Array.isArray(value) &&
+        value.length > 0 &&
+        value.every((v) => v instanceof Block)
+      ) {
         children[key] = value;
       } else {
         props[key] = value;
@@ -146,9 +150,10 @@ export class Block<TProps extends defaultProps> {
       this.renderFlag = true;
       Object.assign(this.props, props);
       this.renderFlag = false;
+
       this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, this.props);
     } else if (Object.keys(children).length) {
-      this._eventBus.emit(EVENTS.FLOW_CDU, this.props, this.props);
+      this._eventBus.emit(EVENTS.FLOW_CDU, { ...this.props }, this.props);
     }
   }
 
