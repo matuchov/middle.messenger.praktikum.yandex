@@ -20,9 +20,13 @@ export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { page } = props;
     const { disabled, isValidate } = ProfilePatterns[page];
+    const { user } = props;
     const avatar = new Avatar({ size: 'large' });
     const inputsPattern = ProfilePatterns[page].inputs;
-    const inputs = inputsPattern.map((el) => new MyInput({ ...el, disabled, isValidate }));
+    const inputs = inputsPattern.map((el) => {
+      const value = user[el.name];
+      return new MyInput({ ...el, disabled, isValidate, value });
+    });
     const sumbitBtn = ProfilePatterns[page].submitBtn
       ? new MyButtonBlock(ProfilePatterns[page].submitBtn)
       : undefined;
@@ -70,11 +74,16 @@ export class Profile extends Block<ProfileProps> {
     }
   }
 
-  render() {
-    const { formContent, avatarComponent, links, inputs } = this.children;
-    inputs?.forEach((el) => {
-      el.setProps({ value: this.props.user[el.props.name] });
+  protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
+    this.children.inputs?.forEach((el) => {
+      el.setProps({ value: newProps.user[el.props.name] });
     });
+    return true;
+  }
+
+  render() {
+    const { formContent, avatarComponent, links } = this.children;
+
     return template.compile({ formContent, avatarComponent, links });
   }
 }
