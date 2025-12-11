@@ -136,6 +136,8 @@ export class Block<TProps extends defaultProps> {
   }
 
   setProps(nextProps: Partial<TProps>) {
+    console.log(nextProps);
+
     if (!nextProps) return;
 
     const { children, props } = this._getChildren(nextProps as TProps);

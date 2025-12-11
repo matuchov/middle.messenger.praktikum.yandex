@@ -27,19 +27,32 @@ export class Sidebar extends Block<SidebarProps> {
         },
       },
     });
+    const addUserBtn = new MyButtonBlock({
+      btnType: 'button',
+      theme: 'default',
+      btnText: 'Привязать пользователя',
+      events: {
+        click: {
+          listener: () => {
+            controller.addUser();
+          },
+        },
+      },
+    });
     const link = new MyLink({ linkText: 'Профиль', linkHref: '/profile' });
     const search = new Search({ value: '' });
     const shatlist = new Chatlist({});
-    super({ ...props, link, search, shatlist, addChatBtn });
+    super({ ...props, link, search, shatlist, addChatBtn, addUserBtn });
   }
 
   render() {
-    const { link, search, shatlist, addChatBtn } = this.children;
+    const { link, search, shatlist, addChatBtn, addUserBtn } = this.children;
     return template.compile({
       addChatBtn,
       link,
       search,
       shatlist,
+      addUserBtn,
     });
   }
 }

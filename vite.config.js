@@ -17,6 +17,12 @@ export default defineConfig({
         secure: false,
         cookieDomainRewrite: 'localhost',
       },
+      '/ws': {
+        target: 'wss://ya-praktikum.tech',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost',
+      },
     },
   },
   preview: {

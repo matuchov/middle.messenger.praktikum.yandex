@@ -1,4 +1,4 @@
-import { Chat } from '@/widgets/Chat/ui/Chat';
+import { Chat } from '@/widgets/Chat/';
 import { Sidebar } from '@/widgets/Sidebar/ui/Sidebar';
 import { Block, type defaultProps } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';

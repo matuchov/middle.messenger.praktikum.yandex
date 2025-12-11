@@ -11,4 +11,12 @@ export class SidebarAPI {
     const res = this.api.post(API_URL + '/chats', { data });
     return res;
   }
+  addUser(chatId: number) {
+    this.api.put(API_URL + '/chats/users', {
+      data: {
+        users: [5269],
+        chatId: chatId,
+      },
+    });
+  }
 }

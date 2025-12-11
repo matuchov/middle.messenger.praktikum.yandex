@@ -14,7 +14,6 @@ interface ChatMessagesProps extends defaultProps {
 export class ChatMessages extends Block<ChatMessagesProps> {
   constructor(props: ChatMessagesProps) {
     const messages = messagesData.map((el) => new ChatMessage(el));
-
     super({ ...props, messages });
   }
 

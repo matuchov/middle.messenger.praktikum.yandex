@@ -15,4 +15,9 @@ export class SidebarController {
     });
     return res;
   }
+  addUser() {
+    store.getState().chatlist?.forEach((chat) => {
+      sidebarAPI.addUser(chat.id);
+    });
+  }
 }
