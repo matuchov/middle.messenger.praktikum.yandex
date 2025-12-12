@@ -2,16 +2,15 @@ import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { ChatTemplate } from '../template/Chat';
 import { ChatHeader } from './ChatHeader/ChatHeader';
-import { ChatMessages } from './ChatMessages/ChatMessages';
+import ChatMessages from './ChatMessages/ChatMessages';
 import { ChatFooter } from './ChatFooter/ChatFooter';
 import './Chat.css';
 import type { ChatProps } from '../model/types';
-import { ChatApi } from '../ChatApi/ChatApi';
 import { connect } from '@/shared/utils/connect/model/connect';
 import type { IStore } from '@/app/store/storeType';
+import controller from '../model/ChatController';
 
 const template = new Templator(ChatTemplate);
-const api = new ChatApi();
 
 class Chat extends Block<ChatProps> {
   constructor(props: ChatProps) {
@@ -22,8 +21,11 @@ class Chat extends Block<ChatProps> {
   }
 
   protected componentDidUpdate(oldProps: ChatProps, newProps: ChatProps): boolean {
-    console.log(newProps);
-    api.openSocket(newProps.curentChatId);
+    if (oldProps.curentChatId === newProps.curentChatId) {
+      return false;
+    }
+    controller.clearMessages();
+    controller.openSocket(newProps.curentChatId);
     return true;
   }
 

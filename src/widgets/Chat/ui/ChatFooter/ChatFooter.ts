@@ -8,6 +8,7 @@ import { ChatFooterTemplate } from './template/ChatFooter';
 import type { ChatFooterProps } from './model/types';
 import { footerDropdown } from './model/footerDropdown';
 import './ChatFooter.css';
+import controller from '../../model/ChatController';
 
 const template = new Templator(ChatFooterTemplate);
 
@@ -58,6 +59,7 @@ export class ChatFooter extends Block<ChatFooterProps> {
 
     if (isValid && e.target instanceof HTMLFormElement) {
       const data = new FormData(e.target);
+      controller.sendMessage([...data.entries()][0][1]);
       console.log([...data.entries()]);
     }
   }
