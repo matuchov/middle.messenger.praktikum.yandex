@@ -5,14 +5,16 @@ export const directions = {
   sent: 'chat__message--sent',
 };
 
-export const types = {
+export const messageTypes = {
   text: '',
   picture: 'chat__message--picture',
 };
 
 export interface ChatMessageProps extends defaultProps {
   messageText: string;
-  type: keyof typeof types;
+  type: keyof typeof messageTypes;
   direction: keyof typeof directions;
   src?: string;
+  time?: string;
+  author?: string;
 }

@@ -3,12 +3,11 @@ import { MyLink } from '@/shared/MyLink';
 import { Search } from '@/features/Search';
 import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
-
-import { sidebarTemplate } from '../template/SidebarTemplate';
-import './Sidebar.css';
-import type { SidebarProps } from '../model/types';
 import { MyButtonBlock } from '@/shared/MyButtonBlock';
+import { sidebarTemplate } from '../template/SidebarTemplate';
+import type { SidebarProps } from '../model/types';
 import { SidebarController } from '../model/SidebarCotroller';
+import './Sidebar.css';
 
 const template = new Templator(sidebarTemplate);
 const controller = new SidebarController();

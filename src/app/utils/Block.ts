@@ -1,4 +1,5 @@
 import { EventBus } from './EventBus';
+import { isEqual } from './isEqual';
 
 const EVENTS = {
   INIT: 'init',
@@ -111,17 +112,14 @@ export class Block<TProps extends defaultProps> {
   }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    this.componentDidUpdate(oldProps, newProps);
-
-    this._eventBus.emit(EVENTS.FLOW_RENDER);
-  }
-
-  protected componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    if (oldProps !== newProps) {
-      return true;
+    const equal = isEqual(oldProps, newProps);
+    if (!equal) {
+      this.componentDidUpdate(oldProps, newProps);
+      this._eventBus.emit(EVENTS.FLOW_RENDER);
     }
-    return false;
   }
+
+  protected componentDidUpdate(oldProps: TProps, newProps: TProps) {}
 
   private _addEvents() {
     const { events = {} } = this.props;

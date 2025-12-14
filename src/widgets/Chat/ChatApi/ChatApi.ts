@@ -21,4 +21,7 @@ export class ChatApi {
     console.log(`Connecting to: ${API_WS_URL}/chats/${userId}/${chatId}/${token}`);
     return new WebSocket(`${API_WS_URL}/chats/${userId}/${chatId}/${token}`);
   }
+  getChatUsers(id: number) {
+    return this.authAPIInstance.get(`${API_URL}/chats/${id}/users`, {});
+  }
 }

@@ -8,6 +8,7 @@ class ChatController {
   private pingInterval: ReturnType<typeof setInterval> | null = null;
 
   public async openSocket(chatId?: number) {
+    store.set({ isChatLoading: true });
     const userId = store.getState().user?.id;
 
     if (!userId || !chatId) {
@@ -17,7 +18,7 @@ class ChatController {
     try {
       const res = await chatApi.getToken(chatId);
       const token = typeof res === 'string' ? JSON.parse(res).token : res.token;
-
+      this.getChatUsers(chatId);
       if (this.socket) {
         this.socket.close();
       }
@@ -26,6 +27,7 @@ class ChatController {
 
       this.socket.onopen = () => {
         console.log('WebSocket connected');
+        store.set({ isChatLoading: false });
         this.getMessages();
         this.setupPing();
       };
@@ -56,10 +58,10 @@ class ChatController {
       }
 
       if (Array.isArray(parsedData)) {
-        store.set({ messages: parsedData.reverse() });
+        store.set({ messages: parsedData });
       } else if (parsedData.type === 'message') {
         const currentMessages = store.getState().messages || [];
-        store.set({ messages: [...currentMessages, parsedData] });
+        store.set({ messages: [parsedData, ...currentMessages] });
       }
 
       console.log('Получено сообщение:', parsedData);
@@ -109,6 +111,19 @@ class ChatController {
       clearInterval(this.pingInterval);
       this.pingInterval = null;
     }
+  }
+  getChatUsers(id: number) {
+    chatApi
+      .getChatUsers(id)
+      .then((res) => {
+        const users = JSON.parse(res as string);
+        if (Array.isArray(users)) {
+          store.set({ chatUsers: users });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }
 
