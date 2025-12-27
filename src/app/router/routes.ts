@@ -14,3 +14,13 @@ export const routes: Record<string, () => HTMLElement | DocumentFragment> = {
   '/500': () => new ErrorPage({ error: '500' }).getContent()!,
   '/AvatarUpload': () => new AvatarUpload({}).getContent()!,
 };
+
+export const routesConfig = [
+  { pathname: '/', block: ChatPage },
+  { pathname: '/login', block: Auth },
+  { pathname: '/registration', block: Auth },
+  { pathname: '/profile', block: Profile },
+  { pathname: '/changepass', block: Profile },
+  { pathname: '/edit', block: Profile },
+  { pathname: '/500', block: ErrorPage },
+];
