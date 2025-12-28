@@ -13,12 +13,15 @@ class Route {
   private _blockClass: BlockConstructable;
   private _block: Block<defaultProps> | null;
   private _props: RouteProps;
+  private _regex: RegExp;
+  private _params: Record<string, string> = {};
 
   constructor(pathname: string, view: BlockConstructable, props: RouteProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
     this._props = props;
+    this._regex = new RegExp(`^${pathname.replace(/:(\w+)/g, '([^/]+)')}$`);
   }
 
   navigate(pathname: string): void {
@@ -35,12 +38,26 @@ class Route {
   }
 
   match(pathname: string): boolean {
-    return pathname === this._pathname;
+    const match = pathname.match(this._regex);
+
+    if (match) {
+      const paramNames = [...this._pathname.matchAll(/:(\w+)/g)].map((m) => m[1]);
+      this._params = paramNames.reduce(
+        (acc, name, index) => {
+          acc[name] = match[index + 1];
+          return acc;
+        },
+        {} as Record<string, string>
+      );
+
+      return true;
+    }
+    return false;
   }
 
   render(): void {
     if (!this._block) {
-      this._block = new this._blockClass();
+      this._block = new this._blockClass(this._params);
       const root = document.querySelector(this._props.rootQuery);
       root!.replaceChildren(this._block.getContent()!);
       return;
