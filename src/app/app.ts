@@ -5,22 +5,20 @@ import { SessionController } from '@/entities/Session';
 const sessionController = new SessionController();
 
 const initApp = async () => {
-  // 1. Регистрируем все роуты
   routesConfig.forEach((route) => router.use(route.pathname, route.block));
 
-  // 2. Запускаем роутер (но не рендерим сразу, если нужна проверка auth)
   router.start();
 
   try {
-    // 3. Проверяем сессию
     await sessionController.getUser();
 
-    // Если мы на странице логина, но авторизованы — на главную
     if (window.location.pathname === '/login') {
-      router.go('/');
+      router.go('/messenger');
     }
   } catch (error) {
     // Если не авторизованы и не на регистрации — на логин
+    console.log('error');
+
     if (window.location.pathname !== '/registration') {
       router.go('/login');
     }

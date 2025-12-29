@@ -50,7 +50,7 @@ export class HTTPTransport {
 
   request: HTTPMethod = (url, options) => {
     const { headers = {}, method, data, timeout = 5000 } = options;
-
+    console.log('dsads');
     return new Promise((resolve, reject) => {
       if (!method) {
         reject(new Error('No method'));
@@ -69,7 +69,15 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, headers[key]);
       });
 
-      xhr.onload = () => resolve(xhr.response);
+      xhr.onload = () => {
+        if (xhr.status === 401) {
+          reject(xhr.response);
+        } else if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr.response);
+        } else {
+          console.error('Другая ошибка:', xhr.status);
+        }
+      };
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.timeout = timeout;

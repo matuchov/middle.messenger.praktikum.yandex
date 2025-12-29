@@ -52,7 +52,7 @@ export class Auth extends Block<AuthProps> {
     });
 
     if (isValid && e.target instanceof HTMLFormElement) {
-      const page = this.props.page;
+      const page = this.props.page || 'login';
       const data = Object.fromEntries(new FormData(e.target));
       if (page === 'login') {
         api.singin(data);
