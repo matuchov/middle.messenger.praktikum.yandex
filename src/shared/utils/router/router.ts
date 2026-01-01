@@ -1,7 +1,7 @@
 import type { Block, defaultProps } from '@/app/utils/Block';
 
 interface BlockConstructable {
-  new (): Block<defaultProps>;
+  new (props: defaultProps): Block<defaultProps>;
 }
 
 interface RouteProps {

@@ -11,14 +11,11 @@ const initApp = async () => {
 
   try {
     await sessionController.getUser();
-
+    router.go('/messenger');
     if (window.location.pathname === '/login') {
-      router.go('/messenger');
+      console.log('go to mess');
     }
   } catch (error) {
-    // Если не авторизованы и не на регистрации — на логин
-    console.log('error');
-
     if (window.location.pathname !== '/registration') {
       router.go('/login');
     }

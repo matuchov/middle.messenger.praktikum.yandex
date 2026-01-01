@@ -6,7 +6,6 @@ const profileAPI = new ProfileAPI();
 export class ProfileController {
   public changeUser(form: HTMLFormElement) {
     const data = Object.fromEntries(new FormData(form));
-    console.log(data);
 
     const res = profileAPI.changeUser(data);
 
@@ -18,4 +17,6 @@ export class ProfileController {
     });
     return res;
   }
+
+  public setEdit() {}
 }

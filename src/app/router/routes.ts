@@ -5,7 +5,7 @@ import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '@/pages/ErrorPage';
 
 export const routesConfig = [
-  { pathname: '/messenger/:chatId', block: ChatPage },
+  { pathname: '/messenger', block: ChatPage },
   { pathname: '/login', block: Auth },
   { pathname: '/registration', block: Auth },
   { pathname: '/profile', block: Profile },

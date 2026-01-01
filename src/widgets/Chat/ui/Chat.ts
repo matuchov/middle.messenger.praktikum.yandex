@@ -1,14 +1,15 @@
 import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
+import { connect } from '@/shared/utils/connect/model/connect';
+import type { IStore } from '@/app/store/storeType';
 import { ChatTemplate } from '../template/Chat';
 import { ChatHeader } from './ChatHeader/ChatHeader';
 import ChatMessages from './ChatMessages/ChatMessages';
 import { ChatFooter } from './ChatFooter/ChatFooter';
-import './Chat.css';
 import type { ChatProps } from '../model/types';
-import { connect } from '@/shared/utils/connect/model/connect';
-import type { IStore } from '@/app/store/storeType';
 import controller from '../model/ChatController';
+import './Chat.css';
+import store from '@/app/store/store';
 
 const template = new Templator(ChatTemplate);
 
@@ -17,6 +18,7 @@ class Chat extends Block<ChatProps> {
     const header = new ChatHeader({});
     const messages = new ChatMessages({});
     const footer = new ChatFooter({});
+
     super({ ...props, header, messages, footer });
   }
 

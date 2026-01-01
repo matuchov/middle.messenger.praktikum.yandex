@@ -60,7 +60,6 @@ export class ChatFooter extends Block<ChatFooterProps> {
     if (isValid && e.target instanceof HTMLFormElement) {
       const data = new FormData(e.target);
       controller.sendMessage([...data.entries()][0][1]);
-      console.log([...data.entries()]);
     }
   }
 
