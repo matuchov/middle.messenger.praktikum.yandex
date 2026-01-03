@@ -29,7 +29,7 @@ export class Sidebar extends Block<SidebarProps> {
     const addUserBtn = new MyButtonBlock({
       btnType: 'button',
       theme: 'default',
-      btnText: 'Привязать пользователя',
+      btnText: 'Добавить пользователя',
       events: {
         click: {
           listener: () => {

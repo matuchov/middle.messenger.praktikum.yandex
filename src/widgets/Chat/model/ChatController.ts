@@ -125,6 +125,18 @@ class ChatController {
         console.log(e);
       });
   }
+
+  addUser(e: SubmitEvent) {
+    const userId;
+    const chatId = store.getState().curentChatId;
+    if (!chatId) return;
+    chatApi.addUser(chatId, userId);
+    this.getChatUsers(chatId);
+  }
+  deleteUser(chatId: number, userId: number) {
+    chatApi.deleteUser(chatId, userId);
+    this.getChatUsers(chatId);
+  }
 }
 
 export default new ChatController();

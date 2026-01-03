@@ -24,4 +24,21 @@ export class ChatApi {
   getChatUsers(id: number) {
     return this.authAPIInstance.get(`${API_URL}/chats/${id}/users`, {});
   }
+
+  addUser(chatId: number, userID: number) {
+    this.authAPIInstance.put(API_URL + '/chats/users', {
+      data: {
+        users: [userID],
+        chatId: chatId,
+      },
+    });
+  }
+  deleteUser(chatId: number, userID: number) {
+    this.authAPIInstance.delete(API_URL + '/chats/users', {
+      data: {
+        users: [userID],
+        chatId: chatId,
+      },
+    });
+  }
 }

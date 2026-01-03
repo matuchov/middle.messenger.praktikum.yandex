@@ -3,7 +3,7 @@ import { Templator } from '@/app/utils/TemplatorClass';
 import { connect } from '@/shared/utils/connect/model/connect';
 import type { IStore } from '@/app/store/storeType';
 import { ChatTemplate } from '../template/Chat';
-import { ChatHeader } from './ChatHeader/ChatHeader';
+import ChatHeader from './ChatHeader/ChatHeader';
 import ChatMessages from './ChatMessages/ChatMessages';
 import { ChatFooter } from './ChatFooter/ChatFooter';
 import type { ChatProps } from '../model/types';

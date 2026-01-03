@@ -4,6 +4,5 @@ export const formTemlpate = `<form
   method="{{ formMetod }}"
 >
   {{{ formContent }}}
-  <br/>
   {{{ subminBtn }}}
 </form>`;

@@ -14,6 +14,14 @@
   gap: 10px;
 }
 
+.chat__header--user {
+  border: 1px solid var(--background-color);
+  border-radius: 8px;
+  padding: 5px;
+}
+.chat__header--user_name {
+}
+
 .chat__username {
   font-weight: 600;
   font-size: 13px;
