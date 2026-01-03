@@ -35,8 +35,7 @@ export class ChatAddUser extends Block<defaultProps> {
       events: {
         submit: {
           listener: (e) => {
-            e.preventDefault();
-            console.log(e);
+            ChatController.addUser(e);
           },
         },
       },

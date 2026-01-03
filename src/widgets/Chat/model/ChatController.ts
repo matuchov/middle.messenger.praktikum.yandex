@@ -126,15 +126,22 @@ class ChatController {
       });
   }
 
-  addUser(e: SubmitEvent) {
-    const userId;
-    const chatId = store.getState().curentChatId;
-    if (!chatId) return;
-    chatApi.addUser(chatId, userId);
-    this.getChatUsers(chatId);
+  public async addUser(e: SubmitEvent) {
+    e.preventDefault();
+
+    if (e.target instanceof HTMLFormElement) {
+      const data = Object.fromEntries(new FormData(e.target));
+      const userId = +data?.addUser;
+      const chatId = store.getState().curentChatId;
+
+      if (!chatId || !userId) return;
+      await chatApi.addUser(chatId, userId);
+      this.getChatUsers(chatId);
+    }
   }
-  deleteUser(chatId: number, userId: number) {
-    chatApi.deleteUser(chatId, userId);
+
+  public async deleteUser(chatId: number, userId: number) {
+    await chatApi.deleteUser(chatId, userId);
     this.getChatUsers(chatId);
   }
 }

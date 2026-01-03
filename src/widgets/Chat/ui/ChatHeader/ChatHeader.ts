@@ -25,6 +25,7 @@ class ChatHeader extends Block<ChatHeaderProps> {
   createUsersComponent(chatUsers: IchatUser[] | undefined, chatId?: number | null) {
     if (chatUsers && chatId) {
       return chatUsers.map((user) => {
+        const avatarComponent = new Avatar({ avatarSrc: user.avatar });
         const deleteButton = new MyButtonBlock({
           btnType: 'button',
           theme: 'clear',
@@ -37,7 +38,7 @@ class ChatHeader extends Block<ChatHeaderProps> {
             },
           },
         });
-        return chatUserTemplate.compile({ userName: user.id, deleteButton });
+        return chatUserTemplate.compile({ userName: user.id, deleteButton, avatarComponent });
       });
     }
   }
