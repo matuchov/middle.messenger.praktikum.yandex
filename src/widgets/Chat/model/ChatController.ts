@@ -16,6 +16,8 @@ class ChatController {
     }
 
     try {
+      console.log(chatId);
+
       const res = await chatApi.getToken(chatId);
       const token = typeof res === 'string' ? JSON.parse(res).token : res.token;
       this.getChatUsers(chatId);

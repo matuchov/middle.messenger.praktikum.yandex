@@ -1,6 +1,5 @@
 import { Chatlist } from '@/features/Chatlist/';
 import { MyLink } from '@/shared/MyLink';
-import { Search } from '@/features/Search';
 import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock';
@@ -15,6 +14,7 @@ const controller = new SidebarController();
 export class Sidebar extends Block<SidebarProps> {
   constructor(props: SidebarProps) {
     const addChatBtn = new MyButtonBlock({
+      btnClass: 'sidebar__addChatBtn',
       btnType: 'button',
       theme: 'default',
       btnText: 'Создать чат',
@@ -26,32 +26,19 @@ export class Sidebar extends Block<SidebarProps> {
         },
       },
     });
-    const addUserBtn = new MyButtonBlock({
-      btnType: 'button',
-      theme: 'default',
-      btnText: 'Добавить пользователя',
-      events: {
-        click: {
-          listener: () => {
-            controller.addUser();
-          },
-        },
-      },
-    });
+
     const link = new MyLink({ linkText: 'Профиль', linkHref: '/profile' });
-    const search = new Search({ value: '' });
     const shatlist = new Chatlist({});
-    super({ ...props, link, search, shatlist, addChatBtn, addUserBtn });
+
+    super({ ...props, link, shatlist, addChatBtn });
   }
 
   render() {
-    const { link, search, shatlist, addChatBtn, addUserBtn } = this.children;
+    const { link, shatlist, addChatBtn } = this.children;
     return template.compile({
       addChatBtn,
       link,
-      search,
       shatlist,
-      addUserBtn,
     });
   }
 }

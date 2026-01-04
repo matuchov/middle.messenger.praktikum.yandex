@@ -6,14 +6,13 @@ import { ChatMessage } from '../ChatMessage/ChatMessage';
 import './ChatMessages.css';
 import { connect } from '@/shared/utils/connect/model/connect';
 import type { IStore } from '@/app/store/storeType';
-import { Loader } from '@/shared/Loader';
 
 const template = new Templator(ChatMessagesTemplate);
 
 interface ChatMessagesProps extends defaultProps {
   messages?: ChatMessage[];
   messagesData?: ChatMessageProps[];
-  isLoading?: boolean;
+  isChatLoading?: boolean;
 }
 
 class ChatMessages extends Block<ChatMessagesProps> {
@@ -27,16 +26,13 @@ class ChatMessages extends Block<ChatMessagesProps> {
   }
 
   render() {
-    const { isLoading } = this.props;
     const { messages } = this.children;
-    if (isLoading) return new Loader({}).getContent()!;
     return template.compile({ messages });
   }
 }
 
 function mapMessages(state: IStore): Partial<ChatMessagesProps> {
-  const messages = state.messages;
-  const isLoading = state.isChatLoading;
+  const { messages } = state;
   const messagesData = messages?.map((ms) => {
     const direction = ms.user_id === state.user?.id ? 'sent' : 'inbox';
     const time = new Date(ms.time).toLocaleTimeString('ru-RU', {
@@ -54,7 +50,6 @@ function mapMessages(state: IStore): Partial<ChatMessagesProps> {
   });
   return {
     messagesData,
-    isLoading,
   };
 }
 

@@ -10,14 +10,9 @@ export class SidebarController {
     res.then((res) => {
       const chatId = JSON.parse(res as string);
       if (Object.hasOwn(chatId, 'id')) {
-        store.set({ curentChatId: chatId });
+        store.set({ curentChatId: chatId.id });
       }
     });
     return res;
-  }
-  addUser() {
-    store.getState().chatlist?.forEach((chat) => {
-      sidebarAPI.addUser(chat.id);
-    });
   }
 }
