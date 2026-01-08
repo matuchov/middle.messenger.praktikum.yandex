@@ -1,8 +1,9 @@
 import type { defaultProps } from '@/app/utils/Block';
 import type { ChatListRow } from '../ui/ChatListRow/ChatlistRow';
+import type { Loader } from '@/shared/Loader';
 
 export interface ChatlistProps extends defaultProps {
-  chatlistRows?: ChatListRow[];
+  chatlistRows?: ChatListRow[] | Loader;
   chatlist?: IChatlistResponce[];
 }
 

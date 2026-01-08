@@ -9,9 +9,11 @@ import { ChatFooter } from './ChatFooter/ChatFooter';
 import type { ChatProps } from '../model/types';
 import controller from '../model/ChatController';
 import './Chat.css';
-import store from '@/app/store/store';
+import { Loader } from '@/shared/Loader';
+import { BlankChat } from '../template/Blank';
 
 const template = new Templator(ChatTemplate);
+const blankTemplate = new Templator(BlankChat);
 
 class Chat extends Block<ChatProps> {
   constructor(props: ChatProps) {
@@ -33,7 +35,9 @@ class Chat extends Block<ChatProps> {
 
   render() {
     const { header, messages, footer } = this.children;
-
+    const { isLoading, curentChatId } = this.props;
+    if (!curentChatId) return blankTemplate.compile({});
+    if (isLoading) return new Loader({}).getContent()!;
     return template.compile({ header, messages, footer });
   }
 }
@@ -41,6 +45,7 @@ class Chat extends Block<ChatProps> {
 function mapChatID(state: IStore) {
   return {
     curentChatId: state.curentChatId,
+    isLoading: state.isChatLoading,
   };
 }
 
