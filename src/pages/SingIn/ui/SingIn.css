@@ -1,0 +1,26 @@
+.singin {
+  margin: auto;
+}
+
+.singin__box {
+  display: flex;
+  flex-direction: column;
+}
+
+.singin__form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 30px;
+  gap: 20px;
+}
+
+.singin__form button {
+  align-self: center;
+}
+
+.singin__link {
+  font-size: 12px;
+  font-weight: 400;
+  align-self: center;
+}

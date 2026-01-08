@@ -5,4 +5,5 @@ export const formTemlpate = `<form
 >
   {{{ formContent }}}
   {{{ subminBtn }}}
+   <div class="form__error">{{errorText}}</div>
 </form>`;

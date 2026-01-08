@@ -3,10 +3,11 @@ import { Auth } from '@/pages/Auth';
 import { ChatPage } from '@/pages/ChatPage';
 import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '@/pages/ErrorPage';
+import { SingIn } from '@/pages/SingIn';
 
 export const routesConfig = [
   { pathname: '/messenger', block: ChatPage },
-  { pathname: '/login', block: Auth },
+  { pathname: '/singin', block: SingIn },
   { pathname: '/registration', block: Auth },
   { pathname: '/profile', block: Profile },
   { pathname: '/changepass', block: Profile },

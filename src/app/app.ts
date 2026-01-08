@@ -12,12 +12,12 @@ const initApp = async () => {
   try {
     await sessionController.getUser();
     router.go('/messenger');
-    if (window.location.pathname === '/login') {
+    if (window.location.pathname === '/singin') {
       console.log('go to mess');
     }
   } catch (error) {
     if (window.location.pathname !== '/registration') {
-      router.go('/login');
+      router.go('/singin');
     }
   }
 };
