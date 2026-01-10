@@ -1,6 +1,6 @@
-type Validator = (value: string) => string | null;
+export type Validator = (value: string) => string | null;
 
-const validators = {
+export const validators = {
   required:
     (msg = 'Поле не может быть пустым'): Validator =>
     (value) =>
@@ -78,10 +78,11 @@ const rules: Record<string, Validator[]> = {
   message: [validators.required(), validators.minLength(1), validators.maxLength(1000)],
 };
 
-export const validateInput = (fieldName: string, value: string): string | null => {
-  const fieldRules = rules[fieldName];
-
-  if (!fieldRules) return null;
+export const validateInput = (
+  fieldRules: Validator[] | undefined,
+  value: string
+): string | null => {
+  if (!fieldRules) return '';
 
   const errors: string[] = [];
 

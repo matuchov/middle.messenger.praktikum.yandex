@@ -1,3 +1,4 @@
+import { validators } from '@/shared/utils/validation/Validate';
 import type { PatternType } from './types';
 
 export const SingInPatterns: PatternType = {
@@ -7,6 +8,7 @@ export const SingInPatterns: PatternType = {
       inputType: 'text',
       label: 'Логин',
       name: 'login',
+      validateRules: [validators.required()],
     },
 
     {
@@ -14,6 +16,7 @@ export const SingInPatterns: PatternType = {
       inputType: 'password',
       label: 'Пароль',
       name: 'password',
+      validateRules: [validators.required()],
     },
   ],
   button: { btnText: 'Войти', btnType: 'submit', theme: 'default' },

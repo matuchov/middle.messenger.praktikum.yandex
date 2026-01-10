@@ -7,10 +7,10 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { authTemplate } from '../template/SingIn.ts';
 import { SingInPatterns } from '../model/pattern.ts';
-import './SingIn.css';
 import { SingInController } from '../model/controller.ts';
 import type { IStore } from '@/app/store/storeType.ts';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
+import './SingIn.css';
 
 const template = new Templator(authTemplate);
 
