@@ -7,23 +7,23 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { authTemplate } from '../template/SingIn.ts';
 import { SingInPatterns } from '../model/pattern.ts';
-import { SingInApi } from '../api/SingIn.ts';
 import './SingIn.css';
+import { SingInController } from '../model/controller.ts';
+import type { IStore } from '@/app/store/storeType.ts';
+import { connect } from '@/shared/utils/connect/model/connect.ts';
 
 const template = new Templator(authTemplate);
 
-const api = new SingInApi();
+const controller = new SingInController();
 
-export class SingIn extends Block<AuthProps> {
+class SingIn extends Block<AuthProps> {
   constructor(props: AuthProps) {
-    const errorText = 'error';
-    const inputs = SingInPatterns.inputs.map((el) => new MyInput({ ...el, isValidate: true }));
+    const inputs = SingInPatterns.inputs.map((el) => new MyInput({ ...el, isValidate: false }));
     const subminBtn = new MyButtonBlock(SingInPatterns.button);
     const form = new Form({
       formClass: 'singin__form',
       formContent: inputs,
       subminBtn,
-      errorText,
       events: {
         submit: {
           listener: (e) => {
@@ -40,7 +40,9 @@ export class SingIn extends Block<AuthProps> {
     super({ ...props, inputs, subminBtn, form, box });
   }
 
-  protected createResources() {}
+  protected componentDidUpdate(oldProps: AuthProps, newProps: AuthProps): void {
+    this.children.form?.setProps({ errorText: newProps.errorText });
+  }
 
   protected onSubmit(e: SubmitEvent) {
     e.preventDefault();
@@ -55,7 +57,7 @@ export class SingIn extends Block<AuthProps> {
 
     if (isValid && e.target instanceof HTMLFormElement) {
       const data = Object.fromEntries(new FormData(e.target));
-      api.singin(data);
+      controller.singin(data);
     }
   }
 
@@ -65,3 +67,11 @@ export class SingIn extends Block<AuthProps> {
     });
   }
 }
+
+function mapSinginError(state: IStore) {
+  return {
+    errorText: state.forms?.singin?.error,
+  };
+}
+
+export default connect(SingIn, mapSinginError);

@@ -17,4 +17,5 @@ export interface MyInputProps extends defaultProps {
   isClean?: boolean;
   placeholder?: string;
   inputClassname?: string;
+  validateRules?: [];
 }

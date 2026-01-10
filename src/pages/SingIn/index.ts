@@ -1,1 +1,2 @@
-export { SingIn } from './ui/SingIn';
+import SingIn from './ui/SingIn';
+export { SingIn };

@@ -17,4 +17,5 @@ export interface AuthProps extends defaultProps {
   form?: Form;
   subminBtn?: MyButtonBlock;
   box?: Box;
+  errorText?: string;
 }

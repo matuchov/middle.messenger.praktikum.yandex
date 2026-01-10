@@ -8,6 +8,7 @@ export interface IStore {
   chatUsers?: IchatUser[];
   isChatLoading?: boolean;
   isChatlistLoading?: boolean;
+  forms: Record<formsList, form>;
 }
 
 export interface IresMessage {
@@ -29,4 +30,14 @@ export interface IchatUser {
   login: string;
   avatar: string;
   role: string;
+}
+
+interface form {
+  forError: string;
+}
+
+enum formsList {
+  singin,
+  singup,
+  changePassword,
 }
