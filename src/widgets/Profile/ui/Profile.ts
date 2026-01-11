@@ -5,7 +5,6 @@ import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
-import { ProfilePatterns } from '../model/pattern.ts';
 import { ProfileTemlpate } from '../template/Profile.ts';
 import type { ProfileProps } from '../model/types.ts';
 import './Profile.css';
@@ -19,14 +18,12 @@ const profileController = new ProfileController();
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { user, pattern, isEdit = false } = props;
-    const avatar = new Avatar({ size: 'large' });
+    const avatar = new Avatar({ size: 'large', avatarSrc: user?.avatar });
     const inputs = pattern.inputs.map((el) => {
       const value = user[el.name];
-      return new MyInput({ ...el, disabled, isValidate, value });
+      return new MyInput({ ...el, disabled: !isEdit, isValidate: isEdit, value });
     });
-    const sumbitBtn = ProfilePatterns[page].submitBtn
-      ? new MyButtonBlock(ProfilePatterns[page].submitBtn)
-      : undefined;
+    const sumbitBtn = pattern.submitBtn ? new MyButtonBlock(pattern.submitBtn) : undefined;
 
     const avatarComponent = new MyLink({
       linkText: '',
@@ -48,9 +45,7 @@ export class Profile extends Block<ProfileProps> {
       },
     });
 
-    const links = ProfilePatterns[page].links
-      ? ProfilePatterns[page].links.map((el) => new MyLink(el))
-      : undefined;
+    const links = pattern.links ? pattern.links.map((el) => new MyLink(el)) : undefined;
 
     super({ ...props, avatarComponent, formContent, links, inputs });
   }
@@ -80,7 +75,6 @@ export class Profile extends Block<ProfileProps> {
 
   render() {
     const { formContent, avatarComponent, links } = this.children;
-
     return template.compile({ formContent, avatarComponent, links });
   }
 }
