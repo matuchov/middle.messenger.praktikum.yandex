@@ -1,7 +1,8 @@
 import type { IChatlistResponce } from '@/features/Chatlist/model/types';
+import type { Iuser } from '@/widgets/Profile';
 
 export interface IStore {
-  user?: string | null;
+  user?: Iuser | null;
   chatlist?: IChatlistResponce[] | null;
   curentChatId?: number | null;
   messages?: IresMessage[];
@@ -9,13 +10,14 @@ export interface IStore {
   isChatLoading?: boolean;
   isChatlistLoading?: boolean;
   forms?: Record<string, form>;
+  isProfileEdit?: boolean;
 }
 
 export interface IresMessage {
   chat_id: number;
   content: string;
   file: null;
-  id: 1;
+  id: number;
   is_read: boolean;
   time: string;
   type: string;

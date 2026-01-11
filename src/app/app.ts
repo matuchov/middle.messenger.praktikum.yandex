@@ -11,7 +11,6 @@ const initApp = async () => {
 
   try {
     await sessionController.getUser();
-    router.go('/messenger');
   } catch (error) {
     if (window.location.pathname !== '/registration') {
       router.go('/');

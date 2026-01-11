@@ -10,18 +10,21 @@ import type { ProfileProps } from '../model/types.ts';
 import './Profile.css';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
-import { ProfileController } from '../model/controller.ts';
 
 const template = new Templator(ProfileTemlpate);
-const profileController = new ProfileController();
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
-    const { user, pattern, isEdit = false } = props;
+    const { user, pattern, isProfileEdit } = props;
     const avatar = new Avatar({ size: 'large', avatarSrc: user?.avatar });
     const inputs = pattern.inputs.map((el) => {
-      const value = user[el.name];
-      return new MyInput({ ...el, disabled: !isEdit, isValidate: isEdit, value });
+      let value;
+      if (user && Object.hasOwn(user, el.name)) {
+        value = user[el.name];
+      } else {
+        value = '';
+      }
+      return new MyInput({ ...el, disabled: !isProfileEdit, isValidate: isProfileEdit, value });
     });
     const sumbitBtn = pattern.submitBtn ? new MyButtonBlock(pattern.submitBtn) : undefined;
 
@@ -61,14 +64,19 @@ export class Profile extends Block<ProfileProps> {
       }
     });
 
-    if (isValid && e.target instanceof HTMLFormElement) {
-      profileController.changeUser(e.target);
+    if (isValid && e.target instanceof HTMLFormElement && this.props.onSubmit) {
+      this.props.onSubmit(e.target);
     }
   }
 
   protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
+    const { user, isProfileEdit = false } = newProps;
     this.children.inputs?.forEach((el) => {
-      el.setProps({ value: newProps.user[el.props.name] });
+      el.setProps({
+        value: user[el.props.name],
+        isValidate: isProfileEdit,
+        disabled: !isProfileEdit,
+      });
     });
     return true;
   }
@@ -80,8 +88,10 @@ export class Profile extends Block<ProfileProps> {
 }
 
 function mapUserToProps(state: IStore) {
+  const { isProfileEdit, user } = state;
   return {
-    user: state.user,
+    user,
+    isProfileEdit,
   };
 }
 

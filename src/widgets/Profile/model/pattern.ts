@@ -1,7 +1,7 @@
 import type { MyInputProps } from '@/shared/MyInput';
 import type { MyButtonProps } from '@/shared/MyButtonBlock';
 import type { MyLinkProps } from '@/shared/MyLink';
-import type { pageTypes } from './types';
+import type { pageTypes, ProfilePattern } from './types';
 
 type ProfilePatternsType = Record<pageTypes, ProfilePattern>;
 
@@ -60,7 +60,6 @@ export const ProfilePatterns: ProfilePatternsType = {
   },
   default: {
     inputs: profileInputs,
-    disabled: true,
     links: [
       {
         linkText: 'Изменить данные',
