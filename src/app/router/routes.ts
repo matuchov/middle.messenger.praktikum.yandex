@@ -1,14 +1,13 @@
-import { Profile } from '@/pages/Profile';
-import { Auth } from '@/pages/Auth';
+import { Profile } from '@/widgets/Profile';
 import { ChatPage } from '@/pages/ChatPage';
-import { AvatarUpload } from '@/pages/AvatarUpload';
 import { ErrorPage } from '@/pages/ErrorPage';
-import { SingIn } from '@/pages/SingIn';
+import { Login } from '@/pages/Login';
+import { Registration } from '@/pages/Registration';
 
 export const routesConfig = [
   { pathname: '/messenger', block: ChatPage },
-  { pathname: '/singin', block: SingIn },
-  { pathname: '/registration', block: Auth },
+  { pathname: '/', block: Login },
+  { pathname: '/registration', block: Registration },
   { pathname: '/profile', block: Profile },
   { pathname: '/changepass', block: Profile },
   { pathname: '/edit', block: Profile },

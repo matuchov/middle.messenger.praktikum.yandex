@@ -2,11 +2,13 @@ import store, { StoreEvents } from '@/app/store/store';
 import type { IStore } from '@/app/store/storeType';
 import type { Block, defaultProps } from '@/app/utils/Block';
 
-export function connect<const T extends defaultProps>(
-  Component: typeof Block,
-  mapStateToProps: (state: IStore) => IStore
+type BlockClass<T extends defaultProps> = new (props: T) => Block<T>;
+
+export function connect<T extends defaultProps>(
+  Component: BlockClass<T>,
+  mapStateToProps: (state: IStore) => Partial<T>
 ) {
-  return class extends Component<T> {
+  return class extends Component {
     constructor(props: T) {
       super({ ...props, ...mapStateToProps(store.getState()) });
 

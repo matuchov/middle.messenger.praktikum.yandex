@@ -3,13 +3,6 @@ import type { MyButtonProps } from '@/shared/MyButtonBlock';
 import type { MyLinkProps } from '@/shared/MyLink';
 import type { pageTypes } from './types';
 
-type ProfilePattern = {
-  inputs: MyInputProps[];
-  submitBtn?: MyButtonProps;
-  links?: MyLinkProps[];
-  disabled: boolean;
-  isValidate?: boolean;
-};
 type ProfilePatternsType = Record<pageTypes, ProfilePattern>;
 
 const profileInputs: MyInputProps[] = [

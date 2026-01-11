@@ -1,7 +1,7 @@
 import { validators } from '@/shared/utils/validation/Validate';
-import type { PatternType } from './types';
+import type { PatternType } from '@/widgets/Auth/model/types';
 
-export const SingInPatterns: PatternType = {
+export const SingInPattern: PatternType = {
   inputs: [
     {
       inputStyle: 'column',

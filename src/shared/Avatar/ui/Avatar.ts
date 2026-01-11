@@ -18,6 +18,7 @@ const tepmlate = new Templator(avatarTemplate);
 export class Avatar extends Block<avatarProps> {
   render() {
     const { avatarSrc = '/assets/pictureIcon.png', size = 'small' } = this.props;
+
     return tepmlate.compile({ src: avatarSrc, class: avatarSizes[size] });
   }
 }

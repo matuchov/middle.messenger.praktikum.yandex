@@ -5,9 +5,9 @@ import { Block } from '@/app/utils/Block.ts';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
-import { ProfilePatterns } from '../model/pattern';
+import { ProfilePatterns } from '../model/pattern.ts';
 import { ProfileTemlpate } from '../template/Profile.ts';
-import type { ProfileProps } from '../model/types';
+import type { ProfileProps } from '../model/types.ts';
 import './Profile.css';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
@@ -18,12 +18,9 @@ const profileController = new ProfileController();
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
-    const { page } = props;
-    const { disabled, isValidate } = ProfilePatterns[page];
-    const { user } = props;
+    const { user, pattern, isEdit = false } = props;
     const avatar = new Avatar({ size: 'large' });
-    const inputsPattern = ProfilePatterns[page].inputs;
-    const inputs = inputsPattern.map((el) => {
+    const inputs = pattern.inputs.map((el) => {
       const value = user[el.name];
       return new MyInput({ ...el, disabled, isValidate, value });
     });

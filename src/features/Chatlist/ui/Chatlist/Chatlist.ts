@@ -18,30 +18,6 @@ class Chatlist extends Block<ChatlistProps> {
     super({ ...props });
   }
 
-  // protected componentDidUpdate(oldProps: ChatlistProps, newProps: ChatlistProps): boolean {
-  //   const { chatlist } = newProps;
-  //   if (chatlist) {
-  //     this.children.chatlistRows = chatlist.map(
-  //       (el) =>
-  //         new ChatListRow({
-  //           avatarSrc: el.avatar,
-  //           counter: el.unread_count.toString(),
-  //           messageText: el.last_message?.content || 'нет сообщений',
-  //           name: el.last_message?.user?.first_name || '',
-  //           time: el.last_message?.time ? new Date(el.last_message?.time).toLocaleTimeString() : '',
-  //           events: {
-  //             click: {
-  //               listener: () => {
-  //                 chatlisController.setCurentChat(el.id);
-  //               },
-  //             },
-  //           },
-  //         })
-  //     );
-  //   }
-  //   return true;
-  // }
-
   createChatlist(chatlist: IChatlistResponce[]) {
     return chatlist.map(
       (el) =>
@@ -76,4 +52,4 @@ function mapUserToProps(state: IStore) {
   };
 }
 
-export default connect(Chatlist, mapUserToProps);
+export default connect<ChatlistProps>(Chatlist, mapUserToProps);

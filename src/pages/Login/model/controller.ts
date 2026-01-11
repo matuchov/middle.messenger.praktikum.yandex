@@ -1,11 +1,11 @@
 import store from '@/app/store/store';
-import { SingInApi } from '../api/SingIn.ts';
+import { LoginApi } from '../api/LoginApi.ts';
 
-const singInApi = new SingInApi();
+const loginApi = new LoginApi();
 
 export class SingInController {
   public singin(data: { [k: string]: FormDataEntryValue }) {
-    const res = singInApi.singin(data);
+    const res = loginApi.singin(data);
 
     res
       .then((res) => {
