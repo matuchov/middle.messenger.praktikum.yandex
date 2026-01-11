@@ -110,6 +110,9 @@ export class Block<TProps extends defaultProps> {
   dispatchComponentDidMount() {
     this._eventBus.emit(EVENTS.FLOW_CDM);
   }
+  dispatchComponentRender() {
+    this._eventBus.emit(EVENTS.FLOW_RENDER);
+  }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     const equal = isEqual(oldProps, newProps);

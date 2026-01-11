@@ -8,7 +8,7 @@ import type { MyLink, MyLinkProps } from '@/shared/MyLink';
 
 export type ProfilePattern = {
   inputs: MyInputProps[];
-  submitBtn?: MyButtonProps;
+  submitBtn: MyButtonProps;
   links?: MyLinkProps[];
   isValidate?: boolean;
 };

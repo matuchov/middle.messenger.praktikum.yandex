@@ -7,15 +7,15 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { ProfileTemlpate } from '../template/Profile.ts';
 import type { ProfileProps } from '../model/types.ts';
-import './Profile.css';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
+import './Profile.css';
 
 const template = new Templator(ProfileTemlpate);
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
-    const { user, pattern, isProfileEdit } = props;
+    const { user, pattern } = props;
     const avatar = new Avatar({ size: 'large', avatarSrc: user?.avatar });
     const inputs = pattern.inputs.map((el) => {
       let value;
@@ -24,9 +24,8 @@ export class Profile extends Block<ProfileProps> {
       } else {
         value = '';
       }
-      return new MyInput({ ...el, disabled: !isProfileEdit, isValidate: isProfileEdit, value });
+      return new MyInput({ ...el, disabled: true, isValidate: false, value });
     });
-    const sumbitBtn = pattern.submitBtn ? new MyButtonBlock(pattern.submitBtn) : undefined;
 
     const avatarComponent = new MyLink({
       linkText: '',
@@ -37,7 +36,6 @@ export class Profile extends Block<ProfileProps> {
 
     const formContent = new Form({
       formClass: 'profile__form',
-      subminBtn: sumbitBtn,
       formContent: inputs,
       events: {
         submit: {
@@ -70,7 +68,13 @@ export class Profile extends Block<ProfileProps> {
   }
 
   protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
-    const { user, isProfileEdit = false } = newProps;
+    const { user, pattern, isProfileEdit = false } = newProps;
+    const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
+    console.log(this.children.formContent);
+
+    this.children.formContent?.setProps({ subminBtn: sumbitBtn });
+    this.children.formContent?.dispatchComponentRender();
+
     this.children.inputs?.forEach((el) => {
       el.setProps({
         value: user[el.props.name],

@@ -9,9 +9,7 @@ const temlpate = new Templator(formTemlpate);
 export class Form extends Block<FormProps> {
   render() {
     const { formClass, formAction, formMetod = 'post', errorText } = this.props;
-
     const { formContent, subminBtn } = this.children;
-
     return temlpate.compile({
       formAction,
       formClass,

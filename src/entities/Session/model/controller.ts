@@ -18,4 +18,7 @@ export class SessionController {
     });
     return res;
   }
+  public logout() {
+    sessionAPI.logout();
+  }
 }

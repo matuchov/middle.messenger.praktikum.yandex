@@ -27,7 +27,7 @@ export class Sidebar extends Block<SidebarProps> {
       },
     });
 
-    const link = new MyLink({ linkText: 'Профиль', linkHref: '/profile' });
+    const link = new MyLink({ linkText: 'Профиль', linkHref: '/settings' });
     const shatlist = new Chatlist({});
 
     super({ ...props, link, shatlist, addChatBtn });
