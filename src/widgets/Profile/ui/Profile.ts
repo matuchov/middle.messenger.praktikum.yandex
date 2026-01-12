@@ -10,13 +10,14 @@ import type { ProfileProps } from '../model/types.ts';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
 import './Profile.css';
+import { RESOURCES_URL } from '@/shared/Config/index.ts';
 
 const template = new Templator(ProfileTemlpate);
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { user, pattern } = props;
-    const avatar = new Avatar({ size: 'large', avatarSrc: user?.avatar });
+    const avatar = new Avatar({ size: 'large', avatarSrc: RESOURCES_URL + user?.avatar });
     const inputs = pattern.inputs.map((el) => {
       let value;
       if (user && Object.hasOwn(user, el.name)) {
@@ -70,8 +71,11 @@ export class Profile extends Block<ProfileProps> {
   protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
     const { user, pattern, isProfileEdit = false } = newProps;
     const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
-    console.log(this.children.formContent);
+    console.log(this.props);
 
+    this.children.avatarComponent?.children?.child?.setProps({
+      avatarSrc: RESOURCES_URL + user?.avatar,
+    });
     this.children.formContent?.setProps({ subminBtn: sumbitBtn });
     this.children.formContent?.dispatchComponentRender();
 

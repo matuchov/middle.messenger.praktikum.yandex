@@ -1,6 +1,7 @@
 import { router } from '@/app/router/router';
 import { routesConfig } from '@/app/router/routes';
 import { SessionController } from '@/entities/Session';
+import store from './store/store';
 
 const sessionController = new SessionController();
 
@@ -14,6 +15,7 @@ const initApp = async () => {
   } catch (error) {
     if (window.location.pathname !== '/registration') {
       router.go('/');
+      store.set({ forms: { singin: { error: 'Необходимо авторизоваться' } } });
     }
   }
 };

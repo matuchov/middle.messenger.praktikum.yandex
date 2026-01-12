@@ -19,7 +19,7 @@
 }
 
 .avatar-upload__input {
-  display: none;
+  /* display: none; */
 }
 
 .avatar-upload__input_label {

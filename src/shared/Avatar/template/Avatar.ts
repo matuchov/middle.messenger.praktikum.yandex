@@ -1,1 +1,1 @@
-export const avatarTemplate = `<div class="avatar {{ class }}"><img src="{{src}}" alt="avatar" /></div>`;
+export const avatarTemplate = `<div class="avatar {{ class }}"><img src="{{ src }}" alt="avatar" /></div>`;

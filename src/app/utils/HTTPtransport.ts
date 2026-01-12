@@ -70,12 +70,10 @@ export class HTTPTransport {
       });
 
       xhr.onload = () => {
-        if (xhr.status === 401) {
-          reject(xhr.response);
-        } else if (xhr.status >= 200 && xhr.status < 300) {
+        if (xhr.status >= 200 && xhr.status < 300) {
           resolve(xhr.response);
         } else {
-          console.error('Другая ошибка:', xhr.status);
+          reject(xhr.response);
         }
       };
       xhr.onabort = reject;
