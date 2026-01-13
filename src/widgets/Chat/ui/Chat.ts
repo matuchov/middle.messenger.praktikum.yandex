@@ -49,4 +49,4 @@ function mapChatID(state: IStore) {
   };
 }
 
-export default connect<ChatProps, typeof ChatClass>(ChatClass, mapChatID);
+export default connect(ChatClass, mapChatID);

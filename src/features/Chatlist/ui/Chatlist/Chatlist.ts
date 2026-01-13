@@ -52,4 +52,4 @@ function mapUserToProps(state: IStore) {
   };
 }
 
-export default connect<ChatlistProps, typeof Chatlist>(Chatlist, mapUserToProps);
+export default connect(Chatlist, mapUserToProps);

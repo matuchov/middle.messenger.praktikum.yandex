@@ -1,7 +1,7 @@
 import type { Block, defaultProps } from '@/app/utils/Block';
 
-interface BlockConstructable {
-  new (props: defaultProps): Block<defaultProps>;
+interface BlockConstructable<T extends defaultProps> {
+  new (props: T): Block<T>;
 }
 
 interface RouteProps {
@@ -10,13 +10,13 @@ interface RouteProps {
 
 class Route {
   private _pathname: string;
-  private _blockClass: BlockConstructable;
+  private _blockClass: BlockConstructable<any>;
   private _block: Block<defaultProps> | null;
   private _props: RouteProps;
   private _regex: RegExp;
   private _params: Record<string, string> = {};
 
-  constructor(pathname: string, view: BlockConstructable, props: RouteProps) {
+  constructor(pathname: string, view: BlockConstructable<any>, props: RouteProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -82,7 +82,7 @@ export class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: BlockConstructable): this {
+  use(pathname: string, block: BlockConstructable<any>): this {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
     this.routes.push(route);
     return this;
