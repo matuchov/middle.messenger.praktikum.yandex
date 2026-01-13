@@ -4,6 +4,6 @@ export const formTemlpate = `<form
   method="{{ formMetod }}"
 >
   {{{ formContent }}}
-  <br/>
   {{{ subminBtn }}}
+   <div class="form__error">{{errorText}}</div>
 </form>`;

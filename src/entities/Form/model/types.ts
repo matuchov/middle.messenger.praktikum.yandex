@@ -8,4 +8,5 @@ export interface FormProps extends defaultProps {
   formMetod?: 'dialog' | 'get' | 'post';
   subminBtn?: MyButtonBlock;
   formContent?: MyInput[];
+  errorText?: string;
 }

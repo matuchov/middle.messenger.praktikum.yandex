@@ -7,4 +7,6 @@ export interface ChatProps extends defaultProps {
   header?: ChatHeader;
   messages?: ChatMessages;
   footer?: ChatFooter;
+  curentChatId?: number;
+  isLoading?: boolean;
 }

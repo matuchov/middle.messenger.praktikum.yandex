@@ -4,8 +4,10 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import type { AvatarUploadProps } from '../model/types.ts';
 import { AvatarUploadTemplate } from '../template/AvatarUpload.ts';
 import './AvatarUpload.css';
+import { AvatarUploadController } from '../model/controller.ts';
 
 const template = new Templator(AvatarUploadTemplate);
+const controller = new AvatarUploadController();
 
 export class AvatarUpload extends Block<AvatarUploadProps> {
   constructor(props: AvatarUploadProps) {
@@ -15,7 +17,19 @@ export class AvatarUpload extends Block<AvatarUploadProps> {
       theme: 'default',
     });
 
-    super({ ...props, submitBtn });
+    const events = {
+      submit: {
+        listener: (e: SubmitEvent) => {
+          controller.onSubmit(e);
+        },
+      },
+    };
+
+    super({
+      ...props,
+      submitBtn,
+      events,
+    });
   }
 
   render() {

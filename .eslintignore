@@ -1,4 +1,0 @@
-/build
-**/*.min.js
-**/*.mtmp.d.ts
-/node_modules 

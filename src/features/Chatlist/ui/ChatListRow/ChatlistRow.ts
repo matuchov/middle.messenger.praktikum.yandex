@@ -17,13 +17,7 @@ const tepmlate = new Templator(chatListRowTemplate);
 
 export class ChatListRow extends Block<ChatListRowProps> {
   render() {
-    const {
-      name = 'name',
-      messageText = 'messageText',
-      time = '11:14',
-      counter = '222',
-      avatarSrc,
-    } = this.props;
+    const { name = '', messageText = '', time = '', counter = '', avatarSrc } = this.props;
     return tepmlate.compile({
       Avatar: new Avatar({ avatarSrc }),
       counter,

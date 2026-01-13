@@ -1,4 +1,5 @@
 import { EventBus } from './EventBus';
+import { isEqual } from './isEqual';
 
 const EVENTS = {
   INIT: 'init',
@@ -82,7 +83,11 @@ export class Block<TProps extends defaultProps> {
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
-      } else if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
+      } else if (
+        Array.isArray(value) &&
+        value.length > 0 &&
+        value.every((v) => v instanceof Block)
+      ) {
         children[key] = value;
       } else {
         props[key] = value;
@@ -105,19 +110,19 @@ export class Block<TProps extends defaultProps> {
   dispatchComponentDidMount() {
     this._eventBus.emit(EVENTS.FLOW_CDM);
   }
-
-  private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    this.componentDidUpdate(oldProps, newProps);
-
+  dispatchComponentRender() {
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
 
-  protected componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    if (oldProps !== newProps) {
-      return true;
+  private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
+    const equal = isEqual(oldProps, newProps);
+    if (!equal) {
+      this.componentDidUpdate(oldProps, newProps);
+      this._eventBus.emit(EVENTS.FLOW_RENDER);
     }
-    return false;
   }
+
+  protected componentDidUpdate(oldProps: TProps, newProps: TProps) {}
 
   private _addEvents() {
     const { events = {} } = this.props;
@@ -146,9 +151,10 @@ export class Block<TProps extends defaultProps> {
       this.renderFlag = true;
       Object.assign(this.props, props);
       this.renderFlag = false;
+
       this._eventBus.emit(EVENTS.FLOW_CDU, oldProps, this.props);
     } else if (Object.keys(children).length) {
-      this._eventBus.emit(EVENTS.FLOW_CDU, this.props, this.props);
+      this._eventBus.emit(EVENTS.FLOW_CDU, { ...this.props }, this.props);
     }
   }
 

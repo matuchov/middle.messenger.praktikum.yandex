@@ -1,0 +1,7 @@
+.form__error {
+  margin: 0 auto;
+  display: block;
+  padding-top: 5px;
+  color: var(--warning-color);
+  font-size: 11px;
+}

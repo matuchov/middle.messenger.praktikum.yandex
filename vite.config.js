@@ -1,5 +1,4 @@
 import path from 'path';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -10,6 +9,20 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    proxy: {
+      '/api': {
+        target: 'https://ya-praktikum.tech',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost',
+      },
+      '/ws': {
+        target: 'wss://ya-praktikum.tech',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost',
+      },
+    },
   },
   preview: {
     port: 3000,

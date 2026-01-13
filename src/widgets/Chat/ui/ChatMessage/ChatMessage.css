@@ -11,6 +11,13 @@
   text-decoration: underline;
 }
 
+.chat__message__author {
+  color: var(--accent-color);
+  font-size: 13px;
+  font-weight: 600;
+  padding-bottom: 3px;
+}
+
 .chat__message-time {
   position: absolute;
   right: 10px;
