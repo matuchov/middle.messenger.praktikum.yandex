@@ -20,7 +20,7 @@ export class AvatarUpload extends Block<AvatarUploadProps> {
     const events = {
       submit: {
         listener: (e: SubmitEvent) => {
-          this.onSubmit(e);
+          controller.onSubmit(e);
         },
       },
     };
@@ -30,15 +30,6 @@ export class AvatarUpload extends Block<AvatarUploadProps> {
       submitBtn,
       events,
     });
-  }
-
-  onSubmit(e: SubmitEvent) {
-    e.preventDefault();
-    console.log(e.target);
-    const form = new FormData(e.target);
-    controller.upload(form);
-    const data = Object.fromEntries(form);
-    console.log(data.avatar);
   }
 
   render() {
