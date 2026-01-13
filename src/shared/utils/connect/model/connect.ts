@@ -2,20 +2,26 @@ import store, { StoreEvents } from '@/app/store/store';
 import type { IStore } from '@/app/store/storeType';
 import type { Block, defaultProps } from '@/app/utils/Block';
 
-type BlockClass<T extends defaultProps> = new (props: T) => Block<T>;
-type Constructor<T> = new (...args: any[]) => T;
+type BlockClass<P extends defaultProps> = abstract new (...args: any[]) => Block<P>;
 
-export function connect<P extends defaultProps>(
-  Component: BlockClass<P>,
+export function connect<P extends defaultProps, C extends BlockClass<P>>(
+  Component: C,
   mapStateToProps: (state: IStore) => Partial<P>
-): BlockClass<P> {
-  return class extends (Component as Constructor<any>) {
-    constructor(props: P) {
-      super({ ...props, ...mapStateToProps(store.getState()) });
+): C {
+  abstract class Connected extends Component {
+    constructor(...args: any[]) {
+      const props = args[0] as P;
+
+      super({
+        ...props,
+        ...mapStateToProps(store.getState()),
+      });
 
       store.on(StoreEvents.Updated, () => {
-        this.setProps({ ...mapStateToProps(store.getState()) } as Partial<P>);
+        this.setProps(mapStateToProps(store.getState()));
       });
     }
-  } as BlockClass<P>;
+  }
+
+  return Connected as C;
 }

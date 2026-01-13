@@ -50,5 +50,3 @@ function mapChatID(state: IStore) {
 }
 
 export default connect(ChatClass, mapChatID);
-
-export type ChatType = ChatClass;
