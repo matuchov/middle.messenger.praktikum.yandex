@@ -16,6 +16,7 @@ type Options = {
   data?: RequestData;
   headers?: Record<string, string>;
   timeout?: number;
+  withCredentials?: boolean;
 };
 
 function queryStringify(data: PlainObject) {
@@ -49,7 +50,7 @@ export class HTTPTransport {
   };
 
   request: HTTPMethod = (url, options) => {
-    const { headers = {}, method, data, timeout = 5000 } = options;
+    const { headers = {}, method, data, timeout = 5000, withCredentials = true } = options;
     console.log('dsads');
     return new Promise((resolve, reject) => {
       if (!method) {
@@ -64,7 +65,8 @@ export class HTTPTransport {
         isGet && !!data && typeof data === 'object' && !(data instanceof FormData);
 
       xhr.open(method, shouldStringify ? `${url}${queryStringify(data as PlainObject)}` : url);
-      xhr.withCredentials = true;
+      xhr.withCredentials = withCredentials;
+
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });

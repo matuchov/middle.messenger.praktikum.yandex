@@ -5,6 +5,6 @@ const authAPIInstance = new HTTPTransport();
 
 export class LoginApi {
   singin(data: Record<string, unknown>) {
-    return authAPIInstance.post(API_URL + '/auth/signin', { data });
+    return authAPIInstance.post(API_URL + '/auth/signin', { data, withCredentials: false });
   }
 }
