@@ -6,7 +6,7 @@ export class AvatarUploadController {
   public onSubmit(e: SubmitEvent) {
     e.preventDefault();
     console.log(e.target);
-    const form = new FormData(e.target);
+    const form = new FormData(e.target as HTMLFormElement);
 
     // this.upload(form);
     const data = Object.fromEntries(form);

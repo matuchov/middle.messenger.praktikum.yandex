@@ -35,7 +35,7 @@ export class Auth extends Block<AuthProps> {
     super({ ...props, inputs, subminBtn, form, box });
   }
 
-  protected componentDidUpdate(oldProps: AuthProps, newProps: AuthProps): void {
+  protected componentDidUpdate(_: AuthProps, newProps: AuthProps): void {
     this.children.form?.setProps({ errorText: newProps.errorText });
   }
 

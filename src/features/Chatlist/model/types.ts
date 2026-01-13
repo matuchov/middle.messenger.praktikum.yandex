@@ -4,7 +4,7 @@ import type { Loader } from '@/shared/Loader';
 
 export interface ChatlistProps extends defaultProps {
   chatlistRows?: ChatListRow[] | Loader;
-  chatlist?: IChatlistResponce[];
+  chatlist?: IChatlistResponce[] | null;
 }
 
 export interface IChatlistResponce {

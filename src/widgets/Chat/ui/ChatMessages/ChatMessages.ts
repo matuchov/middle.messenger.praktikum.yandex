@@ -20,7 +20,7 @@ class ChatMessages extends Block<ChatMessagesProps> {
     super({ ...props });
   }
 
-  protected componentDidUpdate(oldProps: ChatMessagesProps, newProps: ChatMessagesProps): boolean {
+  protected componentDidUpdate(_: ChatMessagesProps, newProps: ChatMessagesProps): boolean {
     this.children.messages = newProps.messagesData?.map((el) => new ChatMessage(el));
     return true;
   }

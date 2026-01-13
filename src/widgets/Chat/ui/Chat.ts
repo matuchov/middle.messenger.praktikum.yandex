@@ -15,7 +15,7 @@ import { BlankChat } from '../template/Blank';
 const template = new Templator(ChatTemplate);
 const blankTemplate = new Templator(BlankChat);
 
-class Chat extends Block<ChatProps> {
+class ChatClass extends Block<ChatProps> {
   constructor(props: ChatProps) {
     const header = new ChatHeader({});
     const messages = new ChatMessages({});
@@ -49,4 +49,6 @@ function mapChatID(state: IStore) {
   };
 }
 
-export default connect(Chat, mapChatID);
+export default connect(ChatClass, mapChatID);
+
+export type ChatType = ChatClass;

@@ -122,7 +122,9 @@ export class Block<TProps extends defaultProps> {
     }
   }
 
-  protected componentDidUpdate(oldProps: TProps, newProps: TProps) {}
+  protected componentDidUpdate(oldProps: TProps, newProps: TProps) {
+    if (oldProps === newProps) return;
+  }
 
   private _addEvents() {
     const { events = {} } = this.props;

@@ -3,19 +3,19 @@ import type { IStore } from '@/app/store/storeType';
 import type { Block, defaultProps } from '@/app/utils/Block';
 
 type BlockClass<T extends defaultProps> = new (props: T) => Block<T>;
+type Constructor<T> = new (...args: any[]) => T;
 
-export function connect<T extends defaultProps>(
-  Component: BlockClass<T>,
-  mapStateToProps: (state: IStore) => Partial<T>
-) {
-  return class extends Component {
-    constructor(props: T) {
+export function connect<P extends defaultProps>(
+  Component: BlockClass<P>,
+  mapStateToProps: (state: IStore) => Partial<P>
+): BlockClass<P> {
+  return class extends (Component as Constructor<any>) {
+    constructor(props: P) {
       super({ ...props, ...mapStateToProps(store.getState()) });
 
-      // подписываемся на событие
       store.on(StoreEvents.Updated, () => {
-        this.setProps({ ...mapStateToProps(store.getState()) });
+        this.setProps({ ...mapStateToProps(store.getState()) } as Partial<P>);
       });
     }
-  };
+  } as BlockClass<P>;
 }
