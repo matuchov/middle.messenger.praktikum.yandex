@@ -20,4 +20,4 @@ function mapLoginError(state: IStore) {
   };
 }
 
-export default connect<AuthProps>(Login, mapLoginError);
+export default connect(Login, mapLoginError);

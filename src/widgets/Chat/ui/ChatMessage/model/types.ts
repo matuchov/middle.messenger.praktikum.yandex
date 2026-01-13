@@ -8,7 +8,7 @@ export const directions = {
 export const messageTypes = {
   text: '',
   picture: 'chat__message--picture',
-};
+} as const;
 
 export interface ChatMessageProps extends defaultProps {
   messageText: string;

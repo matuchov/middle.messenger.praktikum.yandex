@@ -7,6 +7,6 @@ import type { MyLink } from '@/shared/MyLink';
 export interface SidebarProps extends defaultProps {
   link?: MyLink;
   search?: Search;
-  shatlist?: typeof Chatlist;
+  shatlist?: InstanceType<typeof Chatlist>;
   addChatBtn?: MyButtonBlock;
 }

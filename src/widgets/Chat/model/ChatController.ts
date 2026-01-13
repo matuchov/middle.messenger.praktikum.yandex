@@ -7,7 +7,7 @@ class ChatController {
   socket: WebSocket | null = null;
   private pingInterval: ReturnType<typeof setInterval> | null = null;
 
-  public async openSocket(chatId?: number) {
+  public async openSocket(chatId?: number | null) {
     store.set({ isChatLoading: true });
     const userId = store.getState().user?.id;
 

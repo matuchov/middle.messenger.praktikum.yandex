@@ -7,6 +7,6 @@ export interface ChatProps extends defaultProps {
   header?: InstanceType<typeof ChatHeader>;
   messages?: InstanceType<typeof ChatMessages>;
   footer?: ChatFooter;
-  curentChatId?: number;
+  curentChatId?: number | null;
   isLoading?: boolean;
 }

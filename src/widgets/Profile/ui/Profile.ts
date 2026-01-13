@@ -21,7 +21,7 @@ export class Profile extends Block<ProfileProps> {
     const inputs = pattern.inputs.map((el) => {
       let value;
       if (user && Object.hasOwn(user, el.name)) {
-        value = user[el.name];
+        value = user[el.name as keyof Iuser].toString();
       } else {
         value = '';
       }
@@ -103,4 +103,4 @@ function mapUserToProps(state: IStore) {
   };
 }
 
-export default connect<ProfileProps, typeof Profile>(Profile, mapUserToProps);
+export default connect(Profile, mapUserToProps);

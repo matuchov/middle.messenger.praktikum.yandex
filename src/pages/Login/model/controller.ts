@@ -11,7 +11,7 @@ export class SingInController {
     const res = loginApi.singin(data);
 
     res
-      .then((res) => {
+      .then(() => {
         sessionController.getUser().then(() => {
           router.go('/messenger');
         });
@@ -36,6 +36,4 @@ export class SingInController {
       });
     return res;
   }
-
-  public setEdit() {}
 }

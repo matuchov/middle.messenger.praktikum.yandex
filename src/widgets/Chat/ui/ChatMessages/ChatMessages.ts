@@ -1,4 +1,4 @@
-import { type ChatMessageProps } from './../ChatMessage/model/types';
+import { directions, messageTypes, type ChatMessageProps } from './../ChatMessage/model/types';
 import { Block, type defaultProps } from '@/app/utils/Block';
 import { Templator } from '@/app/utils/TemplatorClass';
 import { ChatMessagesTemplate } from './template/ChatMessages';
@@ -34,16 +34,17 @@ class ChatMessages extends Block<ChatMessagesProps> {
 function mapMessages(state: IStore): Partial<ChatMessagesProps> {
   const { messages } = state;
   const messagesData = messages?.map((ms) => {
-    const direction = ms.user_id === state.user?.id ? 'sent' : 'inbox';
+    const direction: keyof typeof directions = ms.user_id === state.user?.id ? 'sent' : 'inbox';
     const time = new Date(ms.time).toLocaleTimeString('ru-RU', {
       hour: '2-digit',
       minute: '2-digit',
     });
     const author = state.chatUsers?.find((user) => user.id === ms.user_id)?.login;
+    const type: keyof typeof messageTypes = 'text';
     return {
       messageText: ms.content,
       direction,
-      type: 'text',
+      type,
       time,
       author,
     };
