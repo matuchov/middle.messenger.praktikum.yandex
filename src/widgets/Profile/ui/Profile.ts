@@ -6,7 +6,7 @@ import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { ProfileTemlpate } from '../template/Profile.ts';
-import type { ProfileProps } from '../model/types.ts';
+import type { Iuser, ProfileProps } from '../model/types.ts';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
 import './Profile.css';
@@ -68,7 +68,7 @@ export class Profile extends Block<ProfileProps> {
     }
   }
 
-  protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
+  protected componentDidUpdate(_: ProfileProps, newProps: ProfileProps): boolean {
     const { user, pattern, isProfileEdit = false } = newProps;
     const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
     console.log(this.props);
@@ -81,7 +81,7 @@ export class Profile extends Block<ProfileProps> {
 
     this.children.inputs?.forEach((el) => {
       el.setProps({
-        value: user[el.props.name],
+        value: user?.[el.props.name as keyof Iuser].toString(),
         isValidate: isProfileEdit,
         disabled: !isProfileEdit,
       });
@@ -103,4 +103,4 @@ function mapUserToProps(state: IStore) {
   };
 }
 
-export default connect(Profile, mapUserToProps);
+export default connect<ProfileProps, typeof Profile>(Profile, mapUserToProps);
