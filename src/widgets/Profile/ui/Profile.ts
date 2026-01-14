@@ -11,13 +11,23 @@ import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
 import './Profile.css';
 import { RESOURCES_URL } from '@/shared/Config/index.ts';
+import { ProfileController } from '../model/controller.ts';
 
 const template = new Templator(ProfileTemlpate);
+const controller = new ProfileController();
+
+const createLink = (url?: string) => {
+  if (url) {
+    return RESOURCES_URL + url;
+  } else {
+    return undefined;
+  }
+};
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { user, pattern } = props;
-    const avatar = new Avatar({ size: 'large', avatarSrc: RESOURCES_URL + user?.avatar });
+    const avatar = new Avatar({ size: 'large', avatarSrc: createLink(user?.avatar) });
     const inputs = pattern.inputs.map((el) => {
       let value;
       if (user && Object.hasOwn(user, el.name)) {
@@ -41,7 +51,7 @@ export class Profile extends Block<ProfileProps> {
       events: {
         submit: {
           listener: (e) => {
-            this.onSubmit(e);
+            controller.onSubmit(e, this);
           },
         },
       },
@@ -50,22 +60,6 @@ export class Profile extends Block<ProfileProps> {
     const links = pattern.links ? pattern.links.map((el) => new MyLink(el)) : undefined;
 
     super({ ...props, avatarComponent, formContent, links, inputs });
-  }
-
-  protected onSubmit(e: SubmitEvent) {
-    e.preventDefault();
-    let isValid = true;
-    this.children.inputs?.forEach((el) => {
-      if (el instanceof MyInput) {
-        if (el.validate() === false) {
-          isValid = false;
-        }
-      }
-    });
-
-    if (isValid && e.target instanceof HTMLFormElement && this.props.onSubmit) {
-      this.props.onSubmit(e.target);
-    }
   }
 
   protected componentDidUpdate(_: ProfileProps, newProps: ProfileProps): boolean {
