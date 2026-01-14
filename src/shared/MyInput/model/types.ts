@@ -13,7 +13,7 @@ export interface MyInputProps extends defaultProps {
   inputType: string;
   label?: string;
   name: string;
-  value?: string;
+  value?: string | null;
   disabled?: boolean;
   isClean?: boolean;
   placeholder?: string;

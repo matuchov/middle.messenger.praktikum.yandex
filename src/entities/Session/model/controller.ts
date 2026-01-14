@@ -1,3 +1,4 @@
+import { router } from '@/app/router/router';
 import store from '@/app/store/store';
 import { SessionApi } from '@/entities/Session/api/SessionApi';
 
@@ -20,5 +21,6 @@ export class SessionController {
   }
   public logout() {
     sessionAPI.logout();
+    router.go('/');
   }
 }

@@ -6,22 +6,32 @@ import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { ProfileTemlpate } from '../template/Profile.ts';
-import type { ProfileProps } from '../model/types.ts';
+import type { Iuser, ProfileProps } from '../model/types.ts';
 import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
 import './Profile.css';
 import { RESOURCES_URL } from '@/shared/Config/index.ts';
+import { ProfileController } from '../model/controller.ts';
 
 const template = new Templator(ProfileTemlpate);
+const controller = new ProfileController();
+
+const createLink = (url?: string) => {
+  if (url) {
+    return RESOURCES_URL + url;
+  } else {
+    return undefined;
+  }
+};
 
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { user, pattern } = props;
-    const avatar = new Avatar({ size: 'large', avatarSrc: RESOURCES_URL + user?.avatar });
+    const avatar = new Avatar({ size: 'large', avatarSrc: createLink(user?.avatar) });
     const inputs = pattern.inputs.map((el) => {
       let value;
       if (user && Object.hasOwn(user, el.name)) {
-        value = user[el.name];
+        value = user[el.name as keyof Iuser].toString();
       } else {
         value = '';
       }
@@ -41,7 +51,7 @@ export class Profile extends Block<ProfileProps> {
       events: {
         submit: {
           listener: (e) => {
-            this.onSubmit(e);
+            controller.onSubmit(e, this);
           },
         },
       },
@@ -52,25 +62,11 @@ export class Profile extends Block<ProfileProps> {
     super({ ...props, avatarComponent, formContent, links, inputs });
   }
 
-  protected onSubmit(e: SubmitEvent) {
-    e.preventDefault();
-    let isValid = true;
-    this.children.inputs?.forEach((el) => {
-      if (el instanceof MyInput) {
-        if (el.validate() === false) {
-          isValid = false;
-        }
-      }
-    });
-
-    if (isValid && e.target instanceof HTMLFormElement && this.props.onSubmit) {
-      this.props.onSubmit(e.target);
-    }
-  }
-
-  protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
+  protected componentDidUpdate(_: ProfileProps, newProps: ProfileProps): boolean {
     const { user, pattern, isProfileEdit = false } = newProps;
     const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
+    console.log('smb' + sumbitBtn);
+
     console.log(this.props);
 
     this.children.avatarComponent?.children?.child?.setProps({
@@ -81,7 +77,7 @@ export class Profile extends Block<ProfileProps> {
 
     this.children.inputs?.forEach((el) => {
       el.setProps({
-        value: user[el.props.name],
+        value: user?.[el.props.name as keyof Iuser].toString(),
         isValidate: isProfileEdit,
         disabled: !isProfileEdit,
       });

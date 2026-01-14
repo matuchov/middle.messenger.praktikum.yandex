@@ -12,8 +12,8 @@ const initApp = async () => {
 
   try {
     await sessionController.getUser();
-  } catch (error) {
-    if (window.location.pathname !== '/registration') {
+  } catch {
+    if (!['/', '/registration'].includes(window.location.pathname)) {
       router.go('/');
       store.set({ forms: { singin: { error: 'Необходимо авторизоваться' } } });
     }

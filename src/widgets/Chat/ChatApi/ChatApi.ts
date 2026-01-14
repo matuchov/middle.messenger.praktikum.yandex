@@ -10,7 +10,7 @@ export class ChatApi {
     this.authAPIInstance = new HTTPTransport();
   }
 
-  async getToken(id: number): Promise<any> {
+  async getToken(id: number): Promise<{ token: number }> {
     if (id) {
       return this.authAPIInstance.post(`${API_URL}/chats/token/${id}`, {});
     }

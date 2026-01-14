@@ -7,7 +7,7 @@ export class SettingsApi {
   constructor() {
     this.api = new HTTPTransport();
   }
-  changeUser(data: {}) {
+  changeUser(data: Record<string, unknown>) {
     const res = this.api.put(API_URL + '/user/profile', { data });
     return res;
   }
