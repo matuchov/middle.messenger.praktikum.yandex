@@ -65,7 +65,7 @@ export class HTTPTransport {
         isGet && !!data && typeof data === 'object' && !(data instanceof FormData);
 
       xhr.open(method, shouldStringify ? `${url}${queryStringify(data as PlainObject)}` : url);
-      // xhr.withCredentials = withCredentials;
+      xhr.withCredentials = withCredentials;
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
