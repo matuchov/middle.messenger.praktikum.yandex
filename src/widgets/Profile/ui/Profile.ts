@@ -65,6 +65,8 @@ export class Profile extends Block<ProfileProps> {
   protected componentDidUpdate(_: ProfileProps, newProps: ProfileProps): boolean {
     const { user, pattern, isProfileEdit = false } = newProps;
     const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
+    console.log('smb' + sumbitBtn);
+
     console.log(this.props);
 
     this.children.avatarComponent?.children?.child?.setProps({

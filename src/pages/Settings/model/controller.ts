@@ -1,5 +1,6 @@
 import store from '@/app/store/store';
 import { SettingsApi } from '../api/SettingsApi';
+import { router } from '@/app/router/router';
 
 const settingsApi = new SettingsApi();
 
@@ -12,8 +13,9 @@ export class SettingsController {
     res.then((res) => {
       const user = JSON.parse(res as string);
       if (Object.hasOwn(user, 'id')) {
-        store.set({ user });
+        store.set({ user, isProfileEdit: false });
       }
+      router.go('/settings');
     });
     return res;
   }
