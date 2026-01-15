@@ -1,6 +1,4 @@
-type PlainObject<T = unknown> = {
-  [k in string]: T;
-};
+type PlainObject<T = unknown> = Record<string, T>;
 
 function isPlainObject(value: unknown): value is PlainObject {
   return (
@@ -11,32 +9,36 @@ function isPlainObject(value: unknown): value is PlainObject {
   );
 }
 
-function isArray(value: unknown): value is [] {
+function isArray(value: unknown): value is unknown[] {
   return Array.isArray(value);
 }
 
-function isArrayOrObject(value: unknown): value is [] | PlainObject {
-  return isPlainObject(value) || isArray(value);
-}
+export function isEqual(lhs: unknown, rhs: unknown): boolean {
+  if (lhs === rhs) return true;
 
-export function isEqual(lhs: PlainObject | [], rhs: PlainObject | []) {
-  if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+  if (typeof lhs !== typeof rhs || lhs === null || rhs === null) {
     return false;
   }
 
-  for (const [key, value] of Object.entries(lhs)) {
-    const rightValue = rhs[key];
-    if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-      if (isEqual(value, rightValue)) {
-        continue;
-      }
-      return false;
-    }
+  if (isArray(lhs) && isArray(rhs)) {
+    if (lhs.length !== rhs.length) return false;
 
-    if (value !== rightValue) {
-      return false;
-    }
+    return lhs.every((value, index) => isEqual(value, rhs[index]));
   }
 
-  return true;
+  if (isPlainObject(lhs) && isPlainObject(rhs)) {
+    const leftKeys = Object.keys(lhs);
+    const rightKeys = Object.keys(rhs);
+
+    if (leftKeys.length !== rightKeys.length) return false;
+
+    for (const key of leftKeys) {
+      if (!Object.prototype.hasOwnProperty.call(rhs, key) || !isEqual(lhs[key], rhs[key])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  return lhs === rhs;
 }

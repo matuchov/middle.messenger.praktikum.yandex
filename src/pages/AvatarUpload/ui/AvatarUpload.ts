@@ -3,13 +3,15 @@ import { Templator } from '@/app/utils/TemplatorClass';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import type { AvatarUploadProps } from '../model/types.ts';
 import { AvatarUploadTemplate } from '../template/AvatarUpload.ts';
-import './AvatarUpload.css';
 import { AvatarUploadController } from '../model/controller.ts';
+import type { IStore } from '@/app/store/storeType.ts';
+import { connect } from '@/shared/utils/connect/model/connect.ts';
+import './AvatarUpload.css';
 
 const template = new Templator(AvatarUploadTemplate);
 const controller = new AvatarUploadController();
 
-export class AvatarUpload extends Block<AvatarUploadProps> {
+class AvatarUpload extends Block<AvatarUploadProps> {
   constructor(props: AvatarUploadProps) {
     const submitBtn = new MyButtonBlock({
       btnText: 'Поменять',
@@ -33,7 +35,16 @@ export class AvatarUpload extends Block<AvatarUploadProps> {
   }
 
   render() {
+    const { error } = this.props;
     const { submitBtn } = this.children;
-    return template.compile({ submitBtn });
+    return template.compile({ submitBtn, error });
   }
 }
+
+function mapAvatarError(state: IStore) {
+  return {
+    error: state.forms?.avatar?.error,
+  };
+}
+
+export default connect(AvatarUpload, mapAvatarError);

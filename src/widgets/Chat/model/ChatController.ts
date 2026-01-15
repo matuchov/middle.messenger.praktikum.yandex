@@ -1,5 +1,6 @@
 import store from '@/app/store/store';
 import { ChatApi } from '../ChatApi/ChatApi';
+import type { IChatlistResponce } from '@/features/Chatlist/model/types';
 
 const chatApi = new ChatApi();
 
@@ -15,60 +16,42 @@ class ChatController {
       throw new Error('Недостаточно данных для открытия сокета');
     }
 
-    try {
-      console.log(chatId);
-
-      const res = await chatApi.getToken(chatId);
-      const token = typeof res === 'string' ? JSON.parse(res).token : res.token;
-      this.getChatUsers(chatId);
-      if (this.socket) {
-        this.socket.close();
-      }
-
-      this.socket = chatApi.openSocket(userId, chatId, token);
-
-      this.socket.onopen = () => {
-        console.log('WebSocket connected');
-        store.set({ isChatLoading: false });
-        this.getMessages();
-        this.setupPing();
-      };
-
-      this.socket.onmessage = (event) => {
-        this.handleIncomingMessage(event.data);
-      };
-
-      this.socket.onclose = (event) => {
-        console.log('WebSocket closed', event);
-        this.cleanupPing();
-      };
-
-      this.socket.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
-    } catch (e) {
-      console.error('Ошибка при открытии сокета:', e);
+    const res = await chatApi.getToken(chatId);
+    const token = typeof res === 'string' ? JSON.parse(res).token : res.token;
+    this.getChatUsers(chatId);
+    if (this.socket) {
+      this.socket.close();
     }
+
+    this.socket = chatApi.openSocket(userId, chatId, token);
+
+    this.socket.onopen = () => {
+      store.set({ isChatLoading: false });
+      this.getMessages();
+      this.setupPing();
+    };
+
+    this.socket.onmessage = (event) => {
+      this.handleIncomingMessage(event.data);
+    };
+
+    this.socket.onclose = () => {
+      this.cleanupPing();
+    };
   }
 
   private handleIncomingMessage(data: string) {
-    try {
-      const parsedData = JSON.parse(data);
+    const parsedData = JSON.parse(data);
 
-      if (parsedData.type === 'pong' || parsedData.type === 'user connected') {
-        return;
-      }
+    if (parsedData.type === 'pong' || parsedData.type === 'user connected') {
+      return;
+    }
 
-      if (Array.isArray(parsedData)) {
-        store.set({ messages: parsedData });
-      } else if (parsedData.type === 'message') {
-        const currentMessages = store.getState().messages || [];
-        store.set({ messages: [parsedData, ...currentMessages] });
-      }
-
-      console.log('Получено сообщение:', parsedData);
-    } catch (e) {
-      console.error('Ошибка парсинга сообщения:', e);
+    if (Array.isArray(parsedData)) {
+      store.set({ messages: parsedData });
+    } else if (parsedData.type === 'message') {
+      const currentMessages = store.getState().messages || [];
+      store.set({ messages: [parsedData, ...currentMessages] });
     }
   }
 
@@ -80,8 +63,6 @@ class ChatController {
           type: 'message',
         })
       );
-    } else {
-      console.error('Сокет не открыт или закрыт');
     }
   }
 
@@ -123,8 +104,8 @@ class ChatController {
           store.set({ chatUsers: users });
         }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
+        store.set({ curentChatId: null });
       });
   }
 
@@ -145,6 +126,23 @@ class ChatController {
   public async deleteUser(chatId: number, userId: number) {
     await chatApi.deleteUser(chatId, userId);
     this.getChatUsers(chatId);
+  }
+  public getChats() {
+    const res = chatApi.getChats();
+
+    res.then((res) => {
+      const chatlist: IChatlistResponce[] = JSON.parse(res as string);
+
+      if (Array.isArray(chatlist)) {
+        store.set({ chatlist });
+      } else {
+        store.set({ chatlist: null });
+      }
+    });
+    return res;
+  }
+  public setCurentChat(chatId: number) {
+    store.set({ curentChatId: chatId });
   }
 }
 

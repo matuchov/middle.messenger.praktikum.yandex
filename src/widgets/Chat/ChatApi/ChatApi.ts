@@ -18,7 +18,6 @@ export class ChatApi {
   }
 
   openSocket(userId: number, chatId: number, token: string): WebSocket {
-    console.log(`Connecting to: ${API_WS_URL}/chats/${userId}/${chatId}/${token}`);
     return new WebSocket(`${API_WS_URL}/chats/${userId}/${chatId}/${token}`);
   }
   getChatUsers(id: number) {
@@ -40,5 +39,9 @@ export class ChatApi {
         chatId: chatId,
       },
     });
+  }
+  async getChats() {
+    const res = this.authAPIInstance.get(API_URL + '/chats', {});
+    return res;
   }
 }

@@ -2,6 +2,7 @@
   width: 100%;
   padding: 6px;
 }
+
 .chat__header--user_id_input {
   width: 130px;
   height: 22px;
@@ -9,6 +10,7 @@
   border-radius: 5px;
   padding-left: 20px;
 }
+
 .chat__header--form {
   display: flex;
   flex-direction: column;

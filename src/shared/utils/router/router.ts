@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Block, defaultProps } from '@/app/utils/Block';
 
 interface BlockConstructable<T extends defaultProps> {
@@ -56,18 +57,16 @@ class Route {
   }
 
   render(): void {
-    if (!this._block) {
-      this._block = new this._blockClass(this._params);
-      const root = document.querySelector(this._props.rootQuery);
-      root!.replaceChildren(this._block.getContent()!);
-      return;
-    }
+    this._block = new this._blockClass(this._params);
+    const root = document.querySelector(this._props.rootQuery);
+
+    root!.replaceChildren(this._block.getContent()!);
+    return;
   }
 }
 
 export class Router {
   private static __instance: Router | null = null;
-
   public routes: Route[] = [];
   public history: History = window.history;
   private _currentRoute: Route | null = null;

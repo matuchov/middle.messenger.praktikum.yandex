@@ -29,3 +29,11 @@
 .avatar-upload__input_label:hover {
   text-decoration: underline;
 }
+
+.avatar-upload__error {
+  margin: 0 auto;
+  display: block;
+  padding-top: 5px;
+  color: var(--warning-color);
+  font-size: 11px;
+}

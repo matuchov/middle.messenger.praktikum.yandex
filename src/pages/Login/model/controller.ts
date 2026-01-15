@@ -19,8 +19,6 @@ export class SingInController {
       .catch((e) => {
         const responce = JSON.parse(e as string);
         const error = responce?.reason;
-        console.log(error);
-        console.log(error === 'User already in system');
 
         if (error === 'User already in system') {
           router.go('/messenger');

@@ -17,7 +17,6 @@ class ChatHeader extends Block<ChatHeaderProps> {
   constructor(props: ChatHeaderProps) {
     const avatarComponent = new Avatar({});
     const addUser = new ChatAddUser({});
-    console.log(addUser.getContent());
 
     super({ ...props, avatarComponent, addUser });
   }

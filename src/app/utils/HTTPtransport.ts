@@ -51,7 +51,6 @@ export class HTTPTransport {
 
   request: HTTPMethod = (url, options) => {
     const { headers = {}, method, data, timeout = 5000, withCredentials = true } = options;
-    console.log('dsads');
     return new Promise((resolve, reject) => {
       if (!method) {
         reject(new Error('No method'));

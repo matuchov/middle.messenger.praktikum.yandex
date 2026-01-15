@@ -35,5 +35,6 @@ export interface IchatUser {
 }
 
 interface form {
-  error: string;
+  error?: string;
+  fileName?: string;
 }

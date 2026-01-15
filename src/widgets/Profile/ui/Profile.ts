@@ -16,7 +16,7 @@ import { ProfileController } from '../model/controller.ts';
 const template = new Templator(ProfileTemlpate);
 const controller = new ProfileController();
 
-const createLink = (url?: string) => {
+const createLink = (url?: string | null) => {
   if (url) {
     return RESOURCES_URL + url;
   } else {
@@ -27,11 +27,15 @@ const createLink = (url?: string) => {
 export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { user, pattern } = props;
+
     const avatar = new Avatar({ size: 'large', avatarSrc: createLink(user?.avatar) });
     const inputs = pattern.inputs.map((el) => {
       let value;
       if (user && Object.hasOwn(user, el.name)) {
-        value = user[el.name as keyof Iuser].toString();
+        const data = user[el.name as keyof Iuser];
+        if (data) {
+          value = data.toString();
+        }
       } else {
         value = '';
       }
@@ -65,19 +69,16 @@ export class Profile extends Block<ProfileProps> {
   protected componentDidUpdate(_: ProfileProps, newProps: ProfileProps): boolean {
     const { user, pattern, isProfileEdit = false } = newProps;
     const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
-    console.log('smb' + sumbitBtn);
-
-    console.log(this.props);
 
     this.children.avatarComponent?.children?.child?.setProps({
-      avatarSrc: RESOURCES_URL + user?.avatar,
+      avatarSrc: createLink(user?.avatar),
     });
     this.children.formContent?.setProps({ subminBtn: sumbitBtn });
     this.children.formContent?.dispatchComponentRender();
 
     this.children.inputs?.forEach((el) => {
       el.setProps({
-        value: user?.[el.props.name as keyof Iuser].toString(),
+        value: user?.[el.props.name as keyof Iuser]?.toString(),
         isValidate: isProfileEdit,
         disabled: !isProfileEdit,
       });
