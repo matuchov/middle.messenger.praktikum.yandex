@@ -91,8 +91,8 @@ export const settingsPattern: ProfilePattern = {
       },
     },
     {
-      linkText: 'Изменить пароль',
-      linkHref: '/changepass',
+      linkText: 'К чатам',
+      linkHref: '/messenger',
       linkClassName: 'profile__link',
     },
     {

@@ -20,7 +20,10 @@ class Store extends EventBus<Record<string, unknown[]>> {
     Object.assign(this.state, value);
 
     this.emit(StoreEvents.Updated);
-    console.log(this.state);
+  }
+
+  public clean() {
+    this.state = {};
   }
 }
 

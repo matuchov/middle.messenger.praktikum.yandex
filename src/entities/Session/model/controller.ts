@@ -5,7 +5,7 @@ import { SessionApi } from '@/entities/Session/api/SessionApi';
 const sessionAPI = new SessionApi();
 
 export class SessionController {
-  public getUser() {
+  public async getUser() {
     const res = sessionAPI.getUser();
 
     res.then((res) => {
@@ -19,8 +19,9 @@ export class SessionController {
     });
     return res;
   }
-  public logout() {
-    sessionAPI.logout();
+  public async logout() {
+    await sessionAPI.logout();
+    store.clean();
     router.go('/');
   }
 }

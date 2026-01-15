@@ -3,7 +3,7 @@ import { Templator } from '@/app/utils/TemplatorClass';
 import { itemsStyleClasses, type MyInputProps } from '../model/types';
 import { clearInputTemplate, myInputTemplate } from '../template/MyInput';
 import './MyInput.css';
-import { validateInput } from '@/shared/utils/validation/Validate';
+import { validate } from '@/shared/utils/validation/Validate';
 
 const template = new Templator(myInputTemplate);
 const cleanTemplate = new Templator(clearInputTemplate);
@@ -38,7 +38,7 @@ export class MyInput extends Block<MyInputProps> {
     }
 
     const value = input?.value || '';
-    const errorText = validateInput(this.props.validateRules, value);
+    const errorText = validate(this.props.validateRules, value);
 
     if (errorText) {
       this.setProps({ errorText, value });

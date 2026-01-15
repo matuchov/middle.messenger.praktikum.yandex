@@ -11,7 +11,7 @@ export class SessionApi {
     const res = this.authAPIInstance.get(API_URL + '/auth/user', {});
     return res;
   }
-  logout() {
+  async logout() {
     return this.authAPIInstance.post(API_URL + '/auth/logout', {});
   }
 }

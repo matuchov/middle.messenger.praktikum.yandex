@@ -13,7 +13,7 @@ const chatlisController = new ChatlisController();
 
 class Chatlist extends Block<ChatlistProps> {
   constructor(props: ChatlistProps) {
-    chatlisController.getChats();
+    // chatlisController.getChats();
     props.chatlistRows = new Loader({});
     super({ ...props });
   }

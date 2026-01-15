@@ -20,7 +20,7 @@ class ChatClass extends Block<ChatProps> {
     const header = new ChatHeader({});
     const messages = new ChatMessages({});
     const footer = new ChatFooter({});
-
+    controller.getChats();
     super({ ...props, header, messages, footer });
   }
 
@@ -28,8 +28,11 @@ class ChatClass extends Block<ChatProps> {
     if (oldProps.curentChatId === newProps.curentChatId) {
       return false;
     }
+    controller.getChats();
+
     controller.clearMessages();
     controller.openSocket(newProps.curentChatId);
+
     return true;
   }
 

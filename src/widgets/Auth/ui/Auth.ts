@@ -7,6 +7,7 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { authTemplate } from '../template/Auth.ts';
 import './Auth.css';
+import { MyLink } from '@/shared/MyLink/index.ts';
 
 const template = new Templator(authTemplate);
 
@@ -14,6 +15,8 @@ export class Auth extends Block<AuthProps> {
   constructor(props: AuthProps) {
     const pattern = props.pattern;
     const inputs = pattern.inputs.map((el) => new MyInput({ ...el, isValidate: true }));
+    const link = pattern.link ? new MyLink(pattern.link) : undefined;
+
     const subminBtn = new MyButtonBlock(pattern.button);
     const form = new Form({
       formClass: 'auth__form',
@@ -27,11 +30,11 @@ export class Auth extends Block<AuthProps> {
         },
       },
     });
+
     const box = new Box({
       boxClass: 'auth__box',
-      children: form,
+      children: [form, link],
     });
-
     super({ ...props, inputs, subminBtn, form, box });
   }
 

@@ -48,18 +48,11 @@ export class ChatFooter extends Block<ChatFooterProps> {
 
   protected onSubmit(e: SubmitEvent) {
     e.preventDefault();
-    let isValid = true;
-    this.children.inputs?.forEach((el) => {
-      if (el instanceof MyInput) {
-        if (el.validate() === false) {
-          isValid = false;
-        }
-      }
-    });
 
-    if (isValid && e.target instanceof HTMLFormElement) {
+    if (e.target instanceof HTMLFormElement) {
       const data = new FormData(e.target);
-      controller.sendMessage([...data.entries()][0][1].toString());
+      const message = [...data.entries()][0][1].toString();
+      if (message) controller.sendMessage([...data.entries()][0][1].toString());
     }
   }
 

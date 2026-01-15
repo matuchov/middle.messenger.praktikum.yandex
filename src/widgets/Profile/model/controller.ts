@@ -4,7 +4,6 @@ import type Profile from '../ui/Profile';
 export class ProfileController {
   public onSubmit(e: SubmitEvent, profile: InstanceType<typeof Profile>) {
     e.preventDefault();
-    console.log(e);
 
     let isValid = true;
     profile.children.inputs?.forEach((el) => {
@@ -14,7 +13,6 @@ export class ProfileController {
         }
       }
     });
-    console.log(profile.props.onSubmit);
 
     if (isValid && e.target instanceof HTMLFormElement && profile.props.onSubmit) {
       profile.props.onSubmit(e.target);
