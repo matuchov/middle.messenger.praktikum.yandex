@@ -6,9 +6,8 @@ const sessionAPI = new SessionApi();
 
 export class SessionController {
   public async getUser() {
-    const res = sessionAPI.getUser();
-
-    res.then((res) => {
+    try {
+      const res = await sessionAPI.getUser();
       const user = JSON.parse(res as string);
 
       if (Object.hasOwn(user, 'id')) {
@@ -16,8 +15,10 @@ export class SessionController {
       } else {
         store.set({ user: null });
       }
-    });
-    return res;
+      return res;
+    } catch (e) {
+      return e;
+    }
   }
   public async logout() {
     await sessionAPI.logout();

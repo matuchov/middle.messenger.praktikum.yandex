@@ -13,7 +13,7 @@ class ChatController {
     const userId = store.getState().user?.id;
 
     if (!userId || !chatId) {
-      throw new Error('Недостаточно данных для открытия сокета');
+      return;
     }
 
     const res = await chatApi.getToken(chatId);
@@ -95,18 +95,17 @@ class ChatController {
       this.pingInterval = null;
     }
   }
-  getChatUsers(id: number) {
-    chatApi
-      .getChatUsers(id)
-      .then((res) => {
-        const users = JSON.parse(res as string);
-        if (Array.isArray(users)) {
-          store.set({ chatUsers: users });
-        }
-      })
-      .catch(() => {
-        store.set({ curentChatId: null });
-      });
+  async getChatUsers(id: number) {
+    try {
+      const res = await chatApi.getChatUsers(id);
+      const users = JSON.parse(res as string);
+      if (Array.isArray(users)) {
+        store.set({ chatUsers: users });
+      }
+    } catch (e) {
+      store.set({ curentChatId: null });
+      throw e;
+    }
   }
 
   public async addUser(e: SubmitEvent) {
@@ -124,9 +123,14 @@ class ChatController {
   }
 
   public async deleteUser(chatId: number, userId: number) {
-    await chatApi.deleteUser(chatId, userId);
-    this.getChatUsers(chatId);
+    try {
+      await chatApi.deleteUser(chatId, userId);
+      await this.getChatUsers(chatId);
+    } catch (e) {
+      return e;
+    }
   }
+
   public getChats() {
     const res = chatApi.getChats();
 
