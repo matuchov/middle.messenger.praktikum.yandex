@@ -7,5 +7,8 @@ export const AvatarUploadTemplate = `<main class="avatar-upload box">
       Выбрать файл на компьютере
     </label>
     {{{ submitBtn }}}
+   <div class="avatar-upload__error">{{error}}</div>
+
   </form>
+
 </main>`;

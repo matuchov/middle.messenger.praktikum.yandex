@@ -24,7 +24,7 @@ export class RegistrationController {
       try {
         await sessionController.getUser();
         router.go('/messenger');
-      } catch (e) {
+      } catch {
         /* ignore */
       }
       return res;
