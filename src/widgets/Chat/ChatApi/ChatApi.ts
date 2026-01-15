@@ -20,7 +20,7 @@ export class ChatApi {
   openSocket(userId: number, chatId: number, token: string): WebSocket {
     return new WebSocket(`${API_WS_URL}/chats/${userId}/${chatId}/${token}`);
   }
-  getChatUsers(id: number) {
+  async getChatUsers(id: number) {
     return this.authAPIInstance.get(`${API_URL}/chats/${id}/users`, {});
   }
 

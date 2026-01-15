@@ -2,6 +2,7 @@ import { SessionController } from './../../../entities/Session/model/controller'
 import store from '@/app/store/store';
 import { RegistrationApi } from '../api/RegistrationApi.ts';
 import { router } from '@/app/router/router.ts';
+import { errorStringify } from '@/shared/utils/errors/errors.ts';
 
 const loginApi = new RegistrationApi();
 const sessionController = new SessionController();
@@ -9,36 +10,15 @@ const sessionController = new SessionController();
 export class RegistrationController {
   public async signup(data: { [k: string]: FormDataEntryValue }) {
     const currentUser = store.getState().user;
-    if (currentUser) {
-      store.set({
-        forms: {
-          signup: {
-            error: 'Для регистрации необходимо выйти из приложения',
-          },
-        },
-      });
-      return;
-    }
     try {
-      const res = await loginApi.signup(data);
-      try {
-        await sessionController.getUser();
-        router.go('/messenger');
-      } catch {
-        /* ignore */
-      }
-      return res;
+      if (currentUser) await sessionController.logout();
+      await loginApi.signup(data);
+      await sessionController.getUser();
+      router.go('/messenger');
     } catch (e) {
-      let errorMessage = 'Unknown error';
-      try {
-        const errorData = typeof e === 'string' ? JSON.parse(e) : e;
-        errorMessage = errorData?.reason || errorMessage;
-      } catch {
-        /* ignore */
-      }
-
+      const error = errorStringify(e);
       store.set({
-        forms: { signup: { error: errorMessage } },
+        forms: { signup: { error } },
       });
     }
   }
