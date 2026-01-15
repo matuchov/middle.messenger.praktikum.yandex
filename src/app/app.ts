@@ -7,9 +7,7 @@ const sessionController = new SessionController();
 
 const initApp = async () => {
   routesConfig.forEach((route) => router.use(route.pathname, route.block));
-
   router.start();
-
   try {
     await sessionController.getUser();
   } catch {

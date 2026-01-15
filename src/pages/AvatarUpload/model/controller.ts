@@ -29,16 +29,14 @@ export class AvatarUploadController {
 
   public async upload(data: FormData) {
     try {
-      const res = api.uploadAvatar(data);
-      res.then((data) => {
-        if (typeof data === 'string') {
-          const user: Iuser = JSON.parse(data);
-          store.set({
-            user,
-          });
-        }
-        router.go('/settings');
-      });
+      await api.uploadAvatar(data);
+      if (typeof data === 'string') {
+        const user: Iuser = JSON.parse(data);
+        store.set({
+          user,
+        });
+      }
+      router.go('/settings');
     } catch (e) {
       const error = errorStringify(e);
       store.set({
@@ -63,9 +61,7 @@ export class AvatarUploadController {
 
   isAllowedExtension(fileName: string): boolean {
     const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
-
     const extension = fileName.split('.').pop()?.toLowerCase();
-
     return extension ? allowedExtensions.includes(extension) : false;
   }
 }
