@@ -1,3 +1,4 @@
+import { errorStringify } from '@/shared/utils/errors/errors';
 import { router } from '@/app/router/router';
 import store from '@/app/store/store';
 import { SessionApi } from '@/entities/Session/api/SessionApi';
@@ -17,7 +18,8 @@ export class SessionController {
       }
       return res;
     } catch (e) {
-      return e;
+      const error = errorStringify(e);
+      throw new Error(error);
     }
   }
   public async logout() {
