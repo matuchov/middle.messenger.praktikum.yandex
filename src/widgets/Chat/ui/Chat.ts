@@ -28,8 +28,8 @@ class ChatClass extends Block<ChatProps> {
     if (oldProps.curentChatId === newProps.curentChatId) {
       return false;
     }
-    controller.getChats();
 
+    controller.getChats();
     controller.clearMessages();
     controller.openSocket(newProps.curentChatId);
 

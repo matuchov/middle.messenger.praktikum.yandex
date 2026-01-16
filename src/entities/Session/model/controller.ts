@@ -23,8 +23,13 @@ export class SessionController {
     }
   }
   public async logout() {
-    await sessionAPI.logout();
-    store.clean();
-    router.go('/');
+    try {
+      await sessionAPI.logout();
+      store.clean();
+      router.go('/');
+    } catch (e) {
+      const error = errorStringify(e);
+      throw new Error(error);
+    }
   }
 }

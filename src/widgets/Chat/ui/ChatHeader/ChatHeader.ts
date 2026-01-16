@@ -9,7 +9,8 @@ import './Chatheader.css';
 import { connect } from '@/shared/utils/connect/model/connect';
 import { MyButtonBlock } from '@/shared/MyButtonBlock';
 import ChatController from '../../model/ChatController';
-import { ChatAddUser } from '../ChatAddUser/ChatAddUser';
+import ChatAddUser from '../ChatAddUser/ChatAddUser';
+import { createResourcesLink } from '@/shared/utils/api/createResourcesLink';
 const template = new Templator(ChatHeaderTemplate);
 const chatUserTemplate = new Templator(User);
 
@@ -24,7 +25,7 @@ class ChatHeader extends Block<ChatHeaderProps> {
   createUsersComponent(chatUsers: IchatUser[] | undefined, chatId?: number | null) {
     if (chatUsers && chatId) {
       return chatUsers.map((user) => {
-        const avatarComponent = new Avatar({ avatarSrc: user.avatar });
+        const avatarComponent = new Avatar({ avatarSrc: createResourcesLink(user.avatar) });
         const deleteButton = new MyButtonBlock({
           btnType: 'button',
           theme: 'clear',

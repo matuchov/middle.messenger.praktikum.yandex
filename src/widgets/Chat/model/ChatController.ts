@@ -1,17 +1,23 @@
+import { errorStringify } from '@/shared/utils/errors/errors';
 import store from '@/app/store/store';
 import { ChatApi } from '../ChatApi/ChatApi';
 import type { IChatlistResponce } from '@/features/Chatlist/model/types';
+import { setFormError } from '@/shared/utils/errors/setFormError';
 
 const chatApi = new ChatApi();
 
 class ChatController {
+  currenChatId: number | null | undefined = null;
   socket: WebSocket | null = null;
   private pingInterval: ReturnType<typeof setInterval> | null = null;
 
   public async openSocket(chatId?: number | null) {
+    if (this.currenChatId === chatId) {
+      return;
+    }
+    this.currenChatId = chatId;
     store.set({ isChatLoading: true });
     const userId = store.getState().user?.id;
-
     if (!userId || !chatId) {
       return;
     }
@@ -117,7 +123,12 @@ class ChatController {
       const chatId = store.getState().curentChatId;
 
       if (!chatId || !userId) return;
-      await chatApi.addUser(chatId, userId);
+      try {
+        await chatApi.addUser(chatId, userId);
+      } catch (e) {
+        const error = errorStringify(e);
+        setFormError(error, 'addUser', 5000);
+      }
       this.getChatUsers(chatId);
     }
   }
@@ -127,24 +138,27 @@ class ChatController {
       await chatApi.deleteUser(chatId, userId);
       await this.getChatUsers(chatId);
     } catch (e) {
-      return e;
+      const error = errorStringify(e);
+      setFormError(error, 'addUser', 5000);
     }
   }
 
-  public getChats() {
-    const res = chatApi.getChats();
-
-    res.then((res) => {
+  public async getChats() {
+    try {
+      const res = await chatApi.getChats();
       const chatlist: IChatlistResponce[] = JSON.parse(res as string);
-
       if (Array.isArray(chatlist)) {
         store.set({ chatlist });
       } else {
         store.set({ chatlist: null });
       }
-    });
-    return res;
+      return res;
+    } catch (e) {
+      const error = errorStringify(e);
+      setFormError(error, 'chatList');
+    }
   }
+
   public setCurentChat(chatId: number) {
     store.set({ curentChatId: chatId });
   }
