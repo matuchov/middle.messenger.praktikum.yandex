@@ -5,7 +5,7 @@ import { Login } from '@/pages/Login';
 import { Registration } from '@/pages/Registration';
 import { Settings } from '@/pages/Settings';
 import { AvatarUpload } from '@/pages/AvatarUpload';
-import ChatAvatarUpload from '@/pages/ChatAvatarUpload/ui/ChatAvatarUpload';
+import { ChatAvatarUpload } from '@/pages/ChatAvatarUpload/';
 
 export const routesConfig = [
   { pathname: '/messenger', block: ChatPage },
