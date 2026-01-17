@@ -1,28 +1,23 @@
 # MessengerApp
 
-Небольшой фронтенд-проект в рамках Sprint_2 на Vite + TypeScript.
+Небольшой фронтенд-проект в рамках Sprint_3 на Vite + TypeScript.
 Компоненты переведены на архитектуру Block, а также были добавлены валидации форм на события submit и blur.
+Подключено ya-praktikum.tech/api/v2/
 Сборка шаблонов осуществляется с помощью класса Teplator, который сразу возращает dom элемент, и для элементов в шаблоне может принимать как dom элементы, так и Block компоненты.
 
 Проект на Netlify https://delightful-praline-d9d196.netlify.app/
 
 Страницы:
 
-[Профиль: /profile](https://delightful-praline-d9d196.netlify.app/profile)
+[Профиль: /settings](https://delightful-praline-d9d196.netlify.app/settings)
 
-[Изменение пароля: /changepass](https://delightful-praline-d9d196.netlify.app/changepass)
+[Логин: /](https://delightful-praline-d9d196.netlify.app/)
 
-[Изменение профиля: /edit](https://delightful-praline-d9d196.netlify.app/edit)
-
-[Логин: /login](https://delightful-praline-d9d196.netlify.app/login)
-
-[Регистрация: /registration](https://delightful-praline-d9d196.netlify.app/registration)
+[Регистрация: /sing-up](https://delightful-praline-d9d196.netlify.app/sing-up)
 
 [Загрузка аватара: /AvatarUpload](https://delightful-praline-d9d196.netlify.app/AvatarUpload)
 
-[Ошибка 500 /500](https://delightful-praline-d9d196.netlify.app/500)
-
-[Ошибка 404 /500](https://delightful-praline-d9d196.netlify.app/dsadsads)
+[Ошибка 404 /any](https://delightful-praline-d9d196.netlify.app/dsadsads)
 
 ## Быстрый старт
 

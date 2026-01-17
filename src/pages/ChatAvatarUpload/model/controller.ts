@@ -1,22 +1,28 @@
 import { errorStringify } from '@/shared/utils/errors/errors';
-import { AvatarUploadApi } from './AvatarUploadApi';
+import { ChatAvatarUploadApi } from './AvatarUploadApi';
 import store from '@/app/store/store';
-import type { Iuser } from '@/widgets/Profile';
 import { router } from '@/app/router/router';
 import { setFormError } from '@/shared/utils/errors/setFormError';
 
-const api = new AvatarUploadApi();
+const api = new ChatAvatarUploadApi();
 
 export class AvatarUploadController {
   public onSubmit(e: SubmitEvent) {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
+    const chatId = store.getState().curentChatId?.toString();
+    if (!chatId) {
+      setFormError('Не выбран чат', 'chatAvatar');
+      return;
+    }
+    form.append('chatId', chatId);
+
     const data = Object.fromEntries(form);
     const file = data.avatar as File;
     const error = this.validate(file);
 
     if (error) {
-      setFormError(error, 'avatar');
+      setFormError(error, 'chatAvatar');
     } else {
       this.upload(form);
     }
@@ -25,16 +31,10 @@ export class AvatarUploadController {
   public async upload(data: FormData) {
     try {
       await api.uploadAvatar(data);
-      if (typeof data === 'string') {
-        const user: Iuser = JSON.parse(data);
-        store.set({
-          user,
-        });
-      }
-      router.go('/settings');
+      router.go('/messenger');
     } catch (e) {
       const error = errorStringify(e);
-      setFormError(error, 'avatar');
+      setFormError(error, 'chatAvatar');
     }
   }
 

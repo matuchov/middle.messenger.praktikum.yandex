@@ -24,6 +24,6 @@ export const SingInPattern: PatternType = {
   link: {
     linkText: 'Зарегистрироваться',
     linkClassName: 'auth__link',
-    linkHref: '/registration',
+    linkHref: '/sign-up',
   },
 };

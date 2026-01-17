@@ -11,7 +11,7 @@ import './AvatarUpload.css';
 const template = new Templator(AvatarUploadTemplate);
 const controller = new AvatarUploadController();
 
-class AvatarUpload extends Block<AvatarUploadProps> {
+export class AvatarUploadClass extends Block<AvatarUploadProps> {
   constructor(props: AvatarUploadProps) {
     const submitBtn = new MyButtonBlock({
       btnText: 'Поменять',
@@ -20,7 +20,8 @@ class AvatarUpload extends Block<AvatarUploadProps> {
     });
 
     const events = {
-      submit: {
+      ...props.events,
+      submit: props.events?.submit || {
         listener: (e: SubmitEvent) => {
           controller.onSubmit(e);
         },
@@ -47,4 +48,4 @@ function mapAvatarError(state: IStore) {
   };
 }
 
-export default connect(AvatarUpload, mapAvatarError);
+export default connect(AvatarUploadClass, mapAvatarError);

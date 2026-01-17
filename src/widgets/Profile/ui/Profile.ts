@@ -11,7 +11,7 @@ import { connect } from '@/shared/utils/connect/model/connect.ts';
 import type { IStore } from '@/app/store/storeType.ts';
 import './Profile.css';
 import { ProfileController } from '../model/controller.ts';
-import { createResourcesLink } from '@/shared/utils/api/createResourcesLink.ts';
+import { createResourcesLink as cRL } from '@/shared/utils/api/createResourcesLink.ts';
 
 const template = new Templator(ProfileTemlpate);
 const controller = new ProfileController();
@@ -20,7 +20,7 @@ export class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     const { user, pattern } = props;
 
-    const avatar = new Avatar({ size: 'large', avatarSrc: createResourcesLink(user?.avatar) });
+    const avatar = new Avatar({ size: 'large', avatarSrc: cRL(user?.avatar) });
     const inputs = pattern.inputs.map((el) => {
       let value;
       if (user && Object.hasOwn(user, el.name)) {
@@ -63,7 +63,7 @@ export class Profile extends Block<ProfileProps> {
     const sumbitBtn = isProfileEdit ? new MyButtonBlock(pattern.submitBtn) : undefined;
 
     this.children.avatarComponent?.children?.child?.setProps({
-      avatarSrc: createResourcesLink(user?.avatar),
+      avatarSrc: cRL(user?.avatar),
     });
     this.children.formContent?.setProps({ subminBtn: sumbitBtn });
     this.children.formContent?.dispatchComponentRender();

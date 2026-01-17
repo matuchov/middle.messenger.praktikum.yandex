@@ -4,9 +4,12 @@ import type { Avatar } from '@/shared/Avatar';
 import ChatAddUser from '../../ChatAddUser/ChatAddUser';
 
 export interface ChatHeaderProps extends defaultProps {
+  avatar?: Avatar;
+
   avatarComponent?: Avatar;
   addUser?: InstanceType<typeof ChatAddUser>;
   name?: string;
   chatUsers?: IchatUser[];
   chatId?: number | null;
+  chatAvatarSrc?: string;
 }

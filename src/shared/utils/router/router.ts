@@ -97,7 +97,7 @@ export class Router {
   }
 
   private _onRoute(pathname: string): void {
-    const route = this.getRoute(pathname);
+    const route = this.getRoute(pathname) || this.getRoute('404');
     if (!route) {
       return;
     }

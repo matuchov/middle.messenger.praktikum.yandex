@@ -9,12 +9,13 @@ const template = new Templator(ErrorPageTemlpate);
 
 export class ErrorPage extends Block<ErrorPageProps> {
   constructor(props: ErrorPageProps) {
+    const { error = '404' } = props;
     const link = new MyLink({
       linkClassName: 'error-page__link',
       linkText: 'Назад к чатам',
-      linkHref: '/',
+      linkHref: '/messenger',
     });
-    super({ ...props, link });
+    super({ ...props, link, error });
   }
 
   render() {

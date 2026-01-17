@@ -121,8 +121,10 @@ class ChatController {
       const data = Object.fromEntries(new FormData(e.target));
       const userId = +data?.addUser;
       const chatId = store.getState().curentChatId;
-
-      if (!chatId || !userId) return;
+      if (!chatId || !userId) {
+        setFormError('Только числа', 'addUser', 5000);
+        return;
+      }
       try {
         await chatApi.addUser(chatId, userId);
       } catch (e) {

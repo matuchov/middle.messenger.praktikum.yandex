@@ -11,21 +11,27 @@ import { MyButtonBlock } from '@/shared/MyButtonBlock';
 import ChatController from '../../model/ChatController';
 import ChatAddUser from '../ChatAddUser/ChatAddUser';
 import { createResourcesLink } from '@/shared/utils/api/createResourcesLink';
+import { MyLink } from '@/shared/MyLink';
 const template = new Templator(ChatHeaderTemplate);
 const chatUserTemplate = new Templator(User);
 
 class ChatHeader extends Block<ChatHeaderProps> {
   constructor(props: ChatHeaderProps) {
-    const avatarComponent = new Avatar({});
+    const { chatAvatarSrc } = props;
+
+    const avatar = new Avatar({ avatarSrc: createResourcesLink(chatAvatarSrc) });
+    const avatarComponent = new MyLink({
+      child: avatar,
+      linkHref: '/chatavatarupload',
+    });
     const addUser = new ChatAddUser({});
 
-    super({ ...props, avatarComponent, addUser });
+    super({ ...props, avatarComponent, addUser, avatar });
   }
 
   createUsersComponent(chatUsers: IchatUser[] | undefined, chatId?: number | null) {
     if (chatUsers && chatId) {
       return chatUsers.map((user) => {
-        const avatarComponent = new Avatar({ avatarSrc: createResourcesLink(user.avatar) });
         const deleteButton = new MyButtonBlock({
           btnType: 'button',
           theme: 'clear',
@@ -38,9 +44,15 @@ class ChatHeader extends Block<ChatHeaderProps> {
             },
           },
         });
-        return chatUserTemplate.compile({ userName: user.id, deleteButton, avatarComponent });
+        return chatUserTemplate.compile({ userName: user.id, deleteButton });
       });
     }
+  }
+
+  protected componentDidUpdate(_: ChatHeaderProps, newProps: ChatHeaderProps): void {
+    const avatarSrc = newProps.chatAvatarSrc;
+    this.children.avatar?.setProps({ avatarSrc: createResourcesLink(avatarSrc) });
+    console.log(this.children.avatarComponent);
   }
 
   render() {
@@ -57,9 +69,13 @@ class ChatHeader extends Block<ChatHeaderProps> {
 }
 
 function mapChatUsers(state: IStore) {
+  const chatId = state.curentChatId;
+  const chatAvatarSrc = state.chatlist?.find((chat) => chat.id === chatId)?.avatar;
+
   return {
     chatUsers: state.chatUsers,
-    chatId: state.curentChatId,
+    chatAvatarSrc,
+    chatId,
   };
 }
 
