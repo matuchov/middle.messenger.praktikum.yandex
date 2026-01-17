@@ -6,15 +6,20 @@ import ChatController from '../../model/ChatController';
 import { ChatAddUserTemplate } from './template/ChatAddUserTemplate';
 import { Form } from '@/entities/Form';
 import { MyInput } from '@/shared/MyInput';
+import { connect } from '@/shared/utils/connect/model/connect';
+import type { IStore } from '@/app/store/storeType';
+
+interface ChatAddUserProps extends defaultProps {
+  error?: string;
+  addUserForm?: Form;
+}
 
 const template = new Templator(ChatAddUserTemplate);
 
-export class ChatAddUser extends Block<defaultProps> {
-  constructor(props: defaultProps) {
-    super({ ...props });
-  }
+class ChatAddUser extends Block<ChatAddUserProps> {
+  constructor(props: ChatAddUserProps) {
+    console.log('init');
 
-  createForm() {
     const addBtn = new MyButtonBlock({
       btnText: 'Добавить',
       btnType: 'submit',
@@ -28,7 +33,8 @@ export class ChatAddUser extends Block<defaultProps> {
       isClean: true,
       inputClassname: 'chat__header--user_id_input',
     });
-    return new Form({
+
+    const addUserForm = new Form({
       formContent: [input],
       subminBtn: addBtn,
       formClass: 'chat__header--form',
@@ -40,9 +46,27 @@ export class ChatAddUser extends Block<defaultProps> {
         },
       },
     });
+
+    super({ ...props, addUserForm });
+  }
+
+  protected componentDidUpdate(_: ChatAddUserProps, newProps: ChatAddUserProps): void {
+    const errorText = newProps.error;
+
+    this.children.addUserForm?.setProps({ errorText });
   }
 
   render() {
-    return template.compile({ addUserForm: this.createForm() });
+    const { addUserForm } = this.children;
+
+    return template.compile({ addUserForm: addUserForm });
   }
 }
+
+function mapAddUser(state: IStore) {
+  return {
+    error: state.forms?.addUser?.error,
+  };
+}
+
+export default connect(ChatAddUser, mapAddUser);

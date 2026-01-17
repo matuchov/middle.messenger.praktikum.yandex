@@ -10,7 +10,7 @@ export interface ChatListRowProps extends defaultProps {
   messageText: string;
   time: string;
   counter: string;
-  avatarSrc: string;
+  avatarSrc?: string;
 }
 
 const tepmlate = new Templator(chatListRowTemplate);

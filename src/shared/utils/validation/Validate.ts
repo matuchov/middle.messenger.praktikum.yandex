@@ -35,7 +35,7 @@ export const validators = {
     (msg = 'Телефон в формате +79991234567'): Validator =>
     (value) =>
       /^\+?\d{10,15}$/.test(value) ? null : msg,
-};
+} as const;
 
 export const validate = (fieldRules: Validator[] | undefined, value: string): string | null => {
   if (!fieldRules) return '';

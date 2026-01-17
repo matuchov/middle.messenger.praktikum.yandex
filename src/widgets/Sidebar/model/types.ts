@@ -1,12 +1,12 @@
 import type { defaultProps } from '@/app/utils/Block';
 import type { Chatlist } from '@/features/Chatlist';
 import type { Search } from '@/features/Search';
-import type { MyButtonBlock } from '@/shared/MyButtonBlock';
 import type { MyLink } from '@/shared/MyLink';
+import type CreateChat from '../ui/CreateChat/CreateChat';
 
 export interface SidebarProps extends defaultProps {
   link?: MyLink;
   search?: Search;
   shatlist?: InstanceType<typeof Chatlist>;
-  addChatBtn?: MyButtonBlock;
+  createChat?: InstanceType<typeof CreateChat>;
 }

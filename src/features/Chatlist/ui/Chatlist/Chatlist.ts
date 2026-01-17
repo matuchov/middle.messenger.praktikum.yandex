@@ -7,13 +7,13 @@ import { ChatlisController } from '../../model/Controller';
 import type { IStore } from '@/app/store/storeType';
 import { connect } from '@/shared/utils/connect/model/connect';
 import { Loader } from '@/shared/Loader';
+import { createResourcesLink } from '@/shared/utils/api/createResourcesLink';
 
 const tepmlate = new Templator(chatlistTemplate);
 const chatlisController = new ChatlisController();
 
 class Chatlist extends Block<ChatlistProps> {
   constructor(props: ChatlistProps) {
-    // chatlisController.getChats();
     props.chatlistRows = new Loader({});
     super({ ...props });
   }
@@ -22,10 +22,10 @@ class Chatlist extends Block<ChatlistProps> {
     return chatlist.map(
       (el) =>
         new ChatListRow({
-          avatarSrc: el.avatar,
+          avatarSrc: createResourcesLink(el.avatar),
           counter: el.unread_count.toString(),
           messageText: el.last_message?.content || 'нет сообщений',
-          name: el.last_message?.user?.first_name || '',
+          name: el.title || '',
           time: el.last_message?.time ? new Date(el.last_message?.time).toLocaleTimeString() : '',
           events: {
             click: {
