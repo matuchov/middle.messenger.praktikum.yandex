@@ -24,10 +24,14 @@ export class Templator {
     Object.entries(rawCtx).forEach(([key, value]) => {
       if (value instanceof Block) {
         ctx[key] = value.getContent()!;
-      } else if (Array.isArray(value) && value.every((item) => item instanceof Block)) {
+      } else if (Array.isArray(value)) {
         const cont = document.createDocumentFragment();
-        value.forEach((block) => {
-          cont.append(block.getContent()!);
+        value.forEach((item) => {
+          if (item instanceof Block) {
+            cont.append(item.getContent()!);
+          } else if (item instanceof HTMLElement || item instanceof DocumentFragment) {
+            cont.append(item);
+          }
         });
         ctx[key] = cont;
       } else {

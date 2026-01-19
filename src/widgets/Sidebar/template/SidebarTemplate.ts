@@ -1,6 +1,6 @@
 export const sidebarTemplate = `<div class="sidebar">
   <div class="sidebar__profile">
-    {{{ link }}}
+{{{createChat}}} {{{addUserBtn}}}{{{ link }}}
   </div>
   {{{ search }}}
   {{{ shatlist }}}

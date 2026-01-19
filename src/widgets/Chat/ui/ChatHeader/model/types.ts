@@ -1,9 +1,15 @@
+import type { IchatUser } from '@/app/store/storeType';
 import type { defaultProps } from '@/app/utils/Block';
 import type { Avatar } from '@/shared/Avatar';
-import type { Dropdown } from '@/shared/Dropdown';
+import ChatAddUser from '../../ChatAddUser/ChatAddUser';
 
 export interface ChatHeaderProps extends defaultProps {
+  avatar?: Avatar;
+
   avatarComponent?: Avatar;
-  dropdownComponent?: Dropdown;
+  addUser?: InstanceType<typeof ChatAddUser>;
   name?: string;
+  chatUsers?: IchatUser[];
+  chatId?: number | null;
+  chatAvatarSrc?: string;
 }

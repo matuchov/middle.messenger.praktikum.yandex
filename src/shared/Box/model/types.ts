@@ -1,6 +1,8 @@
 import type { Block, defaultProps } from '@/app/utils/Block';
 
+type children = Block<object> | HTMLElement | DocumentFragment | undefined | null;
+
 export interface BoxProps extends defaultProps {
   boxClass?: string;
-  children?: Block<object> | HTMLElement | DocumentFragment;
+  children?: children | children[];
 }

@@ -12,9 +12,14 @@
 }
 
 .sidebar__profile {
-  padding-top: 20px;
+  padding: 20px 0;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar__addChatBtn {
+  padding: 10px;
 }
 
 .sidebar__chatlist {
