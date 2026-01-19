@@ -1,7 +1,6 @@
 import { HTTPTransport } from '@/app/utils/HTTPtransport';
 
-const API_URL: string = import.meta.env.VITE_API_URL;
-const API_WS_URL: string = import.meta.env.VITE_API_WS_URL;
+import { API_URL, API_WS_URL } from '@/shared/utils/api/consts';
 
 export class ChatApi {
   private authAPIInstance: HTTPTransport;

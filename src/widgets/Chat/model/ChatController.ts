@@ -47,7 +47,12 @@ class ChatController {
   }
 
   private handleIncomingMessage(data: string) {
-    const parsedData = JSON.parse(data);
+    let parsedData = [];
+    try {
+      parsedData = JSON.parse(data);
+    } catch {
+      return;
+    }
 
     if (parsedData.type === 'pong' || parsedData.type === 'user connected') {
       return;
