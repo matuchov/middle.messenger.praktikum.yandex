@@ -15,11 +15,6 @@ type TEventBus<T> = {
   [EVENTS.FLOW_CDU]: [oldProps: T, newProps: T];
 };
 
-type Tmeta = {
-  tagName: string;
-  props: unknown;
-};
-
 export type defaultProps = {
   events?: Partial<{
     [K in keyof HTMLElementEventMap]: {
@@ -36,19 +31,16 @@ export class Block<TProps extends defaultProps> {
 
   public children: Partial<TProps>;
 
-  private _meta: Tmeta;
-
   props: TProps;
 
   private readonly _eventBus: EventBus<TEventBus<TProps>>;
 
-  constructor(propsAndChildren: TProps, tagName = 'div') {
+  constructor(propsAndChildren: TProps) {
     const { children, props } = this._getChildren(propsAndChildren);
 
     const eventBus = new EventBus<TEventBus<TProps>>();
 
     this.children = children;
-    this._meta = { tagName, props };
     this._eventBus = eventBus;
     this.props = this._makePropsProxy(props);
     this._registerEvents(eventBus);
@@ -62,13 +54,7 @@ export class Block<TProps extends defaultProps> {
     eventBus.on(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
   }
 
-  private _createResources() {
-    const { tagName } = this._meta;
-    this._element = document.createElement(tagName);
-  }
-
   private _init() {
-    this._createResources();
     this.init();
     this._eventBus.emit(EVENTS.FLOW_RENDER);
   }
@@ -236,3 +222,7 @@ export class Block<TProps extends defaultProps> {
     });
   }
 }
+
+const block = new Block({});
+
+console.log(block.getContent());
