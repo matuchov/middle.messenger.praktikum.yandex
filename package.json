@@ -16,12 +16,8 @@
     "preview": "vite preview",
     "lint:fix": "tsc --noEmit && eslint . --ext .ts,.tsx && stylelint src/**/*.css --fix",
     "stylelint": "stylelint src/**/*.css",
-    "stylelint:fix": "stylelint src/**/*.css --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "test && lint"
-    }
+    "stylelint:fix": "stylelint src/**/*.css --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
