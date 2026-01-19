@@ -11,5 +11,13 @@ export default defineConfig([
     languageOptions: { globals: globals.browser },
     ignores: ['/build', '**/*.min.js', '**/*.mtmp.d.ts', '/node_modules'],
   },
+
   tseslint.configs.recommended,
+
+  {
+    files: ['**/*.test.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
 ]);
