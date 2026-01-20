@@ -1,6 +1,6 @@
 import './Dropdown.css';
-import { Block } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { directions, type DropdownProps } from '../model/types';
 import { dropdownTemplate } from '../templates/Dropdown';
 import { DropdownItem } from './DropdownItem/DropdownTtem';

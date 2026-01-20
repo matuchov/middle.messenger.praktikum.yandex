@@ -1,7 +1,7 @@
 {
   "name": "messengerapp",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.4.0",
   "type": "module",
   "engines": {
     "node": ">=20.0.0"
@@ -9,33 +9,47 @@
   "scripts": {
     "dev": "vite",
     "start": "tsc  && vite build && vite preview",
-    "start2": "vite build && vite preview",
-    "test": "tsc --noEmit && eslint . --ext .ts,.tsx && stylelint src/**/*.css --fix",
-    "buildTS": "tsc && vite build",
+    "startnocheck": "vite build && vite preview",
+    "test": "cross-env NODE_OPTIONS=\"--loader ts-node/esm --no-warnings\" mocha 'src/**/*.test.ts' --node-option experimental-specifier-resolution=node",
+    "lint": "tsc --noEmit && eslint . --ext .ts,.tsx && stylelint src/**/*.css",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "lint:fix": "tsc --noEmit && eslint . --ext .ts,.tsx && stylelint src/**/*.css --fix",
     "stylelint": "stylelint src/**/*.css",
-    "stylelint:fix": "stylelint src/**/*.css --fix"
+    "stylelint:fix": "stylelint src/**/*.css --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/chai": "^5.2.3",
+    "@types/jsdom": "^27.0.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^24.10.0",
+    "@types/sinon": "17.0.4",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
     "autoprefixer": "^10.4.21",
+    "chai": "^6.2.2",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "jiti": "^2.6.1",
+    "jsdom": "^27.4.0",
+    "mocha": "^11.7.5",
     "postcss": "^8.5.6",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
+    "sinon": "18.0.1",
     "stylelint": "^16.26.1",
     "stylelint-config-standard-scss": "^16.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.1",
-    "vite": "^7.1.7",
-    "jiti": "^2.6.1"
+    "vite": "^7.1.7"
+  },
+  "overrides": {
+    "diff": "8.0.3"
   },
   "browserslist": [
     ">0.5%",

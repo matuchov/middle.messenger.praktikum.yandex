@@ -3,7 +3,7 @@ import { SingInController } from '../model/controller';
 import { SingInPattern } from '../model/pattern';
 import type { IStore } from '@/app/store/storeType';
 import { connect } from '@/shared/utils/connect/model/connect';
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 
 const controller = new SingInController();
 

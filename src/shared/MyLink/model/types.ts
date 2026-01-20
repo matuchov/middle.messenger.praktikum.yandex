@@ -1,4 +1,4 @@
-import type { Block, defaultProps } from '@/app/utils/Block';
+import type { Block, defaultProps } from '@/app/utils/Block/Block';
 
 export interface MyLinkProps extends defaultProps {
   linkClassName?: string;

@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { Chatlist } from '@/features/Chatlist';
 import type { Search } from '@/features/Search';
 import type { MyLink } from '@/shared/MyLink';

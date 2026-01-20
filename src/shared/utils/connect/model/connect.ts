@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import store, { StoreEvents } from '@/app/store/store';
-import type { IStore } from '@/app/store/storeType';
-import type { Block, defaultProps } from '@/app/utils/Block';
+import store, { StoreEvents } from '../../../../app/store/store';
+import type { IStore } from '../../../../app/store/storeType';
+import type { Block, defaultProps } from '../../../../app/utils/Block/Block';
 
 type BlockClass<P extends defaultProps> = new (...args: any[]) => Block<P>;
 

@@ -1,4 +1,4 @@
-import { Block } from './Block';
+import { Block } from '../Block/Block';
 
 type Props = Record<string, HTMLElement | string | DocumentFragment | unknown>;
 
@@ -48,8 +48,8 @@ export class Templator {
     if (node.nodeType === Node.ELEMENT_NODE && node instanceof HTMLElement) {
       if (node.tagName.startsWith('SLOT-')) {
         const key = node.getAttribute('data-tpl-key');
-        if (key && ctx[key]) {
-          this._replaceElement(node, ctx[key]);
+        if (key) {
+          this._replaceElement(node, ctx[key] ?? null);
           return;
         }
       }
@@ -73,6 +73,7 @@ export class Templator {
         if (ctx.isDisabled) {
           element.setAttribute('disabled', '');
         }
+        return;
       }
 
       if (this._regExes.double.test(attr.value)) {
@@ -97,27 +98,18 @@ export class Templator {
   }
 
   private _processTextNode(intNode: Node, ctx: Props) {
-    let node = intNode;
-    let text = node.textContent || '';
-    let match;
-    this._regExes.double.lastIndex = 0;
-    // eslint-disable-next-line no-cond-assign
-    while ((match = this._regExes.double.exec(text)) !== null) {
-      const [fullMatch, key] = match;
-      const { index } = match;
+    const node = intNode;
+    const text = node.textContent || '';
 
-      if (index > 0) {
-        const tail = (node as Text).splitText(index);
-        node = tail;
-      }
+    this._regExes.doubleGlobal.lastIndex = 0;
 
-      const tail = (node as Text).splitText(fullMatch.length);
+    if (this._regExes.doubleGlobal.test(text)) {
+      const replacedText = text.replace(this._regExes.doubleGlobal, (_, key) => {
+        const val = ctx[key];
+        return val !== undefined && val !== null ? String(val) : '';
+      });
 
-      const value = ctx[key];
-      node.textContent = value !== undefined && value !== null ? String(value) : '';
-
-      node = tail;
-      text = node.textContent || '';
+      node.textContent = replacedText;
     }
   }
 }

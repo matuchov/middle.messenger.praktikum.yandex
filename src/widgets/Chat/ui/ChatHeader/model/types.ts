@@ -1,5 +1,5 @@
 import type { IchatUser } from '@/app/store/storeType';
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { Avatar } from '@/shared/Avatar';
 import ChatAddUser from '../../ChatAddUser/ChatAddUser';
 

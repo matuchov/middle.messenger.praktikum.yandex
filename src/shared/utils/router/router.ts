@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Block, defaultProps } from '@/app/utils/Block';
+import type { Block, defaultProps } from '@/app/utils/Block/Block';
 
 interface BlockConstructable<T extends defaultProps> {
   new (props: T): Block<T>;

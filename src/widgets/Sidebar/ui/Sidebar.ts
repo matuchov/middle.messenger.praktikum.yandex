@@ -1,7 +1,7 @@
 import { Chatlist } from '@/features/Chatlist/';
 import { MyLink } from '@/shared/MyLink';
-import { Block } from '@/app/utils/Block.ts';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { sidebarTemplate } from '../template/SidebarTemplate';
 import type { SidebarProps } from '../model/types';
 import './Sidebar.css';

@@ -1,5 +1,5 @@
-import { Block } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import type { MyLinkProps } from '../model/types';
 import MyLinkTemlpate from '../template/MyLink';
 import { router } from '@/app/router/router';

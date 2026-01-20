@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { Form } from '@/entities/Form';
 import type { Avatar } from '@/shared/Avatar';
 import type { MyButtonProps } from '@/shared/MyButtonBlock';
