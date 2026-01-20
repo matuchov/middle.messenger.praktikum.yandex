@@ -1,5 +1,5 @@
-import { Block, type defaultProps } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block, type defaultProps } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { searchTemplate } from '../template/Search';
 import './Search.css';
 

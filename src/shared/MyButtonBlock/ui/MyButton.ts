@@ -1,5 +1,5 @@
-import { Block } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { MyButtonIconTemlpate, MyButtonTemplate } from '../template/MyButtonTemplate';
 import type { MyButtonProps } from '../model/types';
 import './MyButton.css';

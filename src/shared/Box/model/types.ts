@@ -1,4 +1,4 @@
-import type { Block, defaultProps } from '@/app/utils/Block';
+import type { Block, defaultProps } from '@/app/utils/Block/Block';
 
 type children = Block<object> | HTMLElement | DocumentFragment | undefined | null;
 

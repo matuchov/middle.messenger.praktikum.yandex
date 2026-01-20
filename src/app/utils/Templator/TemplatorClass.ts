@@ -1,4 +1,4 @@
-import { Block } from './Block';
+import { Block } from '../Block/Block';
 
 type Props = Record<string, HTMLElement | string | DocumentFragment | unknown>;
 

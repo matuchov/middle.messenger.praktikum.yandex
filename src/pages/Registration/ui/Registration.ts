@@ -3,7 +3,7 @@ import { SingUpPattern } from '../model/pattern';
 import type { IStore } from '@/app/store/storeType';
 import type { AuthProps } from '@/widgets/Auth/model/types';
 import { connect } from '@/shared/utils/connect/model/connect';
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import { RegistrationController } from '../model/controller';
 
 const controller = new RegistrationController();

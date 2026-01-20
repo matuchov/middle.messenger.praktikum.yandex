@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 
 export const btnThemes = {
   default: 'mybutton',

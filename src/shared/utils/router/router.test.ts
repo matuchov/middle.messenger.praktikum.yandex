@@ -2,9 +2,9 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Router } from './router';
-import { Block } from '../../../app/utils/Block';
+import { Block } from '../../../app/utils/Block/Block';
 import { describe, it } from 'mocha';
-import type { defaultProps } from '../../../app/utils/Block';
+import type { defaultProps } from '../../../app/utils/Block/Block';
 
 class TestBlock extends Block<defaultProps> {
   render() {

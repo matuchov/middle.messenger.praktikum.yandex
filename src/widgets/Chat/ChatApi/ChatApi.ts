@@ -1,4 +1,4 @@
-import { HTTPTransport } from '@/app/utils/HTTPtransport';
+import { HTTPTransport } from '@/app/utils/HTTPTransport/HTTPtransport';
 
 import { API_URL, API_WS_URL } from '@/shared/utils/api/consts';
 

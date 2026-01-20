@@ -1,5 +1,5 @@
-import { EventBus } from './EventBus';
-import { isEqual } from './isEqual';
+import { EventBus } from '../shared/EventBus';
+import { isEqual } from '../shared/isEqual';
 
 const EVENTS = {
   INIT: 'init',
@@ -222,7 +222,3 @@ export class Block<TProps extends defaultProps> {
     });
   }
 }
-
-const block = new Block({});
-
-console.log(block.getContent());

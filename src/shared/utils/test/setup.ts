@@ -9,3 +9,4 @@ global.document = dom.window.document;
 global.DocumentFragment = dom.window.DocumentFragment;
 global.HTMLElement = dom.window.HTMLElement;
 global.Node = dom.window.Node;
+global.XMLHttpRequest = dom.window.XMLHttpRequest;

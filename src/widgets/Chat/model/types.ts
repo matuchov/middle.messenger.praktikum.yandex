@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { ChatFooter } from '../ui/ChatFooter/ChatFooter';
 import type ChatHeader from '../ui/ChatHeader/ChatHeader';
 import type ChatMessages from '../ui/ChatMessages/ChatMessages';

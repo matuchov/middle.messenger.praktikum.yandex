@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { Templator } from './TemplatorClass';
-import { Block, type defaultProps } from './Block';
+import { Block, type defaultProps } from '../Block/Block';
 
 interface testProps extends defaultProps {
   text: string;
@@ -62,11 +62,9 @@ describe('Templator', () => {
     const rawHtml = '<button {{isdisabled}}>Click</button>';
     const templator = new Templator(rawHtml);
 
-    // Случай True
     const fragTrue = templator.compile({ isDisabled: true });
     expect(fragTrue.querySelector('button')?.hasAttribute('disabled')).to.be.true;
 
-    // Случай False
     const fragFalse = templator.compile({ isDisabled: false });
     expect(fragFalse.querySelector('button')?.hasAttribute('disabled')).to.be.false;
   });

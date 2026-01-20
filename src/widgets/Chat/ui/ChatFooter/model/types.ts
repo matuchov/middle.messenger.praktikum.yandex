@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { Form } from '@/entities/Form';
 import type { Dropdown } from '@/shared/Dropdown';
 import type { MyInput } from '@/shared/MyInput';

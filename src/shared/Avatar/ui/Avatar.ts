@@ -1,6 +1,6 @@
 import './Avatar.css';
-import { Block, type defaultProps } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block, type defaultProps } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { avatarTemplate } from '../template/Avatar';
 
 const avatarSizes = {

@@ -1,6 +1,6 @@
 import { directions, messageTypes, type ChatMessageProps } from './../ChatMessage/model/types';
-import { Block, type defaultProps } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block, type defaultProps } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { ChatMessagesTemplate } from './template/ChatMessages';
 import { ChatMessage } from '../ChatMessage/ChatMessage';
 import './ChatMessages.css';

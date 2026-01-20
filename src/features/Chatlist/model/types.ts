@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { ChatListRow } from '../ui/ChatListRow/ChatlistRow';
 import type { Loader } from '@/shared/Loader';
 

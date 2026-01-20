@@ -1,5 +1,5 @@
-import { Block } from '@/app/utils/Block.ts';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { directions, messageTypes, type ChatMessageProps } from './model/types';
 import { ChatMessageTemplate } from './template/ChatMessage';
 import { ChatMessagePictureTemplate } from './template/ChatMessagePicture';
