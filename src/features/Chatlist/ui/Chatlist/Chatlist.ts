@@ -1,5 +1,5 @@
-import { Templator } from '@/app/utils/TemplatorClass';
-import { Block } from '@/app/utils/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
 import { ChatListRow } from '../ChatListRow/ChatlistRow';
 import { chatlistTemplate } from './template/Chatlist';
 import type { ChatlistProps, IChatlistResponce } from '../../model/types';

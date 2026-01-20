@@ -1,5 +1,5 @@
 import type { MyLink } from '@/shared/MyLink';
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 
 export interface ErrorPageProps extends defaultProps {
   error?: string;

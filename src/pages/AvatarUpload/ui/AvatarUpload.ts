@@ -1,5 +1,5 @@
-import { Block } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block.ts';
+import { Templator } from '@/app/utils/Templator/TemplatorClass.ts';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import type { AvatarUploadProps } from '../model/types.ts';
 import { AvatarUploadTemplate } from '../template/AvatarUpload.ts';

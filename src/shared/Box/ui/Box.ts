@@ -1,5 +1,5 @@
-import { Templator } from '@/app/utils/TemplatorClass';
-import { Block } from '@/app/utils/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
 import type { BoxProps } from '../model/types';
 import { boxTemplate } from '../template/Box';
 import './Box.css';

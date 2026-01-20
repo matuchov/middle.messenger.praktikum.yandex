@@ -1,6 +1,6 @@
 import { Avatar } from '@/shared/Avatar';
-import { Block } from '@/app/utils/Block.ts';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import type { IchatUser, IStore } from '@/app/store/storeType';
 import { ChatHeaderTemplate } from './template/ChatHeader';
 import type { ChatHeaderProps } from './model/types';

@@ -1,5 +1,5 @@
-import { Block } from '@/app/utils/Block.ts';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { connect } from '@/shared/utils/connect/model/connect';
 import type { IStore } from '@/app/store/storeType';
 import { ChatTemplate } from '../template/Chat';

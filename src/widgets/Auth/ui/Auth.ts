@@ -1,8 +1,8 @@
 import type { AuthProps } from '../model/types.ts';
 import { Form } from '@/entities/Form';
 import { Box } from '@/shared/Box';
-import { Templator } from '@/app/utils/TemplatorClass';
-import { Block } from '@/app/utils/Block.ts';
+import { Templator } from '@/app/utils/Templator/TemplatorClass.ts';
+import { Block } from '@/app/utils/Block/Block.ts';
 import { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton.ts';
 import { MyInput } from '@/shared/MyInput/index.ts';
 import { authTemplate } from '../template/Auth.ts';

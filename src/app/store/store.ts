@@ -1,11 +1,11 @@
-import { EventBus } from '../utils/EventBus';
+import { EventBus } from '../utils/shared/EventBus';
 import type { IStore } from './storeType';
 
 export const StoreEvents = {
   Updated: 'updated',
 } as const;
 
-class Store extends EventBus<Record<string, unknown[]>> {
+export class Store extends EventBus<Record<string, unknown[]>> {
   constructor() {
     super();
     this.on(StoreEvents.Updated, () => {});

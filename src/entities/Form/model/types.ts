@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import type { MyButtonBlock } from '@/shared/MyButtonBlock/ui/MyButton';
 import type { MyInput } from '@/shared/MyInput';
 

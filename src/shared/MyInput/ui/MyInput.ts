@@ -1,5 +1,5 @@
-import { Block } from '@/app/utils/Block';
-import { Templator } from '@/app/utils/TemplatorClass';
+import { Block } from '@/app/utils/Block/Block';
+import { Templator } from '@/app/utils/Templator/TemplatorClass';
 import { itemsStyleClasses, type MyInputProps } from '../model/types';
 import { clearInputTemplate, myInputTemplate } from '../template/MyInput';
 import './MyInput.css';

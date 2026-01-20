@@ -1,4 +1,4 @@
-import type { defaultProps } from '@/app/utils/Block';
+import type { defaultProps } from '@/app/utils/Block/Block';
 import { AvatarUploadClass } from '@/pages/AvatarUpload';
 import { AvatarUploadController } from '../model/controller';
 import { connect } from '@/shared/utils/connect/model/connect';

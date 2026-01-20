@@ -1,6 +1,6 @@
-import { HTTPTransport } from '@/app/utils/HTTPtransport';
+import { HTTPTransport } from '@/app/utils/HTTPTransport/HTTPtransport';
 
-const API_URL: string = import.meta.env.VITE_API_URL;
+import { API_URL } from '@/shared/utils/api/consts';
 
 export class SessionApi {
   authAPIInstance;
